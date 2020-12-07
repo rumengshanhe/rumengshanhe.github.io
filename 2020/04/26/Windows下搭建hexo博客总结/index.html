@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Windows下搭建hexo博客总结 - 李锦波的博客</title><meta description="前言这是我在这里写下的第一篇博客，它总结了我在Windows10环境下搭建hexo博客的过程；其中包括了要准备的工具，怎么通过命令行创建博客并启动预览，用Markdown写下第一篇博文，以及部署到GitHub上进行公开访问，以及更换主题的全过程；就让我以这个过程的总结作为在这里的起点吧~~    美丽的校园"><meta property="og:type" content="blog"><meta property="og:title" content="Windows下搭建hexo博客总结"><meta property="og:url" content="http://yoursite.com/2020/04/26/Windows%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/"><meta property="og:site_name" content="李锦波的博客"><meta property="og:description" content="前言这是我在这里写下的第一篇博客，它总结了我在Windows10环境下搭建hexo博客的过程；其中包括了要准备的工具，怎么通过命令行创建博客并启动预览，用Markdown写下第一篇博文，以及部署到GitHub上进行公开访问，以及更换主题的全过程；就让我以这个过程的总结作为在这里的起点吧~~    美丽的校园"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/71CE50DDF15544E9BC21255966FA1674?method=download&amp;shareKey=97b708e2c8869de883b8f82429d60d07"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEBf57eb6c15fb4f8f4d048c01051294b2a?method=download&amp;shareKey=b8657a89f677e423c116d326c4d54a92"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/CC4279A81C4D47FDAAB0E2BA3E2BDDB6?method=download&amp;shareKey=0dc2b2511ebbc41029903883605dcb49"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/1D451C30B7F041E9B67489108AFF481F?method=download&amp;shareKey=001fe012c1cbc9660bed142172349737"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/B6670F8AB35140D298F3B40CD9097B7B?method=download&amp;shareKey=0e7fc9b48a0f09ae0045e48effd31165"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/8B1BE86D1AD24828BC9F9409837A077B?method=download&amp;shareKey=969a0731ec6d66b3c6c3f284cdd3f824"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/3713B6C23E014CB38FD4D587897FAE9C?method=download&amp;shareKey=e51849260023ff9f59c93b683a172186"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/2393EB7F3D594DDF873CD44D2EDFCCB2?method=download&amp;shareKey=f3ef7b041afcea3c4a7b92c0ba0bbfcb"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/B428E85B274A4D2FA49E94DF728AE074?method=download&amp;shareKey=cb236d35cf1e5652c5b747f7434947bb"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/A10A0645AA8B4742A3DE2268A295AA83?method=download&amp;shareKey=de265fed22785c777646a10fc23d1c62"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/47683AC05BA8401A83A6C85075C8C67A?method=download&amp;shareKey=28e53730373cc47eecd7819f249ed945"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/EED63050F1FB47F6AD23DBA7278DB42C?method=download&amp;shareKey=1dbdd29ceb4847a1dd30e2564f824439"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/DF32F80ED85141269ECB2A67185465EA?method=download&amp;shareKey=1fe511f07d0722f1568582f9d3c91a42"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/1C5EF7A39F4446C89B294479E68C436E?method=download&amp;shareKey=dc3ebbb72e70eb9c4e4429fc72f0a7bc"><meta property="article:published_time" content="2020-04-26T03:55:09.000Z"><meta property="article:modified_time" content="2020-05-01T02:43:59.795Z"><meta property="article:author" content="lijinbo"><meta property="article:tag" content="hexo搭建"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://note.youdao.com/yws/api/personal/file/71CE50DDF15544E9BC21255966FA1674?method=download&amp;shareKey=97b708e2c8869de883b8f82429d60d07"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2020/04/26/Windows%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/"},"headline":"李锦波的博客","image":[],"datePublished":"2020-04-26T03:55:09.000Z","dateModified":"2020-05-01T02:43:59.795Z","author":{"@type":"Person","name":"lijinbo"},"description":"前言这是我在这里写下的第一篇博客，它总结了我在Windows10环境下搭建hexo博客的过程；其中包括了要准备的工具，怎么通过命令行创建博客并启动预览，用Markdown写下第一篇博文，以及部署到GitHub上进行公开访问，以及更换主题的全过程；就让我以这个过程的总结作为在这里的起点吧~~    美丽的校园"}</script><link rel="canonical" href="http://yoursite.com/2020/04/26/Windows%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/"><link rel="icon" href="/img/favicon1.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?5e25aa44862d2cc519714e0cba3c84f9";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo1.png" alt="李锦波的博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="My GitHub" href="https://github.com/rumengshanhe"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-04-26T03:55:09.000Z" title="2020-04-26T03:55:09.000Z">2020-04-26</time><span class="level-item"><a class="link-muted" href="/categories/%E5%8D%9A%E5%AE%A2/">博客</a></span><span class="level-item">9 分钟 读完 (大约 1338 个字)</span><span class="level-item" id="busuanzi_container_page_pv"><i class="far fa-eye"></i>&nbsp;&nbsp;<span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">Windows下搭建hexo博客总结</h1><div class="content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是我在这里写下的第一篇博客，它总结了我在Windows10环境下搭建hexo博客的过程；其中包括了要准备的工具，怎么通过命令行创建博客并启动预览，用Markdown写下第一篇博文，以及部署到GitHub上进行公开访问，以及更换主题的全过程；就让我以这个过程的总结作为在这里的起点吧~~</p>
+<div style="text-align: center;">
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/71CE50DDF15544E9BC21255966FA1674?method=download&shareKey=97b708e2c8869de883b8f82429d60d07" alt></p>
+<center style="font-size:12px;color:#C0C0C0;text-decoration:none">美丽的校园</center> 
+</div>
+
+
+<a id="more"></a>
+
+<hr>
+<h2 id="工具准备"><a href="#工具准备" class="headerlink" title="工具准备"></a>工具准备</h2><h4 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h4><p><a href="https://nodejs.org/en/" title="nodejs.org">Nodejs官网地址</a></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBf57eb6c15fb4f8f4d048c01051294b2a?method=download&shareKey=b8657a89f677e423c116d326c4d54a92" alt="node.js" title="选择LTS"></p>
+<p>在终端利用<code>node -v</code>和<code>npm -v</code>查看安装是否成功<br></p>
+<div style="text-align: center;">
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/CC4279A81C4D47FDAAB0E2BA3E2BDDB6?method=download&shareKey=0dc2b2511ebbc41029903883605dcb49" alt></p>
+</div>
+
+<hr>
+<h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p><a href="https://note.youdao.com/yws/api/personal/file/1D451C30B7F041E9B67489108AFF481F?method=download&shareKey=001fe012c1cbc9660bed142172349737">快速下载</a><br><br>windows用户必须先安装好Git，并将Git添加到环境变量Path中，不然后面会报错；</p>
+<div style="text-align: center;">
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/1D451C30B7F041E9B67489108AFF481F?method=download&shareKey=001fe012c1cbc9660bed142172349737" alt></p>
+</div>
+
+<hr>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><h4 id="安装淘宝镜像cnpm"><a href="#安装淘宝镜像cnpm" class="headerlink" title="安装淘宝镜像cnpm"></a>安装淘宝镜像cnpm</h4><p>安装hexo需要借助npm包管理器，但是我们国内由于镜像源速度很慢，所以这里利用npm安装淘宝镜像源cnpm;<br></p>
+<blockquote>
+<p><code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></p>
+</blockquote>
+<p>检验安装<br></p>
+<blockquote>
+<p><code>cnpm -v</code></p>
+</blockquote>
+<hr>
+<h4 id="正式安装hexo"><a href="#正式安装hexo" class="headerlink" title="正式安装hexo"></a>正式安装hexo</h4><p>hexo的安装依然采用命令行来完成；<br></p>
+<blockquote>
+<p><code>cnpm install -g hexo.cli</code><br></p>
+</blockquote>
+<p>等待安装完成，检验安装<br></p>
+<blockquote>
+<p><code>hexo -v</code><br></p>
+</blockquote>
+<div style="text-align: center;">
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/B6670F8AB35140D298F3B40CD9097B7B?method=download&shareKey=0e7fc9b48a0f09ae0045e48effd31165" alt="hexo"><br></p>
+</div>
+
+<hr>
+<h4 id="生成博客"><a href="#生成博客" class="headerlink" title="生成博客"></a>生成博客</h4><p>首先需要创建一个文件夹，里面存放你博客的一切；先切换到你喜欢的目录，创建blog文件夹<br></p>
+<blockquote>
+<p><code>mkdir blog</code><br></p>
+</blockquote>
+<p>进入blog文件夹</p>
+<blockquote>
+<p><code>cd ./blog</code><br></p>
+</blockquote>
+<p>生成博客，也可以叫初始化博客；<br></p>
+<blockquote>
+<p><code>hexo init</code><br></p>
+</blockquote>
+<p>等待完成后，查看blog目录下生成了数个文件夹，初始化完成；<br></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/8B1BE86D1AD24828BC9F9409837A077B?method=download&shareKey=969a0731ec6d66b3c6c3f284cdd3f824" alt="init"><br><br>接下来，可以开始启动它了；<br></p>
+<blockquote>
+<p><code>hexo s</code><br></p>
+</blockquote>
+<p><img src="https://note.youdao.com/yws/api/personal/file/3713B6C23E014CB38FD4D587897FAE9C?method=download&shareKey=e51849260023ff9f59c93b683a172186" alt="server"><br></p>
+<p>打开浏览器，访问<code>http://localhost:4000</code>进行本地预览,你会发现你的博客已经有了。<br></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/2393EB7F3D594DDF873CD44D2EDFCCB2?method=download&shareKey=f3ef7b041afcea3c4a7b92c0ba0bbfcb" alt="yousite"><br><br>默认给你创建了一篇<code>Hello World</code>博客，里面简介了hexo的使用方法</p>
+<hr>
+<h4 id="新建博文"><a href="#新建博文" class="headerlink" title="新建博文"></a>新建博文</h4><p>用hexo new来新建文章；<br></p>
+<blockquote>
+<p><code>hexo n &quot;第一篇博客文章&quot;</code><br></p>
+</blockquote>
+<p>进入到如下目录，可以看到已经生成了Markdown文档；</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/B428E85B274A4D2FA49E94DF728AE074?method=download&shareKey=cb236d35cf1e5652c5b747f7434947bb" alt="md"><br></p>
+<p>接下来你可以打开.md文档编辑，Markdown文档知识这不赘述；重新用<code>hexo s</code>启动server，刷新博客网页可以看到刚刚编辑的文章已经存在了<br></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/A10A0645AA8B4742A3DE2268A295AA83?method=download&shareKey=de265fed22785c777646a10fc23d1c62" alt></p>
+<hr>
+<h2 id="博客部署"><a href="#博客部署" class="headerlink" title="博客部署"></a>博客部署</h2><p>这里介绍将博客部署到GitHub上公开使用，当然之后你还可以通过注册域名来进行访问；<br></p>
+<h4 id="新建仓库"><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h4><p>登陆Github，新建一个仓库–<code>New Repository</code>;<br><br><img src="https://note.youdao.com/yws/api/personal/file/47683AC05BA8401A83A6C85075C8C67A?method=download&shareKey=28e53730373cc47eecd7819f249ed945" alt><br></p>
+<p>Repository name要按特定要求来填，下图中的<code>youname</code>一定要对应个人GitHub昵称，然后–<code>Create Repository</code>；<br><br><br><img src="https://note.youdao.com/yws/api/personal/file/EED63050F1FB47F6AD23DBA7278DB42C?method=download&shareKey=1dbdd29ceb4847a1dd30e2564f824439" alt><br></p>
+<hr>
+<h4 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h4><p>需要在blog根目录下安装一个用于Git部署的插件；<br></p>
+<blockquote>
+<p><code>cnpm install --save hexo-deployer-git</code><br></p>
+</blockquote>
+<p><img src="https://note.youdao.com/yws/api/personal/file/DF32F80ED85141269ECB2A67185465EA?method=download&shareKey=1fe511f07d0722f1568582f9d3c91a42" alt></p>
+<hr>
+<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>这是关键的一步，设置blog目录下的<code>_config.yml</code>文件，建议不要用记事本打开，容易遗漏空格，且没有代码高亮（你懂的），当然，可以用<code>sublime_text</code>或<code>VS Code</code>； <br><br>打开配置文件后，找到文件的最底部，参照以下内容进行修改：<br></p>
+<blockquote>
+<p>deploy:<br></p>
+<blockquote>
+<p>type: ‘git’<br><br>repo: <a href="https://github.com/rumengshanhe/rumengshanhe.github.io.git">https://github.com/rumengshanhe/rumengshanhe.github.io.git</a><br><br>branch: master</p>
+</blockquote>
+</blockquote>
+<p><code>repo</code>就填你刚才创建的GitHub仓库的地址；</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/1C5EF7A39F4446C89B294479E68C436E?method=download&shareKey=dc3ebbb72e70eb9c4e4429fc72f0a7bc" alt></p>
+<hr>
+<h4 id="部署验证"><a href="#部署验证" class="headerlink" title="部署验证"></a>部署验证</h4><p>通过以下命令生成,部署到远端；</p>
+<blockquote>
+<p><code>hexo clean</code><br><br><code>hexo g</code><br><br><code>hexo d</code><br></p>
+</blockquote>
+<p>过程中需要设置Git账户邮箱和密码，部署成功后打开GitHub仓库就会发现已经产生博客文件，这时打开浏览器，访问<code>youname.github.io</code>，不出意外就可以访问到你的博客了。</p>
+<hr>
+</div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/hexo%E6%90%AD%E5%BB%BA/">hexo搭建</a></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><div class="social-share"></div><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/qrcode2.JPG" alt="支付宝"></span></a><a class="button donate" href="/" style="background-color:rgba(255,128,62,.87);border-color:transparent;color:white;" target="_blank" rel="noopener"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>送我杯咖啡</span></a><a class="button is-danger donate" href="/" target="_blank" rel="noopener"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/qrcode.JPG" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/12/04/linux_1/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">第一篇--安装Linux虚拟机</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/04/25/hello-world/"><span class="level-item">Hello World</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread' ,
+            notify: undefined,
+            verify: undefined,
+            appId: 'uaJjYDpaCQ0RHCnC5Lh5VOAO-gzGzoHsz',
+            appKey: '9Sa7CfJYO8gWvMowt7KaPHUG',
+            placeholder: 'say something...',
+            avatar: 'retro',
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            visitor: false,
+            highlight: true,
+            recordIP: false
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex" href="#前言"><span class="mr-2">1</span><span>前言</span></a></li><li><a class="is-flex" href="#工具准备"><span class="mr-2">2</span><span>工具准备</span></a><ul class="menu-list"><ul class="menu-list"><li><a class="is-flex" href="#安装Node-js"><span class="mr-2">2.1.1</span><span>安装Node.js</span></a></li><li><a class="is-flex" href="#安装Git"><span class="mr-2">2.1.2</span><span>安装Git</span></a></li></ul></ul></li><li><a class="is-flex" href="#安装hexo"><span class="mr-2">3</span><span>安装hexo</span></a><ul class="menu-list"><ul class="menu-list"><li><a class="is-flex" href="#安装淘宝镜像cnpm"><span class="mr-2">3.1.1</span><span>安装淘宝镜像cnpm</span></a></li><li><a class="is-flex" href="#正式安装hexo"><span class="mr-2">3.1.2</span><span>正式安装hexo</span></a></li><li><a class="is-flex" href="#生成博客"><span class="mr-2">3.1.3</span><span>生成博客</span></a></li><li><a class="is-flex" href="#新建博文"><span class="mr-2">3.1.4</span><span>新建博文</span></a></li></ul></ul></li><li><a class="is-flex" href="#博客部署"><span class="mr-2">4</span><span>博客部署</span></a><ul class="menu-list"><ul class="menu-list"><li><a class="is-flex" href="#新建仓库"><span class="mr-2">4.1.1</span><span>新建仓库</span></a></li><li><a class="is-flex" href="#安装插件"><span class="mr-2">4.1.2</span><span>安装插件</span></a></li><li><a class="is-flex" href="#配置文件"><span class="mr-2">4.1.3</span><span>配置文件</span></a></li><li><a class="is-flex" href="#部署验证"><span class="mr-2">4.1.4</span><span>部署验证</span></a></li></ul></ul></li></ul></div></div></div><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="" src="/img/avatar.png" alt="李锦波"></figure><p class="title is-size-4 is-block line-height-inherit">李锦波</p><p class="is-size-6 is-block">EIE student &amp; Developer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>GuiLin,GuangXi</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">3</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">2</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">2</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/rumengshanhe" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/rumengshanhe"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex" href="#前言"><span class="mr-2">1</span><span>前言</span></a></li><li><a class="is-flex" href="#工具准备"><span class="mr-2">2</span><span>工具准备</span></a><ul class="menu-list"><ul class="menu-list"><li><a class="is-flex" href="#安装Node-js"><span class="mr-2">2.1.1</span><span>安装Node.js</span></a></li><li><a class="is-flex" href="#安装Git"><span class="mr-2">2.1.2</span><span>安装Git</span></a></li></ul></ul></li><li><a class="is-flex" href="#安装hexo"><span class="mr-2">3</span><span>安装hexo</span></a><ul class="menu-list"><ul class="menu-list"><li><a class="is-flex" href="#安装淘宝镜像cnpm"><span class="mr-2">3.1.1</span><span>安装淘宝镜像cnpm</span></a></li><li><a class="is-flex" href="#正式安装hexo"><span class="mr-2">3.1.2</span><span>正式安装hexo</span></a></li><li><a class="is-flex" href="#生成博客"><span class="mr-2">3.1.3</span><span>生成博客</span></a></li><li><a class="is-flex" href="#新建博文"><span class="mr-2">3.1.4</span><span>新建博文</span></a></li></ul></ul></li><li><a class="is-flex" href="#博客部署"><span class="mr-2">4</span><span>博客部署</span></a><ul class="menu-list"><ul class="menu-list"><li><a class="is-flex" href="#新建仓库"><span class="mr-2">4.1.1</span><span>新建仓库</span></a></li><li><a class="is-flex" href="#安装插件"><span class="mr-2">4.1.2</span><span>安装插件</span></a></li><li><a class="is-flex" href="#配置文件"><span class="mr-2">4.1.3</span><span>配置文件</span></a></li><li><a class="is-flex" href="#部署验证"><span class="mr-2">4.1.4</span><span>部署验证</span></a></li></ul></ul></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Linux%E5%BC%80%E5%8F%91/"><span class="level-start"><span class="level-item">Linux开发</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%8D%9A%E5%AE%A2/"><span class="level-start"><span class="level-item">博客</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-12-04T15:18:17.590Z">2020-12-04</time></p><p class="title is-6"><a class="link-muted" href="/2020/12/04/linux_1/">第一篇--安装Linux虚拟机</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Linux%E5%BC%80%E5%8F%91/">Linux开发</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-26T03:55:09.000Z">2020-04-26</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/26/Windows%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/">Windows下搭建hexo博客总结</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/%E5%8D%9A%E5%AE%A2/">博客</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-25T15:11:16.388Z">2020-04-25</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/25/hello-world/">Hello World</a></p><p class="is-uppercase"></p></div></article></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/archives/2020/12/"><span class="level-start"><span class="level-item">十二月 2020</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo%E6%90%AD%E5%BB%BA/"><span class="tag">hexo搭建</span><span class="tag is-grey-lightest">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo1.png" alt="李锦波的博客" height="28"></a><p class="size-small"><span>&copy; 2020 lijinbo</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download icarus on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://yoursite.com',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><script>window.addEventListener("load", function () {
+            MathJax.Hub.Config({
+                'HTML-CSS': {
+                    matchFontHeight: false
+                },
+                SVG: {
+                    matchFontHeight: false
+                },
+                CommonHTML: {
+                    matchFontHeight: false
+                },
+                tex2jax: {
+                    inlineMath: [
+                        ['$','$'],
+                        ['\\(','\\)']
+                    ]
+                }
+            });
+        });</script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
