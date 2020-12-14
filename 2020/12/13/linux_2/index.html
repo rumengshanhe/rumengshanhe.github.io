@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>第二篇--Linux基础知识 - 李锦波的博客</title><meta description="Linux基础知识一、linux介绍定义linux–是一种类unix操作系统，确切的说是内核(kernel)"><meta property="og:type" content="blog"><meta property="og:title" content="第二篇--Linux基础知识"><meta property="og:url" content="http://yoursite.com/2020/12/13/linux_2/"><meta property="og:site_name" content="李锦波的博客"><meta property="og:description" content="Linux基础知识一、linux介绍定义linux–是一种类unix操作系统，确切的说是内核(kernel)"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/D3295E70B2F74F16A7E1635854FEA7C3?method=download&amp;shareKey=cfd459ab323d1ca94ffca90810c6f719"><meta property="article:published_time" content="2020-12-13T11:31:41.685Z"><meta property="article:modified_time" content="2020-12-14T12:49:23.470Z"><meta property="article:author" content="lijinbo"><meta property="article:tag" content="Linux"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://note.youdao.com/yws/api/personal/file/D3295E70B2F74F16A7E1635854FEA7C3?method=download&amp;shareKey=cfd459ab323d1ca94ffca90810c6f719"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2020/12/13/linux_2/"},"headline":"李锦波的博客","image":[],"datePublished":"2020-12-13T11:31:41.685Z","dateModified":"2020-12-14T12:49:23.470Z","author":{"@type":"Person","name":"lijinbo"},"description":"Linux基础知识一、linux介绍定义linux–是一种类unix操作系统，确切的说是内核(kernel)"}</script><link rel="canonical" href="http://yoursite.com/2020/12/13/linux_2/"><link rel="icon" href="/img/favicon1.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?5e25aa44862d2cc519714e0cba3c84f9";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo1.png" alt="李锦波的博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="My GitHub" href="https://github.com/rumengshanhe"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-12-13T11:31:41.685Z" title="2020-12-13T11:31:41.685Z">2020-12-13</time><span class="level-item"><a class="link-muted" href="/categories/Linux%E5%BC%80%E5%8F%91/">Linux开发</a></span><span class="level-item">11 分钟 读完 (大约 1619 个字)</span><span class="level-item" id="busuanzi_container_page_pv"><i class="far fa-eye"></i>&nbsp;&nbsp;<span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">第二篇--Linux基础知识</h1><div class="content"><h1 id="Linux基础知识"><a href="#Linux基础知识" class="headerlink" title="Linux基础知识"></a><strong><em>Linux</em></strong>基础知识</h1><h2 id="一、linux介绍"><a href="#一、linux介绍" class="headerlink" title="一、linux介绍"></a>一、linux介绍</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p><strong><em>linux</em></strong>–是一种类unix操作系统，确切的说是内核(kernel)<br><img src="https://note.youdao.com/yws/api/personal/file/D3295E70B2F74F16A7E1635854FEA7C3?method=download&shareKey=cfd459ab323d1ca94ffca90810c6f719" alt></p>
+<a id="more"></a>
+
+<h3 id="linux-发行版本"><a href="#linux-发行版本" class="headerlink" title="linux 发行版本"></a>linux 发行版本</h3><ul>
+<li><strong><em>redhat</em></strong> :</li>
+<li><strong><em>fedora</em></strong> : </li>
+<li><strong><em>debian</em></strong> : 最遵循GNU规范操作系统</li>
+<li><strong><em>Ubuntu</em></strong> :</li>
+<li><strong><em>Centos</em></strong> :</li>
+<li><strong><em>Suse linux</em></strong> : 德国著名linux</li>
+<li><strong><em>国内红旗</em></strong></li>
+</ul>
+<hr>
+<h2 id="二、快捷键和命令"><a href="#二、快捷键和命令" class="headerlink" title="二、快捷键和命令"></a>二、快捷键和命令</h2><h3 id="桌面环境"><a href="#桌面环境" class="headerlink" title="桌面环境"></a>桌面环境</h3><h4 id="1-打开终端："><a href="#1-打开终端：" class="headerlink" title="1. 打开终端："></a>1. 打开终端：</h4><blockquote>
+<p>alt + F2 =&gt; gnome-terminal</p>
+</blockquote>
+<h4 id="2-关闭："><a href="#2-关闭：" class="headerlink" title="2. 关闭："></a>2. 关闭：</h4><blockquote>
+<p><code>exit</code></p>
+</blockquote>
+<h4 id="3-在一个终端上打开多个标签"><a href="#3-在一个终端上打开多个标签" class="headerlink" title="3. 在一个终端上打开多个标签"></a>3. 在一个终端上打开多个标签</h4><blockquote>
+<p>ctrl + shift + t</p>
+</blockquote>
+<h4 id="4-标签之间切换"><a href="#4-标签之间切换" class="headerlink" title="4. 标签之间切换"></a>4. 标签之间切换</h4><blockquote>
+<p>alt + num</p>
+</blockquote>
+<h4 id="5-放大字体"><a href="#5-放大字体" class="headerlink" title="5. 放大字体"></a>5. 放大字体</h4><blockquote>
+<p>ctrl + shift + ‘ + ‘</p>
+</blockquote>
+<h4 id="6-缩小字体"><a href="#6-缩小字体" class="headerlink" title="6. 缩小字体"></a>6. 缩小字体</h4><blockquote>
+<p>ctrl + ‘ - ‘</p>
+</blockquote>
+<h4 id="7-最大化窗口"><a href="#7-最大化窗口" class="headerlink" title="7. 最大化窗口"></a>7. 最大化窗口</h4><blockquote>
+<p>alt + F10</p>
+</blockquote>
+<h4 id="8-最小化"><a href="#8-最小化" class="headerlink" title="8. 最小化"></a>8. 最小化</h4><blockquote>
+<p>alt + F9</p>
+</blockquote>
+<h4 id="9-关机"><a href="#9-关机" class="headerlink" title="9. 关机"></a>9. 关机</h4><blockquote>
+<p><code>init 0</code> <br><br><code>shutdown -h now</code> <br></p>
+</blockquote>
+<h4 id="10-重启"><a href="#10-重启" class="headerlink" title="10. 重启"></a>10. 重启</h4><blockquote>
+<p><code>init 6</code> <br><br><code>shutdowm -r now</code> <br><br><code>reboot</code> <br></p>
+</blockquote>
+<h3 id="linux基本命令"><a href="#linux基本命令" class="headerlink" title="linux基本命令"></a>linux基本命令</h3><h4 id="1-分类"><a href="#1-分类" class="headerlink" title="1. 分类"></a>1. 分类</h4><ul>
+<li><p>内部命令：就是shell自带的一些命令，而这些命令是不可以卸载。</p>
+</li>
+<li><p>外部命令：就是用户自己安装的一些命令。而这些命令是有路径。</p>
+<h4 id="2-区分内部命令和外部命令"><a href="#2-区分内部命令和外部命令" class="headerlink" title="2. 区分内部命令和外部命令"></a>2. 区分内部命令和外部命令</h4><blockquote>
+<p><code>type + cmd</code> <br><br>[root@localhost /]# <code>type fdisk</code> <br><br>fdisk is hashed (/sbin/fdisk) //表示外部命令 <br><br>[root@localhost /]# <code>type cd</code> <br><br>cd is a shell builtin    //表示内部命令 <br></p>
+</blockquote>
+</li>
+<li><p>如果命令有别名，查看命令别名</p>
+<blockquote>
+<p>[root@localhost /]# <code>type ls</code> <br><br>ls is aliased to ‘ls –color=tty’ <br><br>[root@localhost /]# <code>which ls</code> <br><br>alias ls=’ls –color=tty’ <br><br>/bin/ls</p>
+</blockquote>
+</li>
+<li><p>输出命令，即使内部命令也是外部命令 <br></p>
+<blockquote>
+<p>[root@localhost /]# <code>echo hello</code> <br><br>hello <br><br>[root@localhost /]# <code>type echo</code> <br><br>echo is a shell builtin <br><br>[root@localhost /]# <code>which echo</code> <br><br>/bin/echo <br></p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h4 id="3-tab键的使用—自动补齐"><a href="#3-tab键的使用—自动补齐" class="headerlink" title="3. tab键的使用—自动补齐"></a>3. <strong><em>tab</em></strong>键的使用—自动补齐</h4><ul>
+<li>文件名自动补齐</li>
+<li>命令自动补齐</li>
+</ul>
+<blockquote>
+<p>如果按一次tab键没有反应，有下列情况：<br><br>    1、 没有该文件或者命令<br><br>    2、 可能匹配多个文件或者命令 则再按一次。</p>
+</blockquote>
+<hr>
+<h4 id="4-man—帮助命令"><a href="#4-man—帮助命令" class="headerlink" title="4. man—帮助命令"></a>4. <strong><em>man</em></strong>—帮助命令</h4><p>man命令是Linux下的帮助指令，通过man指令可以查看Linux中的指令帮助、配置文件帮助和编程帮助等信息。</p>
+<ul>
+<li>Format&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<code>man + cmd</code><br><blockquote>
+<p>案例&nbsp;:&nbsp;<code>man 7 man</code> <br></p>
+</blockquote>
+</li>
+<li>Option:       </li>
+<li>a：在所有的man帮助手册中搜索；<br></li>
+<li>f：等价于whatis指令，显示给定关键字的简短描述信息；<br></li>
+<li>P：指定内容时使用分页程序；<br></li>
+<li>M：指定man手册搜索的路径。<br></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数（代号）</th>
+<th>含义</th>
+<th>代表内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Commands</td>
+<td>表示基本命令</td>
+</tr>
+<tr>
+<td>2</td>
+<td>System calls</td>
+<td>表示kernel说明信息</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Library calls</td>
+<td>表示C库或者第三方图形库</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Special files</td>
+<td>表示设备类文件说明（字符设备、块设备）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>File formats and conventions</td>
+<td>表示文件格式说明文档</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Games</td>
+<td>表示游戏开发相关说明文档</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Conventions and miscellaneous</td>
+<td>表示网络相关说明文档</td>
+</tr>
+<tr>
+<td>8</td>
+<td>System management commands</td>
+<td>表示管理员命令</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Kernel routines</td>
+<td>内核相关说明文档</td>
+</tr>
+<tr>
+<td>#### 5. <strong><em>help</em></strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>help 是非常简单的命令，而且不经常使用。对于外部命令，可以使用<code>cmd --help</code>来获取帮助。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>案例：<code>ls --help</code><br></p>
+</blockquote>
+<p>对于内部命令，可以直接使用<code>help cmd</code>格式还获取命令帮助。</p>
+<blockquote>
+<p>案例： <code>help cd</code></p>
+</blockquote>
+<h4 id="6-info"><a href="#6-info" class="headerlink" title="6. info"></a>6. <strong><em>info</em></strong></h4><p>info命令是Linux下info格式的帮助指令。</p>
+<blockquote>
+<p>案例：<code>info ls</code><br></p>
+</blockquote>
+<ul>
+<li>Option：<br></li>
+<li>d：添加包含info格式帮助文档的目录；<br></li>
+<li>f：指定要读取的info格式的帮助文档；<br></li>
+<li>n：指定首先访问的info帮助文件的节点；<br></li>
+<li>o：输出被选择的节点内容到指定文件。<br></li>
+</ul>
+<h4 id="7-ls"><a href="#7-ls" class="headerlink" title="7. ls"></a>7. <strong><em>ls</em></strong></h4><p>显示当前工作目录的所有信息</p>
+<ul>
+<li><p>Format:<br></p>
+<blockquote>
+<p><code>ls [OPTION] [FILE]</code> <br></p>
+</blockquote>
+</li>
+<li><p>Option :<br><br>  -a : 表示显示所有信息(包括 . .. 和隐藏文件或者目录) <br><br>  . &nbsp;:&nbsp; 表示当前工作目录 <br><br>  ..&nbsp; :&nbsp; 表示上级目录 <br><br>  .filename &nbsp;: &nbsp;表示隐藏文件<br><br>  -i &nbsp;:&nbsp; 显示文件索引号<br>计算机识别文件的唯一标识是inode节点号（文件索引号）<br></p>
+<pre><code>-l &amp;nbsp;:&amp;nbsp; 表示长格式显示文件信息&lt;/br&gt;</code></pre><blockquote>
+<p>案例：[root@localhost test]# ls -l<br></p>
+<pre><code>总计 16&lt;/br&gt;
+-rwxr-xr-x 1 root root 4729 11-29 20:18 a.out&lt;/br&gt;
+-rw-r--r-- 1 root root    6 11-29 20:13 a.txt&lt;/br&gt;
+-rw-r--r-- 1 root root   78 11-29 20:18 hello.c&lt;/br&gt;</code></pre></blockquote>
+</li>
+<li><p>第一列：表示文件类型和权限<br><br>  第一个字符：表示文件类型<br></p>
+<blockquote>
+<p>  -&nbsp;: 表示普通文件<br><br>  d : 表示目录<br><br>  c : 表示字符设备类文家<br><br>  b : 表示块设备文件<br><br>  l : 表示链接文件<br><br>  p : 表示管道文件<br><br>  s : 表示套接子文件 <br></p>
+</blockquote>
+<pre><code>第二到第十位表示权限&lt;/br&gt;
+r : 表示只读&lt;/br&gt;
+w : 表示只写&lt;/br&gt;
+x : 表示可执行&lt;/br&gt;
+- : 表示无权限&lt;/br&gt;
+三位为一组。共三组&lt;/br&gt;
+第一组：表示属主权限&lt;/br&gt;
+第二组：表示属组权限&lt;/br&gt;
+第三组：表示其他用户权限&lt;/br&gt;</code></pre></li>
+<li><p>第二列：表示文件硬连接数<br></p>
+</li>
+<li><p>第三列：表示文件属主 文件拥有者<br></p>
+</li>
+<li><p>第四列：表示文件属组 文件拥有组<br></p>
+</li>
+<li><p>第五列：表示文件大小 字节<br></p>
+</li>
+<li><p>第六列：表示时间<br></p>
+</li>
+<li><p>第七列：表示文件名<br></p>
+</li>
+</ul>
+<hr>
+<h2 id="三、系统"><a href="#三、系统" class="headerlink" title="三、系统"></a>三、系统</h2><h3 id="1-文件系统"><a href="#1-文件系统" class="headerlink" title="1. 文件系统"></a>1. 文件系统</h3><p>在linux下，所有的设备皆文件，所有的文件都是从根开始。</p>
+<h4 id="文件目录详解"><a href="#文件目录详解" class="headerlink" title="文件目录详解"></a>文件目录详解</h4><ul>
+<li>/ : 表示根</li>
+<li>etc ： 表示配置文件目录</li>
+<li>sbin ： 表示存放管理员命令可执行文件目录</li>
+<li>bin ： 表示基本命令目录</li>
+<li>home ： 表示普通用户家目录</li>
+<li>media ： 表示挂在U盘、光盘目录</li>
+<li>opt : 表示扩展包存放路径</li>
+<li>proc ：通过proc可以得到系统的信息，并可以改变内核的某些参数<br><br>  <code>cat /proc/cpuinfo</code> ： 查看CPU信息<br><br>  <code>cat /proc/meminfo</code> ： 查看内存大小</li>
+<li>sys  ： 表示虚拟目录</li>
+<li>dev ： 表示设备类目录</li>
+<li>lib ： 表示库目录<br>  动态库： .so<br>  静态库： .a</li>
+<li>mnt : 表示挂载目录</li>
+<li>root ：表示管理员家目录<br><br>  /root/Desktop/ ： 表示桌面</li>
+</ul>
+<hr>
+<h3 id="2-查看系统"><a href="#2-查看系统" class="headerlink" title="2. 查看系统"></a>2. 查看系统</h3><pre><code>[root@localhost /]# `lsb_release -a`
+LSB Version:
+:core-3.1-ia32:core-3.1-noarch:graphics-3.1-ia32:graphics-3.1-noarch
+Distributor ID: RedHatEnterpriseServer 系统名
+Description:    Red Hat Enterprise Linux Server release 5.5 (Tikanga)
+Release:        5.5 表示系统版本
+Codename:       Tikanga
+
+[root@localhost /]# uname -a
+Linux localhost.localdomain 2.6.18-194.el5 #1 SMP Tue Mar 16 21:52:43 EDT
+2010 i686 i686 i386 GNU/Linux
+
+Linux  表示内核
+localhost.localdomain ：表示主机名
+2.6.18-194.el5    ：表示内核版本
+#1 SMP Tue Mar 16 21:52:43 EDT 2010 表示发布时间
+i686 i686 i386 ：表示系统位数
+GNU/Linux        ：表示操作系统名
+
+内核版本
+[root@localhost /]# uname -r
+2.6.18-194.el5
+表示x.y.z
+    x : 表示主版本号，除非系统架构发生改变
+    y : 表示次版本号 
+        奇数：测试版本
+        偶数：稳定版本
+    z : 表示释放版本
+系统位数
+[root@localhost /]# uname -m
+i686    ：表示32位系统
+x86_64  : 表示64位系统</code></pre><hr>
+</div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Linux/">Linux</a></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><div class="social-share"></div><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/qrcode2.JPG" alt="支付宝"></span></a><a class="button donate" href="/" style="background-color:rgba(255,128,62,.87);border-color:transparent;color:white;" target="_blank" rel="noopener"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>送我杯咖啡</span></a><a class="button is-danger donate" href="/" target="_blank" rel="noopener"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/qrcode.JPG" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/12/04/linux_1/"><span class="level-item">第一篇--安装Linux虚拟机</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread' ,
+            notify: undefined,
+            verify: undefined,
+            appId: 'uaJjYDpaCQ0RHCnC5Lh5VOAO-gzGzoHsz',
+            appKey: '9Sa7CfJYO8gWvMowt7KaPHUG',
+            placeholder: 'say something...',
+            avatar: 'retro',
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            visitor: false,
+            highlight: true,
+            recordIP: false
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex" href="#Linux基础知识"><span class="mr-2">1</span><span>Linux基础知识</span></a><ul class="menu-list"><li><a class="is-flex" href="#一、linux介绍"><span class="mr-2">1.1</span><span>一、linux介绍</span></a><ul class="menu-list"><li><a class="is-flex" href="#定义"><span class="mr-2">1.1.1</span><span>定义</span></a></li><li><a class="is-flex" href="#linux-发行版本"><span class="mr-2">1.1.2</span><span>linux 发行版本</span></a></li></ul></li><li><a class="is-flex" href="#二、快捷键和命令"><span class="mr-2">1.2</span><span>二、快捷键和命令</span></a><ul class="menu-list"><li><a class="is-flex" href="#10-重启"><span class="mr-2">1.2.1</span><span>10. 重启</span></a></li><li><a class="is-flex" href="#7-ls"><span class="mr-2">1.2.2</span><span>7. ls</span></a></li></ul></li><li><a class="is-flex" href="#三、系统"><span class="mr-2">1.3</span><span>三、系统</span></a><ul class="menu-list"><li><a class="is-flex" href="#文件目录详解"><span class="mr-2">1.3.1</span><span>文件目录详解</span></a></li><li><a class="is-flex" href="#2-查看系统"><span class="mr-2">1.3.2</span><span>2. 查看系统</span></a></li></ul></li></ul></li></ul></div></div></div><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="" src="/img/avatar.png" alt="李锦波"></figure><p class="title is-size-4 is-block line-height-inherit">李锦波</p><p class="is-size-6 is-block">a EE student &amp; Developer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>GuiLin,GuangXi</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">4</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">2</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">2</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/rumengshanhe" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/rumengshanhe"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex" href="#Linux基础知识"><span class="mr-2">1</span><span>Linux基础知识</span></a><ul class="menu-list"><li><a class="is-flex" href="#一、linux介绍"><span class="mr-2">1.1</span><span>一、linux介绍</span></a><ul class="menu-list"><li><a class="is-flex" href="#定义"><span class="mr-2">1.1.1</span><span>定义</span></a></li><li><a class="is-flex" href="#linux-发行版本"><span class="mr-2">1.1.2</span><span>linux 发行版本</span></a></li></ul></li><li><a class="is-flex" href="#二、快捷键和命令"><span class="mr-2">1.2</span><span>二、快捷键和命令</span></a><ul class="menu-list"><li><a class="is-flex" href="#10-重启"><span class="mr-2">1.2.1</span><span>10. 重启</span></a></li><li><a class="is-flex" href="#7-ls"><span class="mr-2">1.2.2</span><span>7. ls</span></a></li></ul></li><li><a class="is-flex" href="#三、系统"><span class="mr-2">1.3</span><span>三、系统</span></a><ul class="menu-list"><li><a class="is-flex" href="#文件目录详解"><span class="mr-2">1.3.1</span><span>文件目录详解</span></a></li><li><a class="is-flex" href="#2-查看系统"><span class="mr-2">1.3.2</span><span>2. 查看系统</span></a></li></ul></li></ul></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Linux%E5%BC%80%E5%8F%91/"><span class="level-start"><span class="level-item">Linux开发</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%8D%9A%E5%AE%A2/"><span class="level-start"><span class="level-item">博客</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2020-12-13T11:31:41.685Z">2020-12-13</time></p><p class="title is-6"><a class="link-muted" href="/2020/12/13/linux_2/">第二篇--Linux基础知识</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Linux%E5%BC%80%E5%8F%91/">Linux开发</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-12-04T15:18:17.590Z">2020-12-04</time></p><p class="title is-6"><a class="link-muted" href="/2020/12/04/linux_1/">第一篇--安装Linux虚拟机</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Linux%E5%BC%80%E5%8F%91/">Linux开发</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-26T03:55:09.000Z">2020-04-26</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/26/Windows%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2%E6%80%BB%E7%BB%93/">Windows下搭建hexo博客总结</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/%E5%8D%9A%E5%AE%A2/">博客</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-04-25T15:11:16.388Z">2020-04-25</time></p><p class="title is-6"><a class="link-muted" href="/2020/04/25/hello-world/">Hello World</a></p><p class="is-uppercase"></p></div></article></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/archives/2020/12/"><span class="level-start"><span class="level-item">十二月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo%E6%90%AD%E5%BB%BA/"><span class="tag">hexo搭建</span><span class="tag is-grey-lightest">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo1.png" alt="李锦波的博客" height="28"></a><p class="size-small"><span>&copy; 2020 lijinbo</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download icarus on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://yoursite.com',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><script>window.addEventListener("load", function () {
+            MathJax.Hub.Config({
+                'HTML-CSS': {
+                    matchFontHeight: false
+                },
+                SVG: {
+                    matchFontHeight: false
+                },
+                CommonHTML: {
+                    matchFontHeight: false
+                },
+                tex2jax: {
+                    inlineMath: [
+                        ['$','$'],
+                        ['\\(','\\)']
+                    ]
+                }
+            });
+        });</script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
