@@ -5,45 +5,8 @@
             hm.src = "//hm.baidu.com/hm.js?5e25aa44862d2cc519714e0cba3c84f9";
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
-        })();</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo1.png" alt="李锦波的博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="My GitHub" href="https://github.com/rumengshanhe"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags">标签</a></li><li class="is-active"><a href="#" aria-current="page">Linux</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2021-04-10T10:33:00.186Z" title="2021-04-10T10:33:00.186Z">2021-04-10</time><span class="level-item"><a class="link-muted" href="/categories/Linux%E5%BC%80%E5%8F%91/">Linux开发</a></span><span class="level-item">2 分钟 读完 (大约 366 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/10/linux_5/">第五篇  Vim 用法小结</a></h1><div class="content"><p><strong><em>vim</em></strong> 是一款文本编辑器，同时也是一款程序开发利器。<br><br>在命令行下可以用 <code>vim -v</code> 查看 <strong><em>vim</em></strong> 版本；用 <code>vim filename</code> 在 <strong><em>vim</em></strong> 中打开指定文件，若文件不存在则会自动创建。<strong><em>vim</em></strong> 有3种模式 —— 一般模式、插入模式和命令行模式，直接打开文件时默认进入一般模式，按 <strong>ESC</strong> 进入命令行模式，按 <strong>i</strong> 键等进入插入模式。</p>
-<p>![][pic1]</p>
-<hr>
-<h2 id="一般模式"><a href="#一般模式" class="headerlink" title="一般模式"></a>一般模式</h2><h3 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h3><ul>
-<li><strong>dd</strong>    :    表示删除一行</li>
-<li><strong>ndd</strong>    :    表示删除n行</li>
-<li><strong>u</strong>        :    表示撤销上次操作</li>
-<li><strong>dG</strong>    :    表示从当前行删除到文件结尾</li>
-<li><strong>dgg</strong>    :    表示从当前行删除到文件开头</li>
-<li><strong>d^</strong>    :    表示删除到行首</li>
-<li><strong>d$</strong>    :    表示删除到行尾</li>
-<li><strong>dw</strong>    :    表示删除一个单词 必须放在单词第一个字符处</li>
-<li><strong>ndw</strong>   :     表示删除n个单词</li>
-<li><strong>daw</strong>   :    表示在任意位置删除一个单词</li>
-</ul>
-<h3 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h3><ul>
-<li><strong>yy</strong>    :    表示复制一行</li>
-<li><strong>nyy</strong>    :    表示复制n行</li>
-<li><strong>p</strong>     :    表示粘贴</li>
-</ul>
-<h3 id="可视化操作"><a href="#可视化操作" class="headerlink" title="可视化操作"></a>可视化操作</h3><ul>
-<li><strong>v + 方向键 + y + p</strong> ：可视化字符</li>
-<li><strong>shift + v</strong>         ：可视化行</li>
-<li><strong>ctrl + v</strong>          ： 可视化块</li>
-</ul>
-<h3 id="移位"><a href="#移位" class="headerlink" title="移位"></a>移位</h3><pre><code>h : 左移
-j : 下移
-k : 上移
-l : 右移
-
-gg     : 移动到文件开头
-G    : 移动到文件结尾
-ngg : 移动到n行
-^    : 行首
-$    : 行尾
-H    : 移动屏幕开始
-L    ：移动屏幕结尾
-M    ：移动屏幕中键
-50% : 表示文件中间</code></pre></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2021-01-24T13:39:04.253Z" title="2021-01-24T13:39:04.253Z">2021-01-24</time><span class="level-item"><a class="link-muted" href="/categories/C/">C++</a></span><span class="level-item">5 分钟 读完 (大约 741 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/01/24/c++1/">Linux 下 C++ 的编译</a></h1><div class="content"><p>在啃了几十页 <strong><em>《 C++ Primer 》</em></strong> 之后，决定对 <strong><em>C++</em></strong> 的基本语法和运用写一个小实验，编译环境是我的 <strong><em>Red Hat 5 Linux</em></strong>虚拟机。</p>
+        })();</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo1.png" alt="李锦波的博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="My GitHub" href="https://github.com/rumengshanhe"><i class="fab fa-github"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags">标签</a></li><li class="is-active"><a href="#" aria-current="page">Linux</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2021-04-10T10:33:00.186Z" title="2021-04-10T10:33:00.186Z">2021-04-10</time><span class="level-item"><a class="link-muted" href="/categories/Linux%E5%BC%80%E5%8F%91/">Linux开发</a></span><span class="level-item">6 分钟 读完 (大约 839 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/10/linux_5/">第五篇  Vim 用法小结</a></h1><div class="content"><p><strong><em>vim</em></strong> 是一款文本编辑器，同时也是一款程序开发利器。<br><br>在命令行下可以用 <code>vim -v</code> 查看 <strong><em>vim</em></strong> 版本；用 <code>vim filename</code> 在 <strong><em>vim</em></strong> 中打开指定文件，若文件不存在则会自动创建。<strong><em>vim</em></strong> 有3种模式 —— 一般模式、插入模式和命令行模式，直接打开文件时默认进入一般模式，按 <strong>ESC</strong> 进入命令行模式，按 <strong>i</strong> 键等进入插入模式。</p>
+<p><img src="http://ww1.sinaimg.cn/large/006HPlntgy1gpevsuaimkg30sg0k40w3.jpg" alt></p></div><a class="article-more button is-small size-small" href="/2021/04/10/linux_5/#more">阅读更多</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2021-01-24T13:39:04.253Z" title="2021-01-24T13:39:04.253Z">2021-01-24</time><span class="level-item"><a class="link-muted" href="/categories/C/">C++</a></span><span class="level-item">5 分钟 读完 (大约 741 个字)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/01/24/c++1/">Linux 下 C++ 的编译</a></h1><div class="content"><p>在啃了几十页 <strong><em>《 C++ Primer 》</em></strong> 之后，决定对 <strong><em>C++</em></strong> 的基本语法和运用写一个小实验，编译环境是我的 <strong><em>Red Hat 5 Linux</em></strong>虚拟机。</p>
 <h1 id="Helloworld"><a href="#Helloworld" class="headerlink" title="Helloworld"></a>Helloworld</h1><p>下面是hello.cpp源代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;***hello.cpp***&#x2F;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])&#123;</span><br><span class="line">    std::cout &lt;&lt; &quot;Hello World!&quot; &lt;&lt; std::endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
