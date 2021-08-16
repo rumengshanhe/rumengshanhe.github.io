@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.0"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>第六篇  Shell 编程学习小结 - 李锦波的博客</title><meta description="shell 是用于侦听用户输入指令的工具，其接受到这些指令，然后执行相应的操作；shell是一种计算语言，主要用于脚本维护。"><meta property="og:type" content="blog"><meta property="og:title" content="第六篇  Shell 编程学习小结"><meta property="og:url" content="http://yoursite.com/2021/04/11/shell_1/"><meta property="og:site_name" content="李锦波的博客"><meta property="og:description" content="shell 是用于侦听用户输入指令的工具，其接受到这些指令，然后执行相应的操作；shell是一种计算语言，主要用于脚本维护。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://ww1.sinaimg.cn/large/006HPlntgy1gpqhiifwfhj30du08bgmt.jpg"><meta property="article:published_time" content="2021-04-11T06:38:46.263Z"><meta property="article:modified_time" content="2021-04-20T12:43:07.063Z"><meta property="article:author" content="lijinbo"><meta property="article:tag" content="Linux"><meta property="article:tag" content="Shell"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="http://ww1.sinaimg.cn/large/006HPlntgy1gpqhiifwfhj30du08bgmt.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://yoursite.com/2021/04/11/shell_1/"},"headline":"李锦波的博客","image":["http://ww1.sinaimg.cn/large/006HPlntgy1gpqhiifwfhj30du08bgmt.jpg"],"datePublished":"2021-04-11T06:38:46.263Z","dateModified":"2021-04-20T12:43:07.063Z","author":{"@type":"Person","name":"lijinbo"},"description":"shell 是用于侦听用户输入指令的工具，其接受到这些指令，然后执行相应的操作；shell是一种计算语言，主要用于脚本维护。"}</script><link rel="canonical" href="http://yoursite.com/2021/04/11/shell_1/"><link rel="icon" href="/img/favicon1.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?5e25aa44862d2cc519714e0cba3c84f9";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo1.png" alt="李锦波的博客" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="My GitHub" href="https://github.com/rumengshanhe"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2021-04-11T06:38:46.263Z" title="2021-04-11T06:38:46.263Z">2021-04-11</time><span class="level-item"><a class="link-muted" href="/categories/Linux%E5%BC%80%E5%8F%91/">Linux开发</a><span> / </span><a class="link-muted" href="/categories/Shell%E7%BC%96%E7%A8%8B/">Shell编程</a></span><span class="level-item">5 分钟 读完 (大约 778 个字)</span><span class="level-item" id="busuanzi_container_page_pv"><i class="far fa-eye"></i>&nbsp;&nbsp;<span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">第六篇  Shell 编程学习小结</h1><div class="content"><p><strong><em>shell</em></strong> 是用于侦听用户输入指令的工具，其接受到这些指令，然后执行相应的操作；shell是一种计算语言，主要用于脚本维护。 <br></p>
+<p><img src="http://ww1.sinaimg.cn/large/006HPlntgy1gpqhiifwfhj30du08bgmt.jpg" alt></p>
+<a id="more"></a>
+
+<p>我们可以通过以下方式查看当前PC支持的shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# ls &#x2F;bin&#x2F;*sh</span><br><span class="line">&#x2F;bin&#x2F;bash  &#x2F;bin&#x2F;csh  &#x2F;bin&#x2F;ksh    &#x2F;bin&#x2F;sh  &#x2F;bin&#x2F;tcsh</span><br></pre></td></tr></table></figure>
+<p>查看当前系统所使用shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost test]# echo $SHELL</span><br><span class="line">&#x2F;bin&#x2F;bash</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="shell-开发流程"><a href="#shell-开发流程" class="headerlink" title="shell 开发流程"></a><strong><em>shell</em></strong> 开发流程</h1><h2 id="创建shell脚本文件"><a href="#创建shell脚本文件" class="headerlink" title="创建shell脚本文件"></a>创建shell脚本文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch 01_hello.sh</span><br></pre></td></tr></table></figure>
+<h2 id="打开脚本文件"><a href="#打开脚本文件" class="headerlink" title="打开脚本文件"></a>打开脚本文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim 01_hello.sh</span><br></pre></td></tr></table></figure>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash		&#x2F;&#x2F;表示以下所有的所有的指令都通过bash来解析</span><br><span class="line">echo &quot;hello world&quot;	&#x2F;&#x2F;表示输出语句</span><br></pre></td></tr></table></figure>
+<h2 id="指定可执行权限"><a href="#指定可执行权限" class="headerlink" title="指定可执行权限"></a>指定可执行权限</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 01_hello.sh</span><br></pre></td></tr></table></figure>
+<h2 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;01_hello.sh</span><br></pre></td></tr></table></figure>
+<h1 id="shell-环境"><a href="#shell-环境" class="headerlink" title="shell 环境"></a><strong><em>shell</em></strong> 环境</h1><p>shell的变量是没有类型的，但是有环境变量和局部变量之分</p>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>即全局变量，可以被当前shell或者子shell访问；<br></p>
+<h3 id="查看环境变量"><a href="#查看环境变量" class="headerlink" title="查看环境变量"></a>查看环境变量</h3><p><code>env</code></p>
+<h3 id="定义环境变量"><a href="#定义环境变量" class="headerlink" title="定义环境变量"></a>定义环境变量</h3><p><code>export a=hello</code></p>
+<h3 id="访问变量值"><a href="#访问变量值" class="headerlink" title="访问变量值"></a>访问变量值</h3><p><code>${variable_name}</code></p>
+<h2 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h2><p>局部变量只能被当前的shell所访问</p>
+<h3 id="查看局部变量"><a href="#查看局部变量" class="headerlink" title="查看局部变量"></a>查看局部变量</h3><p><code>set</code></p>
+<h3 id="定义局部变量"><a href="#定义局部变量" class="headerlink" title="定义局部变量"></a>定义局部变量</h3><p><code>b=123</code></p>
+<h3 id="访问变量"><a href="#访问变量" class="headerlink" title="访问变量"></a>访问变量</h3><p><code>${variable_name}</code></p>
+<h2 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h2><p><code>+ - * / %</code></p>
+<h3 id="format"><a href="#format" class="headerlink" title="format"></a>format</h3><p><code>$[$variable_name + $variable_name]</code></p>
+<h1 id="shell-语句格式"><a href="#shell-语句格式" class="headerlink" title="shell 语句格式"></a><strong><em>shell</em></strong> 语句格式</h1><h2 id="输出语句"><a href="#输出语句" class="headerlink" title="输出语句"></a>输出语句</h2><h3 id="format-1"><a href="#format-1" class="headerlink" title="format"></a>format</h3><p><code>echo [option] &quot;hello&quot;</code></p>
+<h3 id="option"><a href="#option" class="headerlink" title="option"></a>option</h3><ul>
+<li><strong>-n</strong> : 表示不换行</li>
+</ul>
+<h2 id="输入语句"><a href="#输入语句" class="headerlink" title="输入语句"></a>输入语句</h2><h3 id="format-2"><a href="#format-2" class="headerlink" title="format"></a>format</h3><p><code>read [option] variable_name</code></p>
+<h3 id="option-1"><a href="#option-1" class="headerlink" title="option"></a>option</h3><ul>
+<li><strong>-p</strong> : 表示显示提示信息</li>
+<li><strong>-s</strong> : 表示以非显式方式接受输入</li>
+<li><strong>-n</strong> : 表示指定接受字符个数</li>
+<li><strong>-t</strong> : 表示超时时间（秒）</li>
+</ul>
+<h2 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a><strong>if</strong> 语句</h2><h3 id="format-3"><a href="#format-3" class="headerlink" title="format"></a>format</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if [ condition ]</span><br><span class="line">then</span><br><span class="line">	operation</span><br><span class="line">else</span><br><span class="line">	operation</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h3 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">if [ condition ]</span><br><span class="line">then</span><br><span class="line">	if [ condition ]</span><br><span class="line">	then</span><br><span class="line">		....</span><br><span class="line">	else</span><br><span class="line">		....</span><br><span class="line">	fi</span><br><span class="line">	....</span><br><span class="line">	elif [ condition ]</span><br><span class="line">	then</span><br><span class="line">		....</span><br><span class="line">	else</span><br><span class="line">		....</span><br><span class="line">	fi</span><br><span class="line">....</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h3 id="配合其它命令"><a href="#配合其它命令" class="headerlink" title="配合其它命令"></a>配合其它命令</h3><h4 id="format-4"><a href="#format-4" class="headerlink" title="format"></a>format</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if cmd</span><br><span class="line">then</span><br><span class="line">	cmd</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if mount 192.168.0.254:&#x2F;example &amp;&gt; &#x2F;dev&#x2F;null</span><br><span class="line">then</span><br><span class="line">	echo &quot;Successfully mounted&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h2 id="case-语句"><a href="#case-语句" class="headerlink" title="case 语句"></a><strong>case</strong> 语句</h2><h3 id="format-5"><a href="#format-5" class="headerlink" title="format"></a>format</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">case $variablename in</span><br><span class="line">	value1)</span><br><span class="line">		cmd</span><br><span class="line">		;;</span><br><span class="line">	value2)</span><br><span class="line">		cmd</span><br><span class="line">		;;</span><br><span class="line">		....</span><br><span class="line">	*)</span><br><span class="line">		cmd_fault</span><br><span class="line">		;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<h2 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h2><h3 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h3><table>
+<thead>
+<tr>
+<th>-</th>
+<th>数学表示</th>
+<th>shell格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>大于</td>
+<td>&gt;</td>
+<td>-gt</td>
+</tr>
+<tr>
+<td>小于</td>
+<td>&lt;</td>
+<td>-lt</td>
+</tr>
+<tr>
+<td>等于</td>
+<td>=</td>
+<td>-eq</td>
+</tr>
+<tr>
+<td>大于等于</td>
+<td>&gt;=</td>
+<td>-ge</td>
+</tr>
+<tr>
+<td>小于等于</td>
+<td>&lt;=</td>
+<td>-le</td>
+</tr>
+<tr>
+<td>### 逻辑运算符</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>-</td>
+<td>格式一</td>
+<td>格式二</td>
+</tr>
+<tr>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>与</td>
+<td>&amp;&amp;</td>
+<td>-a</td>
+</tr>
+<tr>
+<td>或</td>
+<td>||</td>
+<td>-o</td>
+</tr>
+<tr>
+<td>非</td>
+<td>!</td>
+<td></td>
+</tr>
+<tr>
+<td>#### format</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[ con1 &amp;&amp; con2 &amp;&amp; ... &amp;&amp; ... ]]        &#x2F;&#x2F;格式1</span><br><span class="line">[ con1 ] &amp;&amp; [ con2 ] &amp;&amp; ... &amp;&amp; [ ... ]  &#x2F;&#x2F;格式2</span><br><span class="line">[ con1 -a con2 -a ... -a ... ]			 &#x2F;&#x2F;格式3</span><br></pre></td></tr></table></figure></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>### 数学计算格式</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>$[$var1 * $var2 + 1]</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h3><table>
+<thead>
+<tr>
+<th>格式</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-n STRING</td>
+<td>判断字符串是非空</td>
+</tr>
+<tr>
+<td>-z STRING</td>
+<td>判断字符串为空</td>
+</tr>
+<tr>
+<td>STRING1 = STRING2</td>
+<td>判断相等</td>
+</tr>
+<tr>
+<td>STRING1 != STRING2</td>
+<td>判断不等</td>
+</tr>
+</tbody></table>
+<h2 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a><strong>for</strong> 循环</h2><h3 id="format-6"><a href="#format-6" class="headerlink" title="format"></a>format</h3><p><strong>for</strong>循环主要有以下两种格式<br>一种是C语言式的for循环</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for ((i &#x3D; 0; i &lt; 100; ++i))</span><br><span class="line">do</span><br><span class="line">	cmd</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>还有一种是for_in式的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for varname in &#96;seq 1 1 100&#96; &#x2F;&#x2F;第一个1是初始值，第二个1是步进值，第三个是终值</span><br><span class="line">do</span><br><span class="line">	cmd</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<h2 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a><strong>while</strong> 循环</h2><h3 id="format-7"><a href="#format-7" class="headerlink" title="format"></a>format</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">i &#x3D; 0 	&#x2F;&#x2F;初始化</span><br><span class="line">while [ condition ]  	&#x2F;&#x2F;条件部分</span><br><span class="line">do</span><br><span class="line">	cmd		&#x2F;&#x2F;循环体</span><br><span class="line">	let i++ 	&#x2F;&#x2F;自增或者自减</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h3 id="死循环"><a href="#死循环" class="headerlink" title="死循环"></a>死循环</h3><p>死循环要配合延迟函数和退出条件使用</p>
+<h4 id="sleep"><a href="#sleep" class="headerlink" title="sleep"></a>sleep</h4><p>用于表示延迟以秒为单位的时间</p>
+<h4 id="usleep"><a href="#usleep" class="headerlink" title="usleep"></a>usleep</h4><p>用于表示延迟以微秒为单位的时间</p>
+<h4 id="break"><a href="#break" class="headerlink" title="break"></a>break</h4><p>退出整个循环，只在当前循环中起作用，不可以跨层退出</p>
+<h4 id="continue"><a href="#continue" class="headerlink" title="continue"></a>continue</h4><p>跳过本次循环，进入下次循环，只对当前循环起作用，不可以深层退出</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="format-8"><a href="#format-8" class="headerlink" title="format"></a>format</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function funname()</span><br><span class="line">&#123;</span><br><span class="line">	body</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">funname()</span><br><span class="line">&#123;</span><br><span class="line">	bbody</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p><br><br><br><br><br><br></p>
+<ul>
+<li>end</li>
+</ul>
+</div><div class="article-tags size-small is-uppercase mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Linux/">Linux</a><a class="link-muted mr-2" rel="tag" href="/tags/Shell/">Shell</a></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><div class="social-share"></div><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button is-info donate"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/qrcode2.JPG" alt="支付宝"></span></a><a class="button donate" href="/" style="background-color:rgba(255,128,62,.87);border-color:transparent;color:white;" target="_blank" rel="noopener"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>送我杯咖啡</span></a><a class="button is-danger donate" href="/" target="_blank" rel="noopener"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a><a class="button is-success donate"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/qrcode.JPG" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/08/16/mos/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">三极管与MOS管</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/04/10/c++2/"><span class="level-item">const 不同用法的区别</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div class="content" id="valine-thread"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js"></script><script>new Valine({
+            el: '#valine-thread' ,
+            notify: undefined,
+            verify: undefined,
+            appId: 'uaJjYDpaCQ0RHCnC5Lh5VOAO-gzGzoHsz',
+            appKey: '9Sa7CfJYO8gWvMowt7KaPHUG',
+            placeholder: 'say something...',
+            avatar: 'retro',
+            avatarForce: false,
+            meta: ["nick","mail","link"],
+            pageSize: 10,
+            visitor: false,
+            highlight: true,
+            recordIP: false
+        });</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex" href="#shell-开发流程"><span class="mr-2">1</span><span>shell 开发流程</span></a><ul class="menu-list"><li><a class="is-flex" href="#创建shell脚本文件"><span class="mr-2">1.1</span><span>创建shell脚本文件</span></a></li><li><a class="is-flex" href="#打开脚本文件"><span class="mr-2">1.2</span><span>打开脚本文件</span></a></li><li><a class="is-flex" href="#实现"><span class="mr-2">1.3</span><span>实现</span></a></li><li><a class="is-flex" href="#指定可执行权限"><span class="mr-2">1.4</span><span>指定可执行权限</span></a></li><li><a class="is-flex" href="#执行"><span class="mr-2">1.5</span><span>执行</span></a></li></ul></li><li><a class="is-flex" href="#shell-环境"><span class="mr-2">2</span><span>shell 环境</span></a><ul class="menu-list"><li><a class="is-flex" href="#环境变量"><span class="mr-2">2.1</span><span>环境变量</span></a><ul class="menu-list"><li><a class="is-flex" href="#查看环境变量"><span class="mr-2">2.1.1</span><span>查看环境变量</span></a></li><li><a class="is-flex" href="#定义环境变量"><span class="mr-2">2.1.2</span><span>定义环境变量</span></a></li><li><a class="is-flex" href="#访问变量值"><span class="mr-2">2.1.3</span><span>访问变量值</span></a></li></ul></li><li><a class="is-flex" href="#局部变量"><span class="mr-2">2.2</span><span>局部变量</span></a><ul class="menu-list"><li><a class="is-flex" href="#查看局部变量"><span class="mr-2">2.2.1</span><span>查看局部变量</span></a></li><li><a class="is-flex" href="#定义局部变量"><span class="mr-2">2.2.2</span><span>定义局部变量</span></a></li><li><a class="is-flex" href="#访问变量"><span class="mr-2">2.2.3</span><span>访问变量</span></a></li></ul></li><li><a class="is-flex" href="#算术运算符"><span class="mr-2">2.3</span><span>算术运算符</span></a><ul class="menu-list"><li><a class="is-flex" href="#format"><span class="mr-2">2.3.1</span><span>format</span></a></li></ul></li></ul></li><li><a class="is-flex" href="#shell-语句格式"><span class="mr-2">3</span><span>shell 语句格式</span></a><ul class="menu-list"><li><a class="is-flex" href="#输出语句"><span class="mr-2">3.1</span><span>输出语句</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-1"><span class="mr-2">3.1.1</span><span>format</span></a></li><li><a class="is-flex" href="#option"><span class="mr-2">3.1.2</span><span>option</span></a></li></ul></li><li><a class="is-flex" href="#输入语句"><span class="mr-2">3.2</span><span>输入语句</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-2"><span class="mr-2">3.2.1</span><span>format</span></a></li><li><a class="is-flex" href="#option-1"><span class="mr-2">3.2.2</span><span>option</span></a></li></ul></li><li><a class="is-flex" href="#if-语句"><span class="mr-2">3.3</span><span>if 语句</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-3"><span class="mr-2">3.3.1</span><span>format</span></a></li><li><a class="is-flex" href="#嵌套"><span class="mr-2">3.3.2</span><span>嵌套</span></a></li><li><a class="is-flex" href="#example"><span class="mr-2">3.3.3</span><span>example</span></a></li></ul></li><li><a class="is-flex" href="#case-语句"><span class="mr-2">3.4</span><span>case 语句</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-5"><span class="mr-2">3.4.1</span><span>format</span></a></li></ul></li><li><a class="is-flex" href="#运算"><span class="mr-2">3.5</span><span>运算</span></a><ul class="menu-list"><li><a class="is-flex" href="#关系运算符"><span class="mr-2">3.5.1</span><span>关系运算符</span></a></li><li><a class="is-flex" href="#字符串比较"><span class="mr-2">3.5.2</span><span>字符串比较</span></a></li></ul></li><li><a class="is-flex" href="#for-循环"><span class="mr-2">3.6</span><span>for 循环</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-6"><span class="mr-2">3.6.1</span><span>format</span></a></li></ul></li><li><a class="is-flex" href="#while-循环"><span class="mr-2">3.7</span><span>while 循环</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-7"><span class="mr-2">3.7.1</span><span>format</span></a></li><li><a class="is-flex" href="#continue"><span class="mr-2">3.7.2</span><span>continue</span></a></li></ul></li><li><a class="is-flex" href="#函数"><span class="mr-2">3.8</span><span>函数</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-8"><span class="mr-2">3.8.1</span><span>format</span></a></li></ul></li></ul></li></ul></div></div></div><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="" src="/img/avatar.png" alt="李锦波"></figure><p class="title is-size-4 is-block line-height-inherit">李锦波</p><p class="is-size-6 is-block">Communication Engineering Undergraduate</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>GuiLin,GuangXi</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">12</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">6</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">11</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/rumengshanhe" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/rumengshanhe"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Dribbble" href="https://dribbble.com"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex" href="#shell-开发流程"><span class="mr-2">1</span><span>shell 开发流程</span></a><ul class="menu-list"><li><a class="is-flex" href="#创建shell脚本文件"><span class="mr-2">1.1</span><span>创建shell脚本文件</span></a></li><li><a class="is-flex" href="#打开脚本文件"><span class="mr-2">1.2</span><span>打开脚本文件</span></a></li><li><a class="is-flex" href="#实现"><span class="mr-2">1.3</span><span>实现</span></a></li><li><a class="is-flex" href="#指定可执行权限"><span class="mr-2">1.4</span><span>指定可执行权限</span></a></li><li><a class="is-flex" href="#执行"><span class="mr-2">1.5</span><span>执行</span></a></li></ul></li><li><a class="is-flex" href="#shell-环境"><span class="mr-2">2</span><span>shell 环境</span></a><ul class="menu-list"><li><a class="is-flex" href="#环境变量"><span class="mr-2">2.1</span><span>环境变量</span></a><ul class="menu-list"><li><a class="is-flex" href="#查看环境变量"><span class="mr-2">2.1.1</span><span>查看环境变量</span></a></li><li><a class="is-flex" href="#定义环境变量"><span class="mr-2">2.1.2</span><span>定义环境变量</span></a></li><li><a class="is-flex" href="#访问变量值"><span class="mr-2">2.1.3</span><span>访问变量值</span></a></li></ul></li><li><a class="is-flex" href="#局部变量"><span class="mr-2">2.2</span><span>局部变量</span></a><ul class="menu-list"><li><a class="is-flex" href="#查看局部变量"><span class="mr-2">2.2.1</span><span>查看局部变量</span></a></li><li><a class="is-flex" href="#定义局部变量"><span class="mr-2">2.2.2</span><span>定义局部变量</span></a></li><li><a class="is-flex" href="#访问变量"><span class="mr-2">2.2.3</span><span>访问变量</span></a></li></ul></li><li><a class="is-flex" href="#算术运算符"><span class="mr-2">2.3</span><span>算术运算符</span></a><ul class="menu-list"><li><a class="is-flex" href="#format"><span class="mr-2">2.3.1</span><span>format</span></a></li></ul></li></ul></li><li><a class="is-flex" href="#shell-语句格式"><span class="mr-2">3</span><span>shell 语句格式</span></a><ul class="menu-list"><li><a class="is-flex" href="#输出语句"><span class="mr-2">3.1</span><span>输出语句</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-1"><span class="mr-2">3.1.1</span><span>format</span></a></li><li><a class="is-flex" href="#option"><span class="mr-2">3.1.2</span><span>option</span></a></li></ul></li><li><a class="is-flex" href="#输入语句"><span class="mr-2">3.2</span><span>输入语句</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-2"><span class="mr-2">3.2.1</span><span>format</span></a></li><li><a class="is-flex" href="#option-1"><span class="mr-2">3.2.2</span><span>option</span></a></li></ul></li><li><a class="is-flex" href="#if-语句"><span class="mr-2">3.3</span><span>if 语句</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-3"><span class="mr-2">3.3.1</span><span>format</span></a></li><li><a class="is-flex" href="#嵌套"><span class="mr-2">3.3.2</span><span>嵌套</span></a></li><li><a class="is-flex" href="#example"><span class="mr-2">3.3.3</span><span>example</span></a></li></ul></li><li><a class="is-flex" href="#case-语句"><span class="mr-2">3.4</span><span>case 语句</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-5"><span class="mr-2">3.4.1</span><span>format</span></a></li></ul></li><li><a class="is-flex" href="#运算"><span class="mr-2">3.5</span><span>运算</span></a><ul class="menu-list"><li><a class="is-flex" href="#关系运算符"><span class="mr-2">3.5.1</span><span>关系运算符</span></a></li><li><a class="is-flex" href="#字符串比较"><span class="mr-2">3.5.2</span><span>字符串比较</span></a></li></ul></li><li><a class="is-flex" href="#for-循环"><span class="mr-2">3.6</span><span>for 循环</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-6"><span class="mr-2">3.6.1</span><span>format</span></a></li></ul></li><li><a class="is-flex" href="#while-循环"><span class="mr-2">3.7</span><span>while 循环</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-7"><span class="mr-2">3.7.1</span><span>format</span></a></li><li><a class="is-flex" href="#continue"><span class="mr-2">3.7.2</span><span>continue</span></a></li></ul></li><li><a class="is-flex" href="#函数"><span class="mr-2">3.8</span><span>函数</span></a><ul class="menu-list"><li><a class="is-flex" href="#format-8"><span class="mr-2">3.8.1</span><span>format</span></a></li></ul></li></ul></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">链接</h3><ul class="menu-list"><li><a class="level is-mobile is-mobile" href="https://hexo.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile is-mobile" href="https://bulma.io" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Bulma</span></span><span class="level-right"><span class="level-item tag">bulma.io</span></span></a></li></ul></div></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/C/"><span class="level-start"><span class="level-item">C++</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Linux%E5%BC%80%E5%8F%91/"><span class="level-start"><span class="level-item">Linux开发</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Shell%E7%BC%96%E7%A8%8B/"><span class="level-start"><span class="level-item">Shell编程</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E5%8D%9A%E5%AE%A2/"><span class="level-start"><span class="level-item">博客</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%A8%A1%E7%94%B5/"><span class="level-start"><span class="level-item">模电</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E7%A1%AC%E4%BB%B6/"><span class="level-start"><span class="level-item">硬件</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content size-small"><p><time dateTime="2021-08-16T04:21:52.649Z">2021-08-16</time></p><p class="title is-6"><a class="link-muted" href="/2021/08/16/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/">一些硬件知识</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/%E7%A1%AC%E4%BB%B6/">硬件</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2021-08-16T03:56:25.826Z">2021-08-16</time></p><p class="title is-6"><a class="link-muted" href="/2021/08/16/mos/">三极管与MOS管</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/%E6%A8%A1%E7%94%B5/">模电</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2021-04-11T06:38:46.263Z">2021-04-11</time></p><p class="title is-6"><a class="link-muted" href="/2021/04/11/shell_1/">第六篇  Shell 编程学习小结</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Linux%E5%BC%80%E5%8F%91/">Linux开发</a> / <a class="link-muted" href="/categories/Shell%E7%BC%96%E7%A8%8B/">Shell编程</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2021-04-10T11:59:25.654Z">2021-04-10</time></p><p class="title is-6"><a class="link-muted" href="/2021/04/10/c++2/">const 不同用法的区别</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/C/">C++</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2021-04-10T10:33:00.186Z">2021-04-10</time></p><p class="title is-6"><a class="link-muted" href="/2021/04/10/linux_5/">第五篇  Vim 用法小结</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Linux%E5%BC%80%E5%8F%91/">Linux开发</a></p></div></article></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">归档</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/archives/2021/08/"><span class="level-start"><span class="level-item">八月 2021</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2021/04/"><span class="level-start"><span class="level-item">四月 2021</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2021/01/"><span class="level-start"><span class="level-item">一月 2021</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/12/"><span class="level-start"><span class="level-item">十二月 2020</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2020/04/"><span class="level-start"><span class="level-item">四月 2020</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/FPGA/"><span class="tag">FPGA</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag is-grey-lightest">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MOS%E7%AE%A1/"><span class="tag">MOS管</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Shell/"><span class="tag">Shell</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/const/"><span class="tag">const</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo%E5%8D%9A%E5%AE%A2/"><span class="tag">hexo博客</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E4%B8%89%E6%9E%81%E7%AE%A1/"><span class="tag">三极管</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/"><span class="tag">单片机</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%95%B0%E7%94%B5/"><span class="tag">数电</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%A8%A1%E7%94%B5/"><span class="tag">模电</span><span class="tag is-grey-lightest">1</span></a></div></div></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo1.png" alt="李锦波的博客" height="28"></a><p class="size-small"><span>&copy; 2021 lijinbo</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download icarus on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://yoursite.com',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><script>window.addEventListener("load", function () {
+            MathJax.Hub.Config({
+                'HTML-CSS': {
+                    matchFontHeight: false
+                },
+                SVG: {
+                    matchFontHeight: false
+                },
+                CommonHTML: {
+                    matchFontHeight: false
+                },
+                tex2jax: {
+                    inlineMath: [
+                        ['$','$'],
+                        ['\\(','\\)']
+                    ]
+                }
+            });
+        });</script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
