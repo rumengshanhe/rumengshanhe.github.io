@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="始于2020年，记录学习技术路上的小细节">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Campbell">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Linux下如何编译C++程序"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="始于2020年，记录学习技术路上的小细节" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="WELCOME TO COMBER&#39;S BLOG"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    
+        <meta name="twitter:card" content="summary" />
+    
+    
+    
+
+    <!-- Title -->
+    
+    <title>Linux下如何编译C++程序 - WELCOME TO COMBER&#39;S BLOG</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Google Analytics -->
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2021/01/24/c++1/">
+                Linux下如何编译C++程序
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2021-01-24</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/C/">C++</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <p>在啃了几十页 <strong><em>《 C++ Primer 》</em></strong> 之后，决定对 <strong><em>C++</em></strong> 的基本语法和运用写一个小实验，编译环境是我的 <strong><em>Red Hat 5 Linux</em></strong>虚拟机。</p>
+<h1 id="Helloworld"><a href="#Helloworld" class="headerlink" title="Helloworld"></a>Helloworld</h1><p>下面是hello.cpp源代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;***hello.cpp***&#x2F;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])&#123;</span><br><span class="line">    std::cout &lt;&lt; &quot;Hello World!&quot; &lt;&lt; std::endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+
+<h1 id="单源文件的编译和运行"><a href="#单源文件的编译和运行" class="headerlink" title="单源文件的编译和运行"></a>单源文件的编译和运行</h1><h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>在 <strong><em>Linux</em></strong>环境下，我们使用 <strong><em>g++</em></strong> 编译器将后缀为 <strong><em>.cpp</em></strong>的源文件编译成为可执行文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ hello.cpp</span><br></pre></td></tr></table></figure>
+<p>其过程与 <strong><em>C</em></strong>文件编译过程类似，首先把源文件编译生成对象文件，接下来是链接对象文件与相关库文件，最后得到可执行文件，默认情况下在源文件目录下生成，名为 <em>a.out</em>。</p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>通过如下格式的命令运行该可执行文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;a.out</span><br></pre></td></tr></table></figure>
+<p>当然我们可以通过在命令中增加选项来指定生成的可执行文件的名称，例如指定为hello，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ hello.cpp -o hello</span><br></pre></td></tr></table></figure>
+
+<h1 id="多源文件的编译和运行"><a href="#多源文件的编译和运行" class="headerlink" title="多源文件的编译和运行"></a>多源文件的编译和运行</h1><h2 id="类（class）"><a href="#类（class）" class="headerlink" title="类（class）"></a>类（class）</h2><p>很多时候为了程序的易于理解和方便修改，我们都把一个工程拆分成若干个模块，每个模块是一个单独的源文件，负责某一项功能，且各模块间能够互相调用。在 <strong><em>C++</em></strong> 中，我们就能够在单独的文件中定义一个 <strong>类（class）</strong>，要完成这个工作，首先需要在头文件里声明该类，声明类的属性和方法，接着还需要在同名的 <em>.cpp</em> 文件内作定义。有了定义的类，只需要在其它源文件 <em>#include</em> 对应头文件，就可以在其他程序源文件中实体化该类得到一个对象，通过该对象就可以访问类的属性和方法。</p>
+<h2 id="源程序"><a href="#源程序" class="headerlink" title="源程序"></a>源程序</h2><p>这是一个实现两数相加的简单程序，在<em>cal.h</em>中定义了<em>Cal</em>类，且定义了一个<em>add</em>方法，打印两数相加和。</p>
+<h3 id="cal-h"><a href="#cal-h" class="headerlink" title="cal.h"></a><strong><em>cal.h</em></strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;***cal.h***&#x2F;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">calss Cal&#123;</span><br><span class="line">    public:</span><br><span class="line">        void add(double a, double b);</span><br><span class="line">&#125;;          &#x2F;&#x2F;此处的 ; 需特别注意</span><br></pre></td></tr></table></figure>
+<h3 id="cal-cpp"><a href="#cal-cpp" class="headerlink" title="cal.cpp"></a><strong><em>cal.cpp</em></strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;***cal.cpp***&#x2F;</span><br><span class="line">#include &quot;cal.h&quot;</span><br><span class="line"></span><br><span class="line">void Cal::add(double a, double b)&#123;</span><br><span class="line">    std::cout &lt;&lt; &quot;a + b &#x3D; &quot; &lt;&lt; a + b &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="main-cpp"><a href="#main-cpp" class="headerlink" title="main.cpp"></a><strong><em>main.cpp</em></strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;***main.cpp***&#x2F;</span><br><span class="line">#include &quot;cal.h&quot;</span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])&#123;</span><br><span class="line">    Cal cal1;</span><br><span class="line">    double a, b;</span><br><span class="line">    char repeat &#x3D; &#39;y&#39;;</span><br><span class="line"></span><br><span class="line">    while(repeat !&#x3D; &#39;N&#39; &amp;&amp; repeat !&#x3D; &#39;n&#39;)&#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;Enter two numbers a&amp;b : &quot; &lt;&lt; std::endl;</span><br><span class="line">        std::cin &gt;&gt; a &gt;&gt; b;</span><br><span class="line">        cal1.add(a, b);</span><br><span class="line"></span><br><span class="line">        std::cout &lt;&lt; &quot;Continue ?(y&#x2F;n):&quot; &lt;&lt; std::endl;</span><br><span class="line">        std::cin &gt;&gt; repeat;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编译-1"><a href="#编译-1" class="headerlink" title="编译"></a>编译</h2><p>如果在 <strong><em>g++</em></strong> 命令中指定多个的源文件，它们将被编译成一个可执行文件，如上例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ cal.cpp main.cpp -o main</span><br></pre></td></tr></table></figure>
+<p>那么上述的两个源文件都被编译成<em>main</em>可执行文件，其中头文件已经声明，不用在命令中加上头文件。<br><br><br></p>
+<p><strong><em>类</em></strong> 是 <strong><em>C++</em></strong> 里很重要的内容，将在后续继续学习。。</p>
+<br>
+<br><br><br><br>
+
+<ul>
+<li>end</li>
+</ul>
+
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo" target="_blank" rel="noopener">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2022/02/14/24V-5VBUCK%E7%A8%B3%E5%8E%8B%E7%94%B5%E8%B7%AF/">24V-5V降压DC-DC稳压电路设计</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/10/02/BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0/">BJT的直流参数</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/09/30/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">全数字锁相环的Verilog实现</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/09/26/BJT%E7%9A%84%E5%BA%94%E7%94%A8/">BJT的基本应用电路</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/">单片机原理和应用</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/C/">C++</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/FPGA/">FPGA</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Linux/">Linux</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/rumengshanhe" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://telegram.org/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-telegram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:2816106900@qq.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Comber. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/" target="_blank" rel="noopener">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+
+<script src="/js/main.js"></script>
+
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

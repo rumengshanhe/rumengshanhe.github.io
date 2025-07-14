@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="始于2020年，记录学习技术路上的小细节">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Campbell">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="第二篇  Linux基础知识"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="始于2020年，记录学习技术路上的小细节" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="WELCOME TO COMBER&#39;S BLOG"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    
+        <meta name="twitter:card" content="summary" />
+    
+    
+    
+
+    <!-- Title -->
+    
+    <title>第二篇  Linux基础知识 - WELCOME TO COMBER&#39;S BLOG</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Google Analytics -->
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2020/12/13/linux_2/">
+                第二篇  Linux基础知识
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2020-12-13</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/Linux/">Linux</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h1 id="linux介绍"><a href="#linux介绍" class="headerlink" title="linux介绍"></a>linux介绍</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p><strong><em>Linux</em></strong>–是一种类unix操作系统，确切的说是指操作系统的内核(kernel)。Linux是自由软件和开放源代码软件发展中最著名的例子。<br><img src="https://note.youdao.com/yws/api/personal/file/D3295E70B2F74F16A7E1635854FEA7C3?method=download&amp;amp;shareKey=cfd459ab323d1ca94ffca90810c6f719" alt></p>
+<a id="more"></a>
+<h2 id="Linux-发行版本"><a href="#Linux-发行版本" class="headerlink" title="Linux 发行版本"></a><strong><em>Linux</em></strong> 发行版本</h2><ul>
+<li><strong><em>redhat</em></strong> : 公司运营，提供完整的解决方案，更专业</li>
+<li><strong><em>fedora</em></strong> : 和Ubuntu的包管理不一样，Fedora对新软件及新技术吸纳比较快</li>
+<li><strong><em>debian</em></strong> : 最遵循GNU规范操作系统，Ubuntu就是基于Debian的</li>
+<li><strong><em>Ubuntu</em></strong> : 国内乃至全球热门的Linux发行版，安装简单，社区活跃</li>
+<li><strong><em>Centos</em></strong> : 特点是相当稳定，版本更新紧跟RedHat，非常适合作为服务器操作系统使用</li>
+<li><strong><em>Suse linux</em></strong> : 德国著名linux，被称为“最华丽的Linux发行版”</li>
+<li><strong><em>红旗Linux</em></strong> : 由中国中科红旗软件技术有限公司开发,方便国内的用户使用</li>
+</ul>
+<hr>
+<h1 id="快捷键和命令"><a href="#快捷键和命令" class="headerlink" title="快捷键和命令"></a>快捷键和命令</h1><h2 id="关于桌面环境"><a href="#关于桌面环境" class="headerlink" title="关于桌面环境"></a>关于桌面环境</h2><h3 id="打开终端"><a href="#打开终端" class="headerlink" title="打开终端"></a>打开终端</h3><p><strong><em>alt + F2</em></strong></p>
+<h3 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h3><p><strong><em>exit</em></strong></p>
+<h3 id="在一个终端上打开多个标签"><a href="#在一个终端上打开多个标签" class="headerlink" title="在一个终端上打开多个标签"></a>在一个终端上打开多个标签</h3><p><strong><em>ctrl + shift + t</em></strong></p>
+<h3 id="标签之间切换"><a href="#标签之间切换" class="headerlink" title="标签之间切换"></a>标签之间切换</h3><p><strong><em>alt + num</em></strong></p>
+<h3 id="放大字体"><a href="#放大字体" class="headerlink" title="放大字体"></a>放大字体</h3><p><strong><em>ctrl + shift + ‘ + ‘</em></strong></p>
+<h3 id="缩小字体"><a href="#缩小字体" class="headerlink" title="缩小字体"></a>缩小字体</h3><p><strong><em>ctrl + ‘ - ‘</em></strong></p>
+<h3 id="最大化窗口"><a href="#最大化窗口" class="headerlink" title="最大化窗口"></a>最大化窗口</h3><p><strong><em>alt + F10</em></strong></p>
+<h3 id="最小化"><a href="#最小化" class="headerlink" title="最小化"></a>最小化</h3><p><strong><em>alt + F9</em></strong></p>
+<h3 id="关机"><a href="#关机" class="headerlink" title="关机"></a>关机</h3><p><strong><em>init 0</em></strong> <br><br><strong><em>shutdown -h now</em></strong> <br></p>
+<h3 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h3><p><strong><em>init 6</em></strong> <br><br><strong><em>shutdowm -r now</em></strong> <br><br><strong><em>reboot</em></strong> <br></p>
+<h2 id="linux基本命令"><a href="#linux基本命令" class="headerlink" title="linux基本命令"></a>linux基本命令</h2><h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ul>
+<li>内部命令：就是shell自带的一些命令，而这些命令是不可以卸载。</li>
+<li>外部命令：就是用户自己安装的一些命令。而这些命令是有路径。</li>
+</ul>
+<h3 id="区分内部命令和外部命令"><a href="#区分内部命令和外部命令" class="headerlink" title="区分内部命令和外部命令"></a>区分内部命令和外部命令</h3><blockquote>
+<p><code>type + cmd</code> <br><br>[root@localhost /]# <code>type fdisk</code> <br><br>fdisk is hashed (/sbin/fdisk) //表示外部命令 <br><br>[root@localhost /]# <code>type cd</code> <br><br>cd is a shell builtin    //表示内部命令 <br></p>
+</blockquote>
+<h3 id="查看命令别名"><a href="#查看命令别名" class="headerlink" title="查看命令别名"></a>查看命令别名</h3><blockquote>
+<p>[root@localhost /]# <code>type ls</code> <br><br>ls is aliased to ‘ls –color=tty’ <br><br>[root@localhost /]# <code>which ls</code> <br><br>alias ls=’ls –color=tty’ <br><br>/bin/ls</p>
+</blockquote>
+<h3 id="输出命令"><a href="#输出命令" class="headerlink" title="输出命令"></a>输出命令</h3><p>输出命令既是内部命令也是外部命令 <br></p>
+<blockquote>
+<p>[root@localhost /]# <code>echo hello</code> <br><br>hello <br><br>[root@localhost /]# <code>type echo</code> <br><br>echo is a shell builtin <br><br>[root@localhost /]# <code>which echo</code> <br><br>/bin/echo <br></p>
+</blockquote>
+<hr>
+<h3 id="tab-键"><a href="#tab-键" class="headerlink" title="tab 键"></a><strong><em>tab</em></strong> 键</h3><p>作用是自动补齐</p>
+<ul>
+<li>文件名自动补齐</li>
+<li>命令自动补齐</li>
+</ul>
+<blockquote>
+<p>如果按一次tab键没有反应，有下列情况：<br><br>    1、 没有该文件或者命令<br><br>    2、 可能匹配多个文件或者命令 则再按一次。</p>
+</blockquote>
+<hr>
+<h3 id="man—帮助命令"><a href="#man—帮助命令" class="headerlink" title="man—帮助命令"></a><strong><em>man</em></strong>—帮助命令</h3><p>man命令是Linux下的帮助指令，通过man指令可以查看Linux中的指令帮助、配置文件帮助和编程帮助等信息。</p>
+<ul>
+<li>Format&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;<code>man + cmd</code><br><blockquote>
+<p>案例&nbsp;:&nbsp;<code>man 7 man</code> <br></p>
+</blockquote>
+</li>
+<li>Option:       </li>
+<li>a：在所有的man帮助手册中搜索；<br></li>
+<li>f：等价于whatis指令，显示给定关键字的简短描述信息；<br></li>
+<li>P：指定内容时使用分页程序；<br></li>
+<li>M：指定man手册搜索的路径。<br></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数（代号</th>
+<th>含义</th>
+<th>代表内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Commands</td>
+<td>表示基本命令</td>
+</tr>
+<tr>
+<td>2</td>
+<td>System calls</td>
+<td>表示kernel说明信息</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Library calls</td>
+<td>表示C库或者第三方图形库</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Special files</td>
+<td>表示设备类文件说明（字符设备、块设备）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>File formats and conventions</td>
+<td>表示文件格式说明文档</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Games</td>
+<td>表示游戏开发相关说明文档</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Conventions and miscellaneous</td>
+<td>表示网络相关说明文档</td>
+</tr>
+<tr>
+<td>8</td>
+<td>System management commands</td>
+<td>表示管理员命令</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Kernel routines</td>
+<td>内核相关说明文档</td>
+</tr>
+</tbody></table>
+<h3 id="help"><a href="#help" class="headerlink" title="help"></a><strong><em>help</em></strong></h3><p>help 是非常简单的命令，而且不经常使用。对于外部命令，可以使用<code>cmd --help</code>来获取帮助。</p>
+<blockquote>
+<p>案例：<code>ls --help</code><br></p>
+</blockquote>
+<p>对于内部命令，可以直接使用<code>help cmd</code>格式还获取命令帮助。</p>
+<blockquote>
+<p>案例： <code>help cd</code></p>
+</blockquote>
+<h3 id="info"><a href="#info" class="headerlink" title="info"></a><strong><em>info</em></strong></h3><p>info命令是Linux下info格式的帮助指令。</p>
+<blockquote>
+<p>案例：<code>info ls</code><br></p>
+</blockquote>
+<ul>
+<li>Option：<br></li>
+<li>d：添加包含info格式帮助文档的目录；<br></li>
+<li>f：指定要读取的info格式的帮助文档；<br></li>
+<li>n：指定首先访问的info帮助文件的节点；<br></li>
+<li>o：输出被选择的节点内容到指定文件。<br></li>
+</ul>
+<h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a><strong><em>ls</em></strong></h3><p>显示当前工作目录的所有信息</p>
+<ul>
+<li><p>Format:<br></p>
+<blockquote>
+<p><code>ls [OPTION] [FILE]</code> <br></p>
+</blockquote>
+</li>
+<li><p>Option :<br><br>  -a : 表示显示所有信息(包括 . .. 和隐藏文件或者目录) <br><br>  . &nbsp;:&nbsp; 表示当前工作目录 <br><br>  ..&nbsp; :&nbsp; 表示上级目录 <br><br>  .filename &nbsp;: &nbsp;表示隐藏文件<br><br>  -i &nbsp;:&nbsp; 显示文件索引号<br>inode节点号（文件索引号）是计算机识别文件的唯一标识<br><br>  -l &nbsp;:&nbsp; 表示长格式显示文件信息<br></p>
+</li>
+</ul>
+<blockquote>
+<p>案例：[root@localhost test]# ls -l<br><br>        总计 16<br><br>        -rwxr-xr-x 1 root root 4729 11-29 20:18 a.out<br><br>        -rw-r–r– 1 root root    6 11-29 20:13 a.txt<br><br>        -rw-r–r– 1 root root   78 11-29 20:18 hello.c<br></p>
+</blockquote>
+<ul>
+<li>第一列：表示文件类型和权限<br></li>
+</ul>
+<p>第一位表示文件类型<br></p>
+<blockquote>
+<p>  -&nbsp;: 表示普通文件<br><br>    d : 表示目录<br><br>    c : 表示字符设备类文家<br><br>    b : 表示块设备文件<br><br>    l : 表示链接文件<br><br>    p : 表示管道文件<br><br>    s : 表示套接子文件 <br></p>
+</blockquote>
+<p>第二到第十位表示权限<br></p>
+<blockquote>
+<p>   r : 表示只读<br><br>    w : 表示只写<br><br>    x : 表示可执行<br><br>    - : 表示无权限<br><br>        三位为一组，共分为三组<br><br>        第一组：表示属主权限<br><br>        第二组：表示属组权限<br><br>        第三组：表示其他用户权限<br></p>
+</blockquote>
+<ul>
+<li>第二列：表示文件硬连接数<br></li>
+<li>第三列：表示文件属主 – 文件拥有者<br></li>
+<li>第四列：表示文件属组 – 文件拥有组<br></li>
+<li>第五列：表示文件大小（字节）<br></li>
+<li>第六列：表示时间<br></li>
+<li>第七列：表示文件名<br></li>
+</ul>
+<hr>
+<h1 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h1><h2 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd zhangsan</span><br></pre></td></tr></table></figure>
+<p>表示创建一个zhangsan的用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd zhangsan</span><br></pre></td></tr></table></figure>
+<p>设定用户密码</p>
+<h2 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h2><p>在linux下，所有的设备皆文件，所有的文件都是从根开始。</p>
+<h3 id="文件目录详解"><a href="#文件目录详解" class="headerlink" title="文件目录详解"></a>文件目录详解</h3><ul>
+<li>/ : 表示根<br>   etc ： 表示配置文件目录<br>   sbin ： 表示存放管理员命令可执行文件目录<br>   bin ： 表示基本命令目录<br>   home ： 表示普通用户家目录<br>   media ： 表示挂在U盘、光盘目录<br>   opt : 表示扩展包存放路径<br>   proc ：通过proc可以得到系统的信息，并可以改变内核的某些参数<br><br>  <code>cat /proc/cpuinfo</code> ： 查看CPU信息<br><br>  <code>cat /proc/meminfo</code> ： 查看内存大小<br>   sys  ： 表示虚拟目录<br>   dev ： 表示设备类目录<br>   lib ： 表示库目录<br>  动态库： .so<br>  静态库： .a<br>   mnt : 表示挂载目录<br>   root ：表示管理员家目录<br><br>  /root/Desktop/ ： 表示桌面</li>
+</ul>
+<hr>
+<h2 id="查看系统"><a href="#查看系统" class="headerlink" title="查看系统"></a>查看系统</h2><ul>
+<li><p>[root@localhost /]# <code>lsb_release -a</code></p>
+<pre><code>LSB Version:&lt;/br&gt;</code></pre><p>  :core-3.1-ia32:core-3.1-noarch:graphics-3.1-ia32:graphics-3.1-noarch<br><br>  Distributor ID: RedHatEnterpriseServer //系统名<br><br>  Description:    Red Hat Enterprise Linux Server release 5.5 (Tikanga)<br><br>  Release:        5.5     //表示系统版本<br><br>  Codename:       Tikanga<br></p>
+</li>
+<li><p>[root@localhost /]# <code>uname -a</code></p>
+<p> Linux localhost.localdomain 2.6.18-194.el5 #1 SMP Tue Mar 16 21:52:43 EDT<br><br> 2010 i686 i686 i386 GNU/Linux<br><br> Linux : 表示内核<br><br> localhost.localdomain ：表示主机名<br><br> 2.6.18-194.el5    ：表示内核版本<br><br> #1 SMP Tue Mar 16 21:52:43 EDT 2010 : 表示发布时间<br><br> i686 i686 i386 ：表示系统位数<br><br> GNU/Linux        ：表示操作系统名<br></p>
+</li>
+<li><p>[root@localhost /]# <code>uname -r</code> : 查看内核版本</p>
+<p> 2.6.18-194.el5<br><br> 表示 : x.y.z<br><br> x : 表示主版本号，除非系统架构发生改变<br><br> y : 表示次版本号 <br><br> 奇数：测试版本<br><br> 偶数：稳定版本<br><br> z : 表示释放版本<br></p>
+</li>
+<li><p>[root@localhost /]# <code>uname -m</code> : 系统位数<br></p>
+<pre><code>i686    ：表示32位系统&lt;/br&gt;</code></pre><p>  x86_64  : 表示64位系统<br></p>
+</li>
+</ul>
+<hr>
+<p><br><br><br><br></p>
+<ul>
+<li>end</li>
+</ul>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/Linux快捷键与命令/">#Linux快捷键与命令</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo" target="_blank" rel="noopener">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2022/02/14/24V-5VBUCK%E7%A8%B3%E5%8E%8B%E7%94%B5%E8%B7%AF/">24V-5V降压DC-DC稳压电路设计</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/10/02/BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0/">BJT的直流参数</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/09/30/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">全数字锁相环的Verilog实现</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/09/26/BJT%E7%9A%84%E5%BA%94%E7%94%A8/">BJT的基本应用电路</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/">单片机原理和应用</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/C/">C++</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/FPGA/">FPGA</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Linux/">Linux</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/rumengshanhe" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://telegram.org/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-telegram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:2816106900@qq.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Comber. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/" target="_blank" rel="noopener">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+
+<script src="/js/main.js"></script>
+
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

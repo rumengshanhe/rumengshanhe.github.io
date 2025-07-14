@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="始于2020年，记录学习技术路上的小细节">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Campbell">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="全数字锁相环的Verilog实现"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="始于2020年，记录学习技术路上的小细节" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="WELCOME TO COMBER&#39;S BLOG"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    
+        <meta name="twitter:card" content="summary" />
+    
+    
+    
+
+    <!-- Title -->
+    
+    <title>全数字锁相环的Verilog实现 - WELCOME TO COMBER&#39;S BLOG</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Google Analytics -->
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2021/09/30/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">
+                全数字锁相环的Verilog实现
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2021-09-30</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/FPGA/">FPGA</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>项目的主要目标就是用<strong>Verilog</strong>设计实现一款数字锁相环，基于低频率时钟源，倍频产生高频时钟，并且达到高频时钟输出相位锁定、占空比1:1的预期效果。设计全基于Verilog代码实现，第一阶段实现数字锁相环的基础架构，达到输入输出锁定的效果，第二阶段再进行倍频的实现。并结合<strong>Modelsim</strong>平台进行行为仿真，验证功能的正确性，观测仿真波形图。 </p>
+<p><img src="https://s2.loli.net/2021/12/06/arilVAXkFsG1gh8.png" alt></p>
+<a id="more"></a>
+
+<h1 id="层次结构"><a href="#层次结构" class="headerlink" title="层次结构"></a>层次结构</h1><p>工程的结构分为顶层模块<strong>dpll.v</strong>和子模块<strong>Phasecomparator</strong>、<strong>VariableResetRandomWalkFilter</strong>和<strong>Freqdivider</strong>，分别对应PLL原理中的鉴相器<strong>PD</strong>、环路滤波器<strong>LF</strong>和受控振荡器<strong>VCO</strong>。系统在统一的系统时钟下同步工作，参考的架构图如下：</p>
+<div style="text-align: center;">
+
+<p><img src="https://s2.loli.net/2021/12/06/wpVePZIkvgc9U3x.jpg" alt="设计架构"></p>
+</div>
+
+<h1 id="模块说明"><a href="#模块说明" class="headerlink" title="模块说明"></a>模块说明</h1><h2 id="DPLL-v"><a href="#DPLL-v" class="headerlink" title="DPLL.v"></a>DPLL.v</h2><h3 id="模块接口"><a href="#模块接口" class="headerlink" title="模块接口"></a>模块接口</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> dpll(</span><br><span class="line">    <span class="keyword">input</span>  SignalIn;                       <span class="comment">// 输入信号</span></span><br><span class="line">    <span class="keyword">input</span>  MainClock;                     <span class="comment">// 系统时钟</span></span><br><span class="line">    <span class="keyword">output</span> SignalOut;                <span class="comment">// 输出信号</span></span><br><span class="line">    <span class="keyword">output</span> Positive, Negative;          <span class="comment">// 环路滤波器输出</span></span><br><span class="line">    <span class="keyword">output</span> Lead, Lag;               <span class="comment">// 鉴相器输出</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h3><p><strong>DPLL</strong>模块是工程的顶层文件，负责把各个子模块组合起来，负责声明整个系统的信号接口。</p>
+<h2 id="Phasecomparator-v"><a href="#Phasecomparator-v" class="headerlink" title="Phasecomparator.v"></a>Phasecomparator.v</h2><h3 id="模块接口-1"><a href="#模块接口-1" class="headerlink" title="模块接口"></a>模块接口</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> phasecomparator(</span><br><span class="line">    <span class="keyword">input</span> MainClock,                  <span class="comment">// System Clock</span></span><br><span class="line">    <span class="keyword">input</span> InputSignal, OutputSignal,         <span class="comment">// 输入输出信号</span></span><br><span class="line">    <span class="keyword">output</span> SynchronousSignal,                 <span class="comment">// 同步信号</span></span><br><span class="line">    <span class="keyword">output</span> Lead, Lag,                    <span class="comment">// 超前、滞后脉冲</span></span><br><span class="line">    <span class="keyword">output</span> InputSignalEdge,  <span class="comment">// 输入信号上升沿</span></span><br><span class="line">    <span class="keyword">output</span> OutputSignalEdge,      <span class="comment">// 输出信号上升沿</span></span><br><span class="line">    <span class="keyword">output</span> Lock,                    <span class="comment">// 锁定标志位</span></span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] PeriodCount  <span class="comment">// 输入信号周期</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="功能描述-1"><a href="#功能描述-1" class="headerlink" title="功能描述"></a>功能描述</h3><p><strong>Phasecomparator</strong>为鉴相器模块，首先通过D触发器，把输入信号同步到系统的时钟域；其二，统计输入信号的周期，用于振荡信号的生成；其三，对输入信号与反馈信号进行相位比较，反馈信号超前于输入信号则置Lead为高电平，反之，反馈信号滞后则置Lag为高电平，这两个信号有效的持续周期都为一个系统时钟周期。</p>
+<div style="text-align: center;">
+
+<p><img src="https://s2.loli.net/2021/12/06/GUCWkRHwEKltxFZ.jpg" alt="鉴相器工作示意图"></p>
+</div>
+
+<h2 id="VariableResetRandomWalkFilter-v和RandomWalkFilter-v"><a href="#VariableResetRandomWalkFilter-v和RandomWalkFilter-v" class="headerlink" title="VariableResetRandomWalkFilter.v和RandomWalkFilter.v"></a>VariableResetRandomWalkFilter.v和RandomWalkFilter.v</h2><h3 id="模块接口-2"><a href="#模块接口-2" class="headerlink" title="模块接口"></a>模块接口</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> variableresetrandomwalkfilter(</span><br><span class="line">   <span class="keyword">input</span>  MainClock, Lead, Lag;  <span class="comment">// System Clock and Phase Comparator signals</span></span><br><span class="line">   <span class="keyword">output</span> Positive, Negative;    <span class="comment">// "positive shift" and "negative shift" outputs</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> randomwalkfilter(</span><br><span class="line">   <span class="keyword">input</span>  MainClock, Lead, Lag;  <span class="comment">// System Clock and Phase Comparator signals</span></span><br><span class="line">   <span class="keyword">output</span> Positive, Negative;    <span class="comment">// "positive shift" and "negative shift" outputs</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="功能描述-2"><a href="#功能描述-2" class="headerlink" title="功能描述"></a>功能描述</h3><p><strong>VariableResetRandomWalkFilter</strong>模块是环路滤波器模块，<strong>RandomWalkFilter</strong>是它的子模块，该子模块实现的是<strong>随机徘徊序列滤波器</strong>，前者在后者基础上增加Reset值可调的功能。随机徘徊序列滤波器的主体是一个可逆计数器。当有超前脉冲输人到UP端时,计数器上行计数,当有滞后脉冲输入到DN端时,计数器下行计数。如果超前脉冲超过滞后的数目到达计数容量N时,就在+N端输出一个提前脉冲,同时使计数器复位。反之，则在-N端输出一个推后脉冲,同时计数器复位。环路锁定前,鉴相器连续输出超前或滞后脉冲,上行计数器或下行计数器到达满状态后输出提前脉冲或推后脉冲,在这两个脉冲作用下环路逐步进入锁定状态。当环路进入锁定状态后，由噪声引起的超前或滞后脉冲是随机的，而且出现概率基本相等,不会有连续很多个超前或滞后脉冲，因而它们的差值达到计数容量N的可能性极小，这样就可以减小噪声对环路的干扰作用。</p>
+<div style="text-align: center;">
+
+<p><img src="https://s2.loli.net/2021/12/06/C7VKpyd3mNFPsrg.jpg" alt="RandomWalkFilter滤波器的结构"></p>
+</div>
+
+
+
+<h2 id="Freqdivider-v"><a href="#Freqdivider-v" class="headerlink" title="Freqdivider.v"></a>Freqdivider.v</h2><h3 id="模块接口-3"><a href="#模块接口-3" class="headerlink" title="模块接口"></a>模块接口</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> freqdivider(</span><br><span class="line">	<span class="keyword">input</span> MainClock;                  </span><br><span class="line">	<span class="keyword">input</span> Positive, Negative;    <span class="comment">// 控制输出周期</span></span><br><span class="line">	<span class="keyword">output</span> FrequencyOut;               <span class="comment">// 倍频输出</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="功能描述-3"><a href="#功能描述-3" class="headerlink" title="功能描述"></a>功能描述</h3><p>主要功能是基于系统时钟进行分频。系统时钟取决于FPGA硬件型号，一般需要较高的系统时钟。基于由上述鉴相器模块计算得到的输入信号的时钟周期数，计算倍频信号的时钟周期数，产生同步振荡信号。由于存在系统延时，一开始产生的振荡信号与输入信号并不同步，由鉴相器处理使其逐渐达到同步锁定状态。</p>
+<h1 id="功能仿真"><a href="#功能仿真" class="headerlink" title="功能仿真"></a>功能仿真</h1><h2 id="电路逻辑"><a href="#电路逻辑" class="headerlink" title="电路逻辑"></a>电路逻辑</h2><p>使用Quartus完成程序设计，对应的RTL电路逻辑如下图所示。</p>
+<p><img src="https://s2.loli.net/2021/12/06/JWBkolRYv56Op2V.png" alt="RTL逻辑电路图"></p>
+<h2 id="仿真参数"><a href="#仿真参数" class="headerlink" title="仿真参数"></a>仿真参数</h2><p>系统时钟设置为50MHz，输入信号频率为500KHz，输入信号具有不确定性，即仿真中添加一个随机时延，此处设置为3287ns。</p>
+<h2 id="仿真效果"><a href="#仿真效果" class="headerlink" title="仿真效果"></a>仿真效果</h2><h3 id="同步性能"><a href="#同步性能" class="headerlink" title="同步性能"></a>同步性能</h3><p>波形仿真图如图3-1所示，MainClock为系统时钟，SignalIn为输入信号，SignalOut为输出信号，Lead、Lag分别为鉴相器输出的相位领先和滞后信号，Positive、Negative则对应上述两个信号经过环路滤波器后的输出。Lock是输出锁定信号，置高电平时环路锁定。由仿真波形图可以看出，锁定时间为168300ns ，减去开头加入的输入时延3287ns，实际锁定时间为165013ns，即165μs，锁定后输出与输入信号同频同相。</p>
+<p><img src="https://s2.loli.net/2021/12/06/jmBtJRqaOgFWsSx.png" alt="环路锁定"></p>
+<h3 id="倍频效果"><a href="#倍频效果" class="headerlink" title="倍频效果"></a>倍频效果</h3><p>改变顶层文件（dpll.v）里的参数（parameter）DividerMultiple的值，便可以修改锁相环输出倍频的倍数，可以实现奇倍频和偶倍频。如图所示分别为基于500KHz输入信号产生2倍频、5倍频和20倍频的效果图。。</p>
+<p><img src="https://s2.loli.net/2021/12/06/Ibzl2HNjD1W9xRQ.png" alt="2倍频"></p>
+<p><img src="https://s2.loli.net/2021/12/06/xM14OUsGlWbcQ6I.png" alt="5倍频"></p>
+<p><img src="https://s2.loli.net/2021/12/06/U5VjaZlAGEFqdS3.png" alt="20倍频"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>结合上述功能仿真，本次设计实现了基于低频率时钟源，倍频产生高频时钟，并且达到高频时钟输出相位锁定、占空比1:1的预期效果。通过本次设计的锁相环路，可以实现在FPGA平台上，锁定未知的较低频输入信号，产生同频同相的任意倍频（频率低于系统时钟频率）输出信号。本设计完全基于Verilog代码实现，程序简单，完全可以满足简单地实现同步倍频信号的场合要求。</p>
+<p> <br><br><br></p>
+<ul>
+<li>end</li>
+</ul>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/DPLL/">#DPLL</a> <a href="/tags/Verilog/">#Verilog</a> <a href="/tags/倍频器/">#倍频器</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo" target="_blank" rel="noopener">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2022/02/14/24V-5VBUCK%E7%A8%B3%E5%8E%8B%E7%94%B5%E8%B7%AF/">24V-5V降压DC-DC稳压电路设计</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/10/02/BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0/">BJT的直流参数</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/09/30/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">全数字锁相环的Verilog实现</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/09/26/BJT%E7%9A%84%E5%BA%94%E7%94%A8/">BJT的基本应用电路</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/">单片机原理和应用</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/C/">C++</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/FPGA/">FPGA</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Linux/">Linux</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/rumengshanhe" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://telegram.org/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-telegram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:2816106900@qq.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Comber. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/" target="_blank" rel="noopener">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+
+<script src="/js/main.js"></script>
+
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

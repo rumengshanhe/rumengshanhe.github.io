@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="始于2020年，记录学习技术路上的小细节">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Campbell">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Buck电路是怎么实现降压的?"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="始于2020年，记录学习技术路上的小细节" />
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="WELCOME TO COMBER&#39;S BLOG"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    
+        <meta name="twitter:card" content="summary" />
+    
+    
+    
+
+    <!-- Title -->
+    
+    <title>Buck电路是怎么实现降压的? - WELCOME TO COMBER&#39;S BLOG</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Google Analytics -->
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/about.html">
+                    About
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/tags">
+                    Tags
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/categories">
+                    Categories
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/contact.html">
+                    Contact
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2021/08/17/Buck%E7%94%B5%E8%B7%AF/">
+                Buck电路是怎么实现降压的?
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2021-08-17</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/模电原理及应用/">模电原理及应用</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <p>开关电源（Switching  Mode  Power  Supply）即开关稳压电源，是相对于线性稳压电源的一种的新型稳压电源电路，它通过对输出电压实时监测并动态控制开关管导通与断开的时间比值来稳定输出电压。 而Buck电路，也称为DC-DC Buck型降压开关电源电路，电路结构还算简单，通过对开关管的通断控制，将直流电压断续地加到负载上，通过改变占空比改变输出电压平均值，得到需要的输出电压。</p>
+<h1 id="电路拓扑图"><a href="#电路拓扑图" class="headerlink" title="电路拓扑图"></a>电路拓扑图</h1><p><img src="https://i.loli.net/2021/08/17/nUgRhZyeP7l21mW.png" alt="Buck电路"></p>
+<a id="more"></a>
+
+<p>其中，Q1是MOS管，也作为开关管，驱动电压一般为PWM波，D1是续流二极管，还有电感L1、电容C1和负载电阻RL。</p>
+<h1 id="工作机理"><a href="#工作机理" class="headerlink" title="工作机理"></a>工作机理</h1><h2 id="开关导通"><a href="#开关导通" class="headerlink" title="开关导通"></a>开关导通</h2><p><img src="https://inews.gtimg.com/newsapp_match/0/3507842604/0" alt="电流示意图"></p>
+<p>当Q1栅极G为高电平的时候，Q1的D、S极导通，电流方向是VCC经过Q1、L1，经C1和RL流向地，由于电感器的特性，电感会产生一个自感电动势，来阻碍电流通过，同时电感器会储存磁能。此时，流经电感L1的电流线性增加，同时给电容C1充电，给负载RL提供能量。 </p>
+<div style="text-align: center;">
+
+<p><img src="https://i.loli.net/2021/08/17/reUcFhLIW3k2ZPX.png" alt="开关导通时等效电路"> </p>
+</div>
+
+<h2 id="开关截止"><a href="#开关截止" class="headerlink" title="开关截止"></a>开关截止</h2><p><img src="https://inews.gtimg.com/newsapp_match/0/3507842607/0" alt="电流示意图"></p>
+<p>当栅极G为低电平的时候，Q1截止，那么流过电感L1的电流就会减小，由于电感器的特性，电感会产生自感电动势阻碍电流减小。那么这个电动势经过滤波电容C1滤波，经过负载RL到地，再经过续流二极管D1构成回路，当电感上的电动势减小或者消失后，电路是通过滤波电容器C1给后级负载供电的。即此时，储能电感L1通过续流二极管D1放电，电感电流线性减少，输出电压靠输出滤波电容C1放电以及减小的电感电流维持 。</p>
+<div style="text-align: center;">
+
+<p><img src="https://i.loli.net/2021/08/17/WtTRGswy8nKvAem.png" alt="开关截止时等效电路"> </p>
+</div>
+
+<h1 id="我的理解"><a href="#我的理解" class="headerlink" title="我的理解"></a>我的理解</h1><p>经过上述工作过程的分析，不难发现，这种类型的Buck电路的本质就是通过控制开关Q1的导通时间（占空比），来调节储能元件L和C充放电的时间，进而控制输出电压的大小（平均值），当控制信号的占空比越大时，输出电压的瞬间峰值越大，则输出平均值越大，反之，输出电压平均值越小，理想状态下（忽略损耗），则输出电压与输入电压的关系如下式： </p>
+<div style="text-align: center;">
+
+<p><img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D%5Cfrac%7BT_%7Bon%7D%7D%7BT_%7Bon%7D%7B%2BT_%7Boff%7D%7D%7D*v_%7BI%7D" alt="公式"></p>
+</div>
+
+<p>其中，Ton表示一个周期内开关闭合的时间，Toff表示一个周期内开关断开的时间，Ton/（Ton+Toff）也就是矩形波的占空比，即一个周期内高电平脉冲宽度与整个周期的比值，亦即输出电压为输入电压与控制信号占空比的乘积 。</p>
+<p>这种通过控制占空比实现降压输出的方式也叫做脉冲宽度调制方式（<a href="https://zhuanlan.zhihu.com/p/35998770" target="_blank" rel="noopener">PWM方式</a>），它是一种频率固定而占空比变化的控制方式，相应地，也有脉冲频率调制技术（<a href="https://zhuanlan.zhihu.com/p/35998770" target="_blank" rel="noopener">PFM方式</a>），或两者的结合。 </p>
+<h1 id="Buck电路的三种工作模式"><a href="#Buck电路的三种工作模式" class="headerlink" title="Buck电路的三种工作模式"></a>Buck电路的三种工作模式</h1><p>根据能量守恒，在稳态条件下，电感两端电压在一个开关周期内的平均值为0，即<a href="https://baike.baidu.com/item/%E4%BC%8F%E7%A7%92%E5%8E%9F%E5%88%99/3081515" target="_blank" rel="noopener">伏秒平衡原理</a>。根据电感电流在一个开关周期内是否连续，有三种工作模式，分别是CCM连续导通模式，BCM临界导通模式和DCM不连续导通模式 </p>
+<h2 id="连续导通模式-CCM"><a href="#连续导通模式-CCM" class="headerlink" title="连续导通模式-CCM"></a>连续导通模式-CCM</h2><h3 id="信号示意图"><a href="#信号示意图" class="headerlink" title="信号示意图"></a>信号示意图</h3><p>　　<a href="http://www.elecfans.com/uploads/allimg/171107/2387123-1G10G50FS36.png" target="_blank" rel="noopener"><img src="http://www.elecfans.com/uploads/allimg/171107/2387123-1G10G50FS36.png" alt="图四"></a></p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>根据伏秒平衡原理，CCM模式在稳态情况下，开通周期DT内，电感电压为（Vin-Vout）；关断周期（1-D）*T内，电感电压为Vout，前后两者乘积相等，即：</p>
+<p><code>（Vin-Vout）* D * T=Vout *（1-D）* T</code></p>
+<p>其中，D为占空比，T为开关周期，Vin为输入电压，Vout为输出电压，可以得到：</p>
+<p><code>Vout / Vin = D</code></p>
+<p>由此可见CCM模式下传递函数等于占空比，且和负载电流无关。</p>
+<h2 id="边界导通模式-BCM"><a href="#边界导通模式-BCM" class="headerlink" title="边界导通模式-BCM"></a>边界导通模式-BCM</h2><h3 id="信号示意图-1"><a href="#信号示意图-1" class="headerlink" title="信号示意图"></a>信号示意图</h3><p>　　<img src="http://www.elecfans.com/uploads/allimg/171107/2387123-1G10G50P2V8.png" alt="图五"></p>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p><img src="http://www.elecfans.com/uploads/allimg/171107/2387123-1G10G50Q6452.png" alt="BCM模式分析"></p>
+<h2 id="非连续导通模式-DCM"><a href="#非连续导通模式-DCM" class="headerlink" title="非连续导通模式-DCM"></a>非连续导通模式-DCM</h2><h3 id="信号示意图-2"><a href="#信号示意图-2" class="headerlink" title="信号示意图"></a>信号示意图</h3><p><img src="http://www.elecfans.com/uploads/allimg/171107/2387123-1G10G50S2O0.png" alt="图六"></p>
+<h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>随着负载电流不断下降，电感将进入DCM模式，此时传递函数、电流和电压波形将发生很大变化，该模式下的输出电流纹波也比CCM模式大。因此要想维持电感在CCM模式下，有最小负载电流值的要求。</p>
+<p>稳态情况下，根据伏秒平衡原理有：</p>
+<p><code>（Vin - Vout）* D1 * T = Vout * D2 * T</code></p>
+<p>得</p>
+<p><code>Vout / Vin = D1 / (D1 + D2)</code></p>
+<p>开关管导通、二极管截止的时间长度为D1T；开关管截止、二极管导通的时间长度为D2T；开关管和二极管都截止的时间长度为（1-D1-D2）* T，D2与电路参数有关。</p>
+<p><br><br><br><br><br><br></p>
+<ul>
+<li>end</li>
+</ul>
+
+    </div>
+
+    
+
+    
+        <div class="post-tags">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            <a href="/tags/Buck电路/">#Buck电路</a>
+        </div>
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    This theme was developed by <a href="https://github.com/klugjo" target="_blank" rel="noopener">Jonathan Klughertz</a>. The source code is available on Github. Create Websites. Make Magic.
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2022/02/14/24V-5VBUCK%E7%A8%B3%E5%8E%8B%E7%94%B5%E8%B7%AF/">24V-5V降压DC-DC稳压电路设计</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/10/02/BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0/">BJT的直流参数</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/09/30/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">全数字锁相环的Verilog实现</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2021/09/26/BJT%E7%9A%84%E5%BA%94%E7%94%A8/">BJT的基本应用电路</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/">单片机原理和应用</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/C/">C++</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/FPGA/">FPGA</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Linux/">Linux</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/rumengshanhe" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://twitter.com/?lang=en" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-twitter"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-facebook"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-instagram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://dribbble.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-dribbble"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://telegram.org/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-telegram"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://www.behance.net/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-behance"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="https://500px.com/" target="_blank" rel="noopener">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-500px"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="mailto:2816106900@qq.com">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-envelope-o"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    @Comber. All right reserved | Design & Hexo <a href="http://www.codeblocq.com/" target="_blank" rel="noopener">Jonathan Klughertz</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+
+<script src="/js/main.js"></script>
+
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
