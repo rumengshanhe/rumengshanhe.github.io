@@ -173,9 +173,9 @@
 
         <!-- Post Content -->
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这是我在这里写下的第一篇博客，它总结了我在Windows10环境下搭建hexo博客的过程；其中包括了要准备的工具，怎么通过命令行创建博客并启动预览，用Markdown写下第一篇博文，以及部署到GitHub上进行公开访问，以及更换主题的全过程；就让我以这个过程的总结作为在这里的起点吧~~</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
-<p><img src="https://note.youdao.com/yws/api/personal/file/71CE50DDF15544E9BC21255966FA1674?method=download&amp;shareKey=97b708e2c8869de883b8f82429d60d07" alt></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/71CE50DDF15544E9BC21255966FA1674?method=download&amp;shareKey=97b708e2c8869de883b8f82429d60d07" alt=""></p>
 </div>
 
 
@@ -184,79 +184,79 @@
 <hr>
 <h1 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h1><h2 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h2><p><a href="https://nodejs.org/en/" target="_blank" rel="noopener" title="nodejs.org">Nodejs官网地址</a></p>
 <p><img src="https://note.youdao.com/yws/api/personal/file/WEBf57eb6c15fb4f8f4d048c01051294b2a?method=download&amp;shareKey=b8657a89f677e423c116d326c4d54a92" alt="node.js" title="选择LTS"></p>
-<p>在终端利用<code>node -v</code>和<code>npm -v</code>查看安装是否成功<br></p>
-<div style="text-align: center;">
+<p>在终端利用<code>node -v</code>和<code>npm -v</code>查看安装是否成功</br></p>
+<div style='text-align: center;'>
 
-<p><img src="https://note.youdao.com/yws/api/personal/file/CC4279A81C4D47FDAAB0E2BA3E2BDDB6?method=download&amp;shareKey=0dc2b2511ebbc41029903883605dcb49" alt></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/CC4279A81C4D47FDAAB0E2BA3E2BDDB6?method=download&amp;shareKey=0dc2b2511ebbc41029903883605dcb49" alt=""></p>
 </div>
 
 <hr>
-<h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><p><a href="https://note.youdao.com/yws/api/personal/file/1D451C30B7F041E9B67489108AFF481F?method=download&amp;shareKey=001fe012c1cbc9660bed142172349737" target="_blank" rel="noopener">快速下载</a><br><br>windows用户必须先安装好Git，并将Git添加到环境变量Path中，不然后面会报错；</p>
-<div style="text-align: center;">
+<h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><p><a href="https://note.youdao.com/yws/api/personal/file/1D451C30B7F041E9B67489108AFF481F?method=download&amp;shareKey=001fe012c1cbc9660bed142172349737" target="_blank" rel="noopener">快速下载</a></br><br>windows用户必须先安装好Git，并将Git添加到环境变量Path中，不然后面会报错；</p>
+<div style='text-align: center;'>
 
-<p><img src="https://note.youdao.com/yws/api/personal/file/1D451C30B7F041E9B67489108AFF481F?method=download&amp;shareKey=001fe012c1cbc9660bed142172349737" alt></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/1D451C30B7F041E9B67489108AFF481F?method=download&amp;shareKey=001fe012c1cbc9660bed142172349737" alt=""></p>
 </div>
 
 <hr>
-<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><h3 id="安装淘宝镜像cnpm"><a href="#安装淘宝镜像cnpm" class="headerlink" title="安装淘宝镜像cnpm"></a>安装淘宝镜像cnpm</h3><p>安装hexo需要借助npm包管理器，但是我们国内由于镜像源速度很慢，所以这里利用npm安装淘宝镜像源cnpm;<br></p>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><h3 id="安装淘宝镜像cnpm"><a href="#安装淘宝镜像cnpm" class="headerlink" title="安装淘宝镜像cnpm"></a>安装淘宝镜像cnpm</h3><p>安装hexo需要借助npm包管理器，但是我们国内由于镜像源速度很慢，所以这里利用npm安装淘宝镜像源cnpm;</br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
 
-<p>检验安装<br></p>
+<p>检验安装</br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm -v</span><br></pre></td></tr></table></figure>
 <hr>
-<h3 id="正式安装hexo"><a href="#正式安装hexo" class="headerlink" title="正式安装hexo"></a>正式安装hexo</h3><p>hexo的安装依然采用命令行来完成；<br></p>
+<h3 id="正式安装hexo"><a href="#正式安装hexo" class="headerlink" title="正式安装hexo"></a>正式安装hexo</h3><p>hexo的安装依然采用命令行来完成；</br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install -g hexo.cli</span><br></pre></td></tr></table></figure>
-<p>等待安装完成，检验安装<br></p>
+<p>等待安装完成，检验安装</br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo -v</span><br></pre></td></tr></table></figure>
 
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
-<p><img src="https://note.youdao.com/yws/api/personal/file/B6670F8AB35140D298F3B40CD9097B7B?method=download&amp;shareKey=0e7fc9b48a0f09ae0045e48effd31165" alt="hexo"><br></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/B6670F8AB35140D298F3B40CD9097B7B?method=download&amp;shareKey=0e7fc9b48a0f09ae0045e48effd31165" alt="hexo"></br></p>
 </div>
 
 <hr>
-<h3 id="生成博客"><a href="#生成博客" class="headerlink" title="生成博客"></a>生成博客</h3><p>首先需要创建一个文件夹，里面存放你博客的一切；先切换到你喜欢的目录，创建blog文件夹<br></p>
+<h3 id="生成博客"><a href="#生成博客" class="headerlink" title="生成博客"></a>生成博客</h3><p>首先需要创建一个文件夹，里面存放你博客的一切；先切换到你喜欢的目录，创建blog文件夹</br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir blog</span><br></pre></td></tr></table></figure>
 
 <p>进入blog文件夹</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd .&#x2F;blog</span><br></pre></td></tr></table></figure>
 
-<p>生成博客，也可以叫初始化博客；<br></p>
+<p>生成博客，也可以叫初始化博客；</br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
 
-<p>等待完成后，查看blog目录下生成了数个文件夹，初始化完成<br></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/8B1BE86D1AD24828BC9F9409837A077B?method=download&amp;shareKey=969a0731ec6d66b3c6c3f284cdd3f824" alt="init"><br><br>接下来，可以开始启动它了；<br></p>
+<p>等待完成后，查看blog目录下生成了数个文件夹，初始化完成</br></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/8B1BE86D1AD24828BC9F9409837A077B?method=download&amp;shareKey=969a0731ec6d66b3c6c3f284cdd3f824" alt="init"></br><br>接下来，可以开始启动它了；</br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p><img src="https://note.youdao.com/yws/api/personal/file/3713B6C23E014CB38FD4D587897FAE9C?method=download&amp;shareKey=e51849260023ff9f59c93b683a172186" alt="server"><br></p>
-<p>打开浏览器，访问<code>http://localhost:4000</code>进行本地预览,你会发现你的博客已经有了。<br></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/2393EB7F3D594DDF873CD44D2EDFCCB2?method=download&amp;shareKey=f3ef7b041afcea3c4a7b92c0ba0bbfcb" alt="yousite"><br><br>默认给你创建了一篇<code>Hello World</code>博客，里面简介了hexo的使用方法</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/3713B6C23E014CB38FD4D587897FAE9C?method=download&amp;shareKey=e51849260023ff9f59c93b683a172186" alt="server"></br></p>
+<p>打开浏览器，访问<code>http://localhost:4000</code>进行本地预览,你会发现你的博客已经有了。</br></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/2393EB7F3D594DDF873CD44D2EDFCCB2?method=download&amp;shareKey=f3ef7b041afcea3c4a7b92c0ba0bbfcb" alt="yousite"></br><br>默认给你创建了一篇<code>Hello World</code>博客，里面简介了hexo的使用方法</p>
 <hr>
-<h4 id="新建博文"><a href="#新建博文" class="headerlink" title="新建博文"></a>新建博文</h4><p>用hexo new来新建文章；<br></p>
+<h4 id="新建博文"><a href="#新建博文" class="headerlink" title="新建博文"></a>新建博文</h4><p>用hexo new来新建文章；</br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo n &quot;第一篇博客文章&quot;</span><br></pre></td></tr></table></figure>
 <p>进入到如下目录，可以看到已经生成了Markdown文档；</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/B428E85B274A4D2FA49E94DF728AE074?method=download&amp;shareKey=cb236d35cf1e5652c5b747f7434947bb" alt="md"><br></p>
-<p>接下来你可以打开.md文档编辑，Markdown文档知识这不赘述；重新用<code>hexo s</code>启动server，刷新博客网页可以看到刚刚编辑的文章已经存在了<br></p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/A10A0645AA8B4742A3DE2268A295AA83?method=download&amp;shareKey=de265fed22785c777646a10fc23d1c62" alt></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/B428E85B274A4D2FA49E94DF728AE074?method=download&amp;shareKey=cb236d35cf1e5652c5b747f7434947bb" alt="md"></br></p>
+<p>接下来你可以打开.md文档编辑，Markdown文档知识这不赘述；重新用<code>hexo s</code>启动server，刷新博客网页可以看到刚刚编辑的文章已经存在了</br></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/A10A0645AA8B4742A3DE2268A295AA83?method=download&amp;shareKey=de265fed22785c777646a10fc23d1c62" alt=""></p>
 <hr>
-<h1 id="博客部署"><a href="#博客部署" class="headerlink" title="博客部署"></a>博客部署</h1><p>这里介绍将博客部署到GitHub上公开使用，当然之后你还可以通过注册域名来进行访问；<br></p>
-<h2 id="新建仓库"><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h2><p>登陆Github，新建一个仓库–<code>New Repository</code>;<br><br><img src="https://note.youdao.com/yws/api/personal/file/47683AC05BA8401A83A6C85075C8C67A?method=download&amp;shareKey=28e53730373cc47eecd7819f249ed945" alt><br></p>
-<p>Repository name要按特定要求来填，下图中的<code>youname</code>一定要对应个人GitHub昵称，然后–<code>Create Repository</code>；<br><br><br><img src="https://note.youdao.com/yws/api/personal/file/EED63050F1FB47F6AD23DBA7278DB42C?method=download&amp;shareKey=1dbdd29ceb4847a1dd30e2564f824439" alt><br></p>
+<h1 id="博客部署"><a href="#博客部署" class="headerlink" title="博客部署"></a>博客部署</h1><p>这里介绍将博客部署到GitHub上公开使用，当然之后你还可以通过注册域名来进行访问；</br></p>
+<h2 id="新建仓库"><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h2><p>登陆Github，新建一个仓库–<code>New Repository</code>;</br><br><img src="https://note.youdao.com/yws/api/personal/file/47683AC05BA8401A83A6C85075C8C67A?method=download&amp;shareKey=28e53730373cc47eecd7819f249ed945" alt=""></br></p>
+<p>Repository name要按特定要求来填，下图中的<code>youname</code>一定要对应个人GitHub昵称，然后–<code>Create Repository</code>；<br></br><br><img src="https://note.youdao.com/yws/api/personal/file/EED63050F1FB47F6AD23DBA7278DB42C?method=download&amp;shareKey=1dbdd29ceb4847a1dd30e2564f824439" alt=""></br></p>
 <hr>
-<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>需要在blog根目录下安装一个用于Git部署的插件；<br></p>
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>需要在blog根目录下安装一个用于Git部署的插件；</br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://note.youdao.com/yws/api/personal/file/DF32F80ED85141269ECB2A67185465EA?method=download&amp;shareKey=1fe511f07d0722f1568582f9d3c91a42" alt></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/DF32F80ED85141269ECB2A67185465EA?method=download&amp;shareKey=1fe511f07d0722f1568582f9d3c91a42" alt=""></p>
 <hr>
-<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>这是关键的一步，设置blog目录下的<code>_config.yml</code>文件，建议不要用记事本打开，容易遗漏空格，且没有代码高亮（你懂的），当然，可以用<code>sublime_text</code>或<code>VS Code</code>； <br><br>打开配置文件后，找到文件的最底部，参照以下内容进行修改：<br></p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>这是关键的一步，设置blog目录下的<code>_config.yml</code>文件，建议不要用记事本打开，容易遗漏空格，且没有代码高亮（你懂的），当然，可以用<code>sublime_text</code>或<code>VS Code</code>； </br><br>打开配置文件后，找到文件的最底部，参照以下内容进行修改：</br></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: &#39;git&#39;</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;rumengshanhe&#x2F;rumengshanhe.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 <p><em>repo</em>就填你刚才创建的GitHub仓库的地址；</p>
-<p><img src="https://note.youdao.com/yws/api/personal/file/1C5EF7A39F4446C89B294479E68C436E?method=download&amp;shareKey=dc3ebbb72e70eb9c4e4429fc72f0a7bc" alt></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/1C5EF7A39F4446C89B294479E68C436E?method=download&amp;shareKey=dc3ebbb72e70eb9c4e4429fc72f0a7bc" alt=""></p>
 <hr>
 <h2 id="部署验证"><a href="#部署验证" class="headerlink" title="部署验证"></a>部署验证</h2><p>通过以下命令生成，并部署到远端</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
 <p>过程中需要设置Git账户邮箱和密码，部署成功后打开GitHub仓库就会发现已经产生博客文件，这时打开浏览器，访问<code>youname.github.io</code>，不出意外就可以访问到你的博客了。</p>
 <hr>
-<p><br><br><br><br><br></p>
+<p></br></br></br></br></br></p>
 <ul>
 <li>end</li>
 </ul>

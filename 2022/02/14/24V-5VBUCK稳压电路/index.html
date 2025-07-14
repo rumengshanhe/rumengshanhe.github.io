@@ -180,16 +180,16 @@
 <a id="more"></a>
 
 <hr>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
-<p><img src="https://s2.loli.net/2022/02/14/gHGUE1TzrwPphmL.jpg" alt></p>
+<p><img src="https://s2.loli.net/2022/02/14/gHGUE1TzrwPphmL.jpg" alt=""></p>
 </div>
 
 <h1 id="方案设计与论证"><a href="#方案设计与论证" class="headerlink" title="方案设计与论证"></a>方案设计与论证</h1><h2 id="技术指标"><a href="#技术指标" class="headerlink" title="技术指标"></a>技术指标</h2><p>1、输入电压24V；</p>
 <p>2、输出5V/0.5A；</p>
 <p>3、满载效率不低于70%；</p>
 <p>4、纹波电压小于100mVpp</p>
-<h2 id="电路形式的选择"><a href="#电路形式的选择" class="headerlink" title="电路形式的选择"></a>电路形式的选择</h2><h3 id="BUCK电路的原理及优缺点"><a href="#BUCK电路的原理及优缺点" class="headerlink" title="BUCK电路的原理及优缺点"></a>BUCK电路的原理及优缺点</h3><div style="text-align: center;">
+<h2 id="电路形式的选择"><a href="#电路形式的选择" class="headerlink" title="电路形式的选择"></a>电路形式的选择</h2><h3 id="BUCK电路的原理及优缺点"><a href="#BUCK电路的原理及优缺点" class="headerlink" title="BUCK电路的原理及优缺点"></a>BUCK电路的原理及优缺点</h3><div style='text-align: center;'>
 
 <p><img src="https://s2.loli.net/2022/02/14/R5O3jT8BPrwtDQu.png" alt="BUCK电路的基本结构"></p>
 </div>
@@ -199,7 +199,7 @@
 <li><p>从BUCK电路的基本结构可以看出，电感L和电容C组成低通滤波器，此滤波器设计的原则是使U<sub>d</sub>的直流分量可以通过，而抑制U<sub>d</sub>的谐波分量，电容上输出电压U<sub>o</sub>就是U<sub>d</sub>的直流分量再附加微小纹波U<sub>ripple</sub>；</p>
 </li>
 <li><p>电路工作频率很高，一个开关周期内电容充放电引起的纹波U<sub>ripple</sub>很小，相对于电容上输出的直流电压U<sub>o</sub>有：</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p>U<sub>ripple</sub> &lt;&lt; U<sub>o</sub></p>
 </div>
@@ -210,19 +210,19 @@
 <p>上述过程是电容上电压调整的过渡过程，在电路稳态工作时，电路达到稳定平衡，电容上充放电也达到平衡，这是电路稳态工作时的一个普遍规律。</p>
 </li>
 <li><p>如下图，电路处于导通状态时，电感电流增加，电感储能；而当电路处于截止状态时，电感电流减小，电感放电。</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://s2.loli.net/2022/02/14/vE6jeK1gAXZl3aG.png" alt="开关导通状态等效电路（左） 开关截止状态等效电路（右）"></p>
 </div>
 
 <p>假定电流增加量大于电流减小量，则一个开关周期内电感上磁链增量为：</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p>ΔΨ = L(Δt) &gt; 0</p>
 </div>
 
 <p>此增量将产生一个平均感应电势：</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p>u = ΔΨ / T &gt; 0</p>
 </div>
@@ -231,7 +231,7 @@
 </li>
 </ul>
 <h3 id="开关电源稳压还是线性电源稳压"><a href="#开关电源稳压还是线性电源稳压" class="headerlink" title="开关电源稳压还是线性电源稳压"></a>开关电源稳压还是线性电源稳压</h3><p>开关电源是一种比较新型的电源。它具有效率高，重量轻，可升、降压，输出功率大等优点。但是由于电路工作在开关状态，所以噪声比较大。如图所示，电路由开关K(实际电路中为三极管或者场效应管)，续流二极管D，储能电感L，滤波电容C等构成。</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://s2.loli.net/2022/02/14/4lR8C6mvBpsn1Z2.png" alt="开关电源稳压等效电路"></p>
 </div>
@@ -241,7 +241,7 @@
 <p>线性稳压电源的优点是输出电压质量高、纹波小、不需要使用电感元件 。线性稳压电源经过变压、整流、滤波、稳压实现电源稳压。优点是稳定性好，瞬态响应速度快，可靠性高，输出电压精度高，输出纹波电压精度小。缺点是变换效率较低，尤其是在输入输出电压差较大的情况下。如果输出电流也较大，会有明显的发热发烫现象，甚至可能烧坏稳压器。</p>
 <h2 id="电源管理芯片的选择"><a href="#电源管理芯片的选择" class="headerlink" title="电源管理芯片的选择"></a>电源管理芯片的选择</h2><p><strong>LM2596</strong>系列是德州仪器（TI）生产的3A电流输出降压开关型集成稳压芯片，它内含固定频率振荡器（150KHZ）和基准稳压器（1.23v），并具有完善的保护电路、电流限制、热关断电路等。利用该器件只需极少的外围器件便可构成高效稳压电路。该系列提供了有3.3V、5V、12V及可调（ADJ）等多个电压档次产品。由于该器件可以使用通用的标准电感，这更促进LM2596的使用，极大地简化了开关电源电路的设计。</p>
 <p>LM2596还有其他一些特点：在特定的输入电压和输出负载的条件下，输出电压的误差可以保证在±4%的范围内，振荡频率误差在±15%的范围内；可以用仅80μA的待机电流，实现外部断电；具有自我保护电路（一个两级降频限流保护和一个在异常情况下断电的过温完全保护电路）。</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://s2.loli.net/2022/02/14/X1Vy68JIcMONKHW.png" alt="LM2596内部框图"></p>
 </div>
@@ -272,7 +272,7 @@
 <blockquote>
 <p>电路设计中要注意让反馈支路线要远离电感，电路加粗的线尽量要短，调节输出电压的电阻R1、R2要靠近LM2596芯片的4脚。</p>
 </blockquote>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://s2.loli.net/2022/02/14/61CiWpwyAnPZ4Hv.png" alt="理论参考电路"></p>
 </div>
@@ -285,24 +285,24 @@
 <p>本次设计中要求输出为5V，R<sub>1</sub>为固定电阻1KΩ，计算得R<sub>P2</sub>约为3.1KΩ；</p>
 <p>(4) 电感选择：</p>
 <p>查得LM2596内部开关饱和电压为V<sub>sat</sub> = 1.16V，二极管1N5821的正向压降为V­­<sub>D</sub> = 0.5V。可以通过下面的公式计算电感电压与时间（微秒）的乘积：</p>
-<p> <img src="https://s2.loli.net/2022/02/14/wpfaYiIKR6QCDgv.png" alt> </p>
+<p> <img src="https://s2.loli.net/2022/02/14/wpfaYiIKR6QCDgv.png" alt=""> </p>
 <p>从下图的电感值选择指导看出，电感的取值范围可以由上述的E·T值和和所允许最大负载电流来决定。由上面公式计算出E·T值，然后在图7的纵轴上找到对应的数值。在横轴上，选择最大的负载电流。通过 E·T的值和最大负载电流值确定电感范围，同时记录下该范围所对应的电感号。通过电感号来确定具体的电感值，从而选择合适的电感。另外电感的选择还应考虑LM2596芯片的开关频率150KHz和通过的电流额定值。</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://s2.loli.net/2022/02/14/NMGjb4mfDCE1ucv.png" alt="电感选择指导"></p>
  </div>
 
 <p>(5) 前馈电容选择：</p>
 <p>前馈电容即原理图中的C<sub>1</sub>，上面算得R<sub>P2</sub>约为3.1KΩ，代入下式计算，该前馈电容取10nF即可。</p>
-<p><img src="https://s2.loli.net/2022/02/14/fEm7wezFxGDHrYA.png" alt> </p>
+<p><img src="https://s2.loli.net/2022/02/14/fEm7wezFxGDHrYA.png" alt=""> </p>
 <h2 id="仿真测试"><a href="#仿真测试" class="headerlink" title="仿真测试"></a>仿真测试</h2><h3 id="仿真测试方案"><a href="#仿真测试方案" class="headerlink" title="仿真测试方案"></a>仿真测试方案</h3><p>借助TI公司的一款在线设计和仿真工具<strong><em>WEBENCH</em></strong>进行电路仿真。仿真工具提供了LM2596搭建的许多种典型电路，可从上面直接找到与本设计符合的参考电路。为了符合本设计的指标，可对电路参数进行修正。限定最小输入电压为12V、最大值则为40V，典型值是24V，输出电压典型值改为5V，负载电流最大值改为2.5A，典型值是0.5A。其余元件参数由仿真工具自动调整以达到设定的指标，然后开始仿真即可查看各电路参数的波形。</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://s2.loli.net/2022/02/14/lTVw4IFdU7qWpr9.png" alt="WEBENCH仿真"></p>
 </div>
 
 <h3 id="仿真测试结果"><a href="#仿真测试结果" class="headerlink" title="仿真测试结果"></a>仿真测试结果</h3><p>如图是输出电压波形和负载电流波形。</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://s2.loli.net/2022/02/14/v2Aupx9SP87thIw.png" alt="仿真波形"></p>
 </div>
@@ -310,7 +310,7 @@
 <p>左侧红色示数为电压示数，右侧蓝色为电流示数。可以看到输出电压V<sub>out</sub>的基础电压值在U<sub>o</sub> = 5.015V左右，负载电流为I<sub>L</sub> = 0.5A，输出功率约为P<sub>o</sub> = 2.51W。 最大纹波电压峰峰值为u<sub>o</sub> = 30mV，达到设计要求。</p>
 <hr>
 <h1 id="PCB设计与电路实测"><a href="#PCB设计与电路实测" class="headerlink" title="PCB设计与电路实测"></a>PCB设计与电路实测</h1><h2 id="PCB设计"><a href="#PCB设计" class="headerlink" title="PCB设计"></a>PCB设计</h2><p>电路原理图和PCB均通过<strong><em>Altium Designer 2020</em></strong>绘制，采用单层板结构，方便手工制作。PCB对GND网络进行敷铜，配合LM2596芯片的TO-263表面贴封装，可有效利用敷铜和PCB板帮助芯片的散热。考虑到电源电压较高，所以电源网络线宽应适当加大。</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://s2.loli.net/2022/02/14/GmdJy9pO2tjBwcK.png" alt="PCB图"></p>
 </div>
@@ -323,20 +323,20 @@
 <h3 id="测试结果与分析"><a href="#测试结果与分析" class="headerlink" title="测试结果与分析"></a>测试结果与分析</h3><h4 id="输出功率"><a href="#输出功率" class="headerlink" title="输出功率"></a>输出功率</h4><p>电路外接10Ω负载，通过万用表测得输出电压为4.989V，负载电流为0.507A；可以计算出输出功率为P<sub>o</sub> = 2.53W；</p>
 <h4 id="输入功率"><a href="#输入功率" class="headerlink" title="输入功率"></a>输入功率</h4><p>由于用万用表测量的输入电流与直流电源的示数误差极小，所以直接采用直流电源显示的数值。电源输出电压为24.011V，电流为0.143A，所以电路输入功率为P<sub>I</sub> = 3.434W。 </p>
 <h4 id="满载效率"><a href="#满载效率" class="headerlink" title="满载效率"></a>满载效率</h4><p>满载效率经计算得到：</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
-<p><img src="https://s2.loli.net/2022/02/14/XWrfPl9asQciNu3.png" alt></p>
+<p><img src="https://s2.loli.net/2022/02/14/XWrfPl9asQciNu3.png" alt=""></p>
 </div>
 
 <h4 id="最大纹波电压"><a href="#最大纹波电压" class="headerlink" title="最大纹波电压"></a>最大纹波电压</h4><p>输出电压波形如图所示：</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://s2.loli.net/2022/02/14/FDPIlA5RLHS4ZX9.png" alt="示波器波形"></p>
 </div>
 
 <p>最大纹波电压峰峰值约为28.8mW​，指标要求最大纹波电压为​100mW​，达到指标要求。</p>
 <hr>
-<p><br><br><br><br><br></p>
+<p></br></br></br></br></br></p>
 <ul>
 <li>end</li>
 </ul>

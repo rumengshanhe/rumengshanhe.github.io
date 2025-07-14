@@ -180,24 +180,24 @@
 <h1 id="积分运算电路"><a href="#积分运算电路" class="headerlink" title="积分运算电路"></a>积分运算电路</h1><h2 id="原理图"><a href="#原理图" class="headerlink" title="原理图"></a>原理图</h2><p><img src="https://i.loli.net/2021/08/17/NVEpivL9ady35Is.png" alt="积分电路"></p>
 <a id="more"></a>
 
-<h2 id="电路分析"><a href="#电路分析" class="headerlink" title="电路分析"></a>电路分析</h2><p>由“虚短”得<img src="https://www.zhihu.com/equation?tex=v_%7BN%7D%3Dv_%7BP%7D%3D0" alt></p>
-<p>由“虚断”得<img src="https://www.zhihu.com/equation?tex=i_%7BN%7D%3Di_%7BP%7D%3D0" alt></p>
-<p>由于<img src="https://www.zhihu.com/equation?tex=v_%7BN%7D%3D0" alt> ，于是有<img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-v_%7BC%7D" alt></p>
-<p>电容电压满足<img src="https://www.zhihu.com/equation?tex=u%3DQ/C" alt>)，而电荷Q则是电容电流的积分，则有<img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-%5Cfrac%7B1%7D%7BC%7D%5Cint_%7B%7D%5E%7B%7D%7Bi%7D_%7BC%7Ddt" alt></p>
-<p>又因为上述虚短的特性，有 <img src="https://www.zhihu.com/equation?tex=i_%7BC%7D%3Di_%7BR%7D%3D%5Cfrac%7Bv_%7BI%7D%7D%7BR%7D" alt></p>
+<h2 id="电路分析"><a href="#电路分析" class="headerlink" title="电路分析"></a>电路分析</h2><p>由“虚短”得<img src="https://www.zhihu.com/equation?tex=v_%7BN%7D%3Dv_%7BP%7D%3D0" alt=""></p>
+<p>由“虚断”得<img src="https://www.zhihu.com/equation?tex=i_%7BN%7D%3Di_%7BP%7D%3D0" alt=""></p>
+<p>由于<img src="https://www.zhihu.com/equation?tex=v_%7BN%7D%3D0" alt=""> ，于是有<img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-v_%7BC%7D" alt=""></p>
+<p>电容电压满足<img src="https://www.zhihu.com/equation?tex=u%3DQ/C" alt="">)，而电荷Q则是电容电流的积分，则有<img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-%5Cfrac%7B1%7D%7BC%7D%5Cint_%7B%7D%5E%7B%7D%7Bi%7D_%7BC%7Ddt" alt=""></p>
+<p>又因为上述虚短的特性，有 <img src="https://www.zhihu.com/equation?tex=i_%7BC%7D%3Di_%7BR%7D%3D%5Cfrac%7Bv_%7BI%7D%7D%7BR%7D" alt=""></p>
 <p>所以输出电压又可以写成</p>
-<p><img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-%5Cfrac%7B1%7D%7BRC%7D%5Cint_%7B%7D%5E%7B%7Dv_%7BI%7Ddt" alt></p>
+<p><img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-%5Cfrac%7B1%7D%7BRC%7D%5Cint_%7B%7D%5E%7B%7Dv_%7BI%7Ddt" alt=""></p>
 <p>考虑到输入信号还有时间，就可以得到定积分</p>
-<p><img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-%5Cfrac%7B1%7D%7BRC%7D%5Cint_%7Bt_%7B1%7D%7D%5E%7Bt_%7B2%7D%7Dv_%7BI%7Ddt%2Bv_%7BO%7D%28t_%7B1%7D%29" alt></p>
+<p><img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-%5Cfrac%7B1%7D%7BRC%7D%5Cint_%7Bt_%7B1%7D%7D%5E%7Bt_%7B2%7D%7Dv_%7BI%7Ddt%2Bv_%7BO%7D%28t_%7B1%7D%29" alt=""></p>
 <h2 id="常见的积分输出电压波形"><a href="#常见的积分输出电压波形" class="headerlink" title="常见的积分输出电压波形"></a>常见的积分输出电压波形</h2><p><img src="https://i.loli.net/2021/08/17/xB4DULJ53GFqhMW.jpg" alt="积分波形"></p>
 <h1 id="微分运算电路"><a href="#微分运算电路" class="headerlink" title="微分运算电路"></a>微分运算电路</h1><h2 id="原理图-1"><a href="#原理图-1" class="headerlink" title="原理图"></a>原理图</h2><p><img src="https://i.loli.net/2021/08/17/icJrE6XTCbvp48k.png" alt="微分电路"></p>
 <h2 id="电路分析-1"><a href="#电路分析-1" class="headerlink" title="电路分析"></a>电路分析</h2><p>由“虚断”有</p>
-<p><img src="https://www.zhihu.com/equation?tex=i_%7BC%7D%3Di_%7BR%7D%3DC%5Cfrac%7Bdv_%7BI%7D%7D%7Bdt%7D" alt></p>
-<p>又由“虚短”得<img src="https://www.zhihu.com/equation?tex=v_%7BN%7D%3Dv_%7BP%7D%3D0" alt>)，据此有<img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-i_R*R" alt>,即</p>
-<p><img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-RC%5Cfrac%7Bdv_%7BI%7D%7D%7Bdt%7D" alt></p>
+<p><img src="https://www.zhihu.com/equation?tex=i_%7BC%7D%3Di_%7BR%7D%3DC%5Cfrac%7Bdv_%7BI%7D%7D%7Bdt%7D" alt=""></p>
+<p>又由“虚短”得<img src="https://www.zhihu.com/equation?tex=v_%7BN%7D%3Dv_%7BP%7D%3D0" alt="">)，据此有<img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-i_R*R" alt="">,即</p>
+<p><img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D-RC%5Cfrac%7Bdv_%7BI%7D%7D%7Bdt%7D" alt=""></p>
 <h1 id="加法电路"><a href="#加法电路" class="headerlink" title="加法电路"></a>加法电路</h1><h2 id="原理图-2"><a href="#原理图-2" class="headerlink" title="原理图"></a>原理图</h2><p><img src="https://i.loli.net/2021/08/17/XhSGl5POUcWitzK.png" alt="加法电路"></p>
 <h2 id="电路分析-2"><a href="#电路分析-2" class="headerlink" title="电路分析"></a>电路分析</h2><p>运放的同相输入端接地，根据“虚短”特性，运放的反相输入端的电位也为0，因此三个输入支路的电流分别为：</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://i.loli.net/2021/08/17/6ZpwxRklD7yXTQ9.png" alt="公式"></p>
 </div>
@@ -210,7 +210,7 @@
 <h1 id="差分放大器"><a href="#差分放大器" class="headerlink" title="差分放大器"></a>差分放大器</h1><p>差分放大器只放大两个输入信号的差值，而不放大其公共部分（共模电压）。这种特性称为<strong>共模抑制</strong>（common-mode rejection）。在实际工况中，外部环境的噪声通常对两个输入端的影响是相同的，而差分放大器不会放大这种同时叠加到两个输入端的噪声，因此差分放大器可以比较有效地抵抗这种噪声的影响。</p>
 <h2 id="原理图-3"><a href="#原理图-3" class="headerlink" title="原理图"></a>原理图</h2><p><img src="https://i.loli.net/2021/08/17/nbOdSijh3a2M5PR.png" alt="差分电路"></p>
 <h2 id="电路分析-3"><a href="#电路分析-3" class="headerlink" title="电路分析"></a>电路分析</h2><p>根据理想运放的虚短和0输入电流特性，可得到同相和反相输入端的电压表达式：</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://i.loli.net/2021/08/17/u5MWkTVc6JLsY2d.png" alt="公式"></p>
 </div>
@@ -220,14 +220,14 @@
 <p>​      将上式略作变形，可得：</p>
 <p><img src="https://i.loli.net/2021/08/17/TEsiyAtvMHR6DWm.png" alt="公式"></p>
 <p>​      当配置R1/R2 = R3/R4时，上式可化简为：</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://i.loli.net/2021/08/17/plKXyHtQbh9GeZI.png" alt="公式"></p>
 </div>
 
 <p>​      从而实现了对输入电压差值的放大。</p>
 <h1 id="减法电路"><a href="#减法电路" class="headerlink" title="减法电路"></a>减法电路</h1><h2 id="使用差分放大器实现"><a href="#使用差分放大器实现" class="headerlink" title="使用差分放大器实现"></a>使用差分放大器实现</h2><p>有多种方法可以实现减法电路，一种就是使用上面的差分放大器，将四个电阻取值为：R1=R2=R3=R4时，上面的输出电压就变为了</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://i.loli.net/2021/08/17/HlGPbMBYncoqWst.png" alt="公式"></p>
 </div>
@@ -237,7 +237,7 @@
 <h3 id="原理图-5"><a href="#原理图-5" class="headerlink" title="原理图"></a>原理图</h3><p><img src="https://i.loli.net/2021/08/17/jna4kGyOQFpAsMY.png" alt="运放实现减法电路"></p>
 <h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>输入信号Vi1经过反相放大器后，变为-Vi1，然后再将其与Vi2做加法运算，输出电压Vo表达式为</p>
 <p><img src="https://i.loli.net/2021/08/17/UhYVnA5rHxqBt8W.png" alt="公式"></p>
-<p><br><br><br><br><br><br></p>
+<p></br></br></br></br></br></br></p>
 <ul>
 <li>end</li>
 </ul>

@@ -211,7 +211,7 @@
 <h2 id="IIC"><a href="#IIC" class="headerlink" title="IIC"></a>IIC</h2><p>IIC 接口的协议里面包括设备地址信息，IIC总线是一个真正的多主机总线，可以同一总线上连接多个从设备，通过应答来互通数据及命令。</p>
 <h3 id="数据协议"><a href="#数据协议" class="headerlink" title="数据协议"></a>数据协议</h3><p>假设A给B发数据，A-&gt;SCL接B-&gt;SCL, A-&gt;SDA接B-&gt;SDA。起初SDA和SCL上的电平都为高电平，接着A先把SDA拉低，等SDA变为低电平后再把SCL拉低，以上两个动作构成了IIC协议的起始位，此时SDA就可以发送数据了。与此同时，SCL发送一定周期的脉冲（周期和PCLK有关，一般会在IIC的控制寄存器中设置）。SDA发送数据和SCL发送脉冲要符合的关系是：SDA必须在SCL是高电平时保持有效，在SCL是低电平时发送下一位，而SCL会在上升沿对SDA进行采样。规定一次必须传8位数据，8位数据传输结束后A释放SDA，但SCL会再发一个脉冲，这会触发B通过将SDA置为低电平表示确认。最后SCL先变为高电平，SDA再变为高电平，这就构成了是IIC协议的结束标志。如果B没有将SDA置为低电平，则A停止发送下一帧数据。</p>
 <p>IIC总线上的每个设备都有唯一地址，数据包传输时先发送地址位，接着才发送数据。一个地址字节由7个地址位和1个指示位组成，总共可以挂载128个设备。指示位是0表示写操作，1表示读操作。还有10位寻址模式，使用两个字节来保存地址，第一个字节的最低两位和第二个字节的8位合起来构成10位地址。</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="http://tva1.sinaimg.cn/large/006HPlntgy1gv1xmry5v0j60ng08dwf102.jpg" alt="完整数据传输"> </p>
 </div>
@@ -253,7 +253,7 @@
 </li>
 <li><p>SPI用<strong>片选信号</strong>选择从机，IIC用<strong>地址</strong>选择从机。</p>
 <p>… …</p>
-<p><br><br><br></p>
+<p></br></br></br></p>
 <ul>
 <li>end</li>
 </ul>

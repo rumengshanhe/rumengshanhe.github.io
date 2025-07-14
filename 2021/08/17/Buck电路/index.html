@@ -183,20 +183,20 @@
 <p>其中，Q1是MOS管，也作为开关管，驱动电压一般为PWM波，D1是续流二极管，还有电感L1、电容C1和负载电阻RL。</p>
 <h1 id="工作机理"><a href="#工作机理" class="headerlink" title="工作机理"></a>工作机理</h1><h2 id="开关导通"><a href="#开关导通" class="headerlink" title="开关导通"></a>开关导通</h2><p><img src="https://inews.gtimg.com/newsapp_match/0/3507842604/0" alt="电流示意图"></p>
 <p>当Q1栅极G为高电平的时候，Q1的D、S极导通，电流方向是VCC经过Q1、L1，经C1和RL流向地，由于电感器的特性，电感会产生一个自感电动势，来阻碍电流通过，同时电感器会储存磁能。此时，流经电感L1的电流线性增加，同时给电容C1充电，给负载RL提供能量。 </p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://i.loli.net/2021/08/17/reUcFhLIW3k2ZPX.png" alt="开关导通时等效电路"> </p>
 </div>
 
 <h2 id="开关截止"><a href="#开关截止" class="headerlink" title="开关截止"></a>开关截止</h2><p><img src="https://inews.gtimg.com/newsapp_match/0/3507842607/0" alt="电流示意图"></p>
 <p>当栅极G为低电平的时候，Q1截止，那么流过电感L1的电流就会减小，由于电感器的特性，电感会产生自感电动势阻碍电流减小。那么这个电动势经过滤波电容C1滤波，经过负载RL到地，再经过续流二极管D1构成回路，当电感上的电动势减小或者消失后，电路是通过滤波电容器C1给后级负载供电的。即此时，储能电感L1通过续流二极管D1放电，电感电流线性减少，输出电压靠输出滤波电容C1放电以及减小的电感电流维持 。</p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://i.loli.net/2021/08/17/WtTRGswy8nKvAem.png" alt="开关截止时等效电路"> </p>
 </div>
 
 <h1 id="我的理解"><a href="#我的理解" class="headerlink" title="我的理解"></a>我的理解</h1><p>经过上述工作过程的分析，不难发现，这种类型的Buck电路的本质就是通过控制开关Q1的导通时间（占空比），来调节储能元件L和C充放电的时间，进而控制输出电压的大小（平均值），当控制信号的占空比越大时，输出电压的瞬间峰值越大，则输出平均值越大，反之，输出电压平均值越小，理想状态下（忽略损耗），则输出电压与输入电压的关系如下式： </p>
-<div style="text-align: center;">
+<div style='text-align: center;'>
 
 <p><img src="https://www.zhihu.com/equation?tex=v_%7BO%7D%3D%5Cfrac%7BT_%7Bon%7D%7D%7BT_%7Bon%7D%7B%2BT_%7Boff%7D%7D%7D*v_%7BI%7D" alt="公式"></p>
 </div>
@@ -219,7 +219,7 @@
 <p>得</p>
 <p><code>Vout / Vin = D1 / (D1 + D2)</code></p>
 <p>开关管导通、二极管截止的时间长度为D1T；开关管截止、二极管导通的时间长度为D2T；开关管和二极管都截止的时间长度为（1-D1-D2）* T，D2与电路参数有关。</p>
-<p><br><br><br><br><br><br></p>
+<p></br></br></br></br></br></br></p>
 <ul>
 <li>end</li>
 </ul>
