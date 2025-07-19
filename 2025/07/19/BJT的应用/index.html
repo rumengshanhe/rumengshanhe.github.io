@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BJT的基本应用电路 | Something Interesting</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon1.png"><!-- index.css--><link rel="stylesheet" href="/css/index.css?v=3.0.19"><!-- inject head--><link rel="canonical" href="http://example.com/2025/07/19/BJT%E7%9A%84%E5%BA%94%E7%94%A8/index.html"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><!-- Open Graph--><meta name="description" content="BJT实现逻辑门BJT晶体管可以实现逻辑门，事实上，在场效应管（FET）被发明用于集成电路以前，各种逻辑门芯片中的电路就是用BJT晶体管来实现的。最早人们使用二极管与BJT组合来实现逻辑门，称为二极管-晶体管逻辑（Diode-Transistor Logic），简称DTL；后来改进为全部用BJT晶体"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="Something Interesting"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon1.png"><link rel="apple-touch-icon" href="/img/pwa/favicon1.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.19' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: undefined,
+    runtime: '2025-07-18 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可"},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: false,
+    expire: false,
+};</script><!-- page-config head--><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: false,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body id="body"><!-- universe--><!-- background img--><!-- loading--><!-- console--><!-- sidebar--><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/Buck%E7%94%B5%E8%B7%AF/">Buck电路<sup>2</sup></a><a href="/tags/BJT/">BJT<sup>3</sup></a><a href="/tags/MOS%E7%AE%A1/">MOS管<sup>1</sup></a><a href="/tags/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/">开关电源<sup>2</sup></a><a href="/tags/FPGA%E5%99%A8%E4%BB%B6/">FPGA器件<sup>1</sup></a><a href="/tags/const/">const<sup>1</sup></a><a href="/tags/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/">Linux虚拟机安装<sup>1</sup></a><a href="/tags/Linux%E5%BF%AB%E6%8D%B7%E9%94%AE%E4%B8%8E%E5%91%BD%E4%BB%A4/">Linux快捷键与命令<sup>1</sup></a><a href="/tags/Linux%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">Linux文件操作<sup>1</sup></a><a href="/tags/NFS%E6%9C%8D%E5%8A%A1/">NFS服务<sup>1</sup></a><a href="/tags/Linux%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">Linux网络操作<sup>1</sup></a><a href="/tags/Vim/">Vim<sup>1</sup></a><a href="/tags/Shell%E7%BC%96%E7%A8%8B/">Shell编程<sup>1</sup></a><a href="/tags/%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/">串行通信<sup>1</sup></a><a href="/tags/UART/">UART<sup>1</sup></a><a href="/tags/IIC/">IIC<sup>1</sup></a><a href="/tags/SPI/">SPI<sup>1</sup></a><a href="/tags/DPLL/">DPLL<sup>1</sup></a><a href="/tags/Verilog/">Verilog<sup>1</sup></a><a href="/tags/%E5%80%8D%E9%A2%91%E5%99%A8/">倍频器<sup>1</sup></a><a href="/tags/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E7%90%86/">基尔霍夫定理<sup>1</sup></a><a href="/tags/%E5%BB%BA%E7%AB%8B%E6%97%B6%E9%97%B4%E5%92%8C%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4/">建立时间和保持时间<sup>1</sup></a><a href="/tags/%E7%BA%BF%E4%B8%8E/">线与<sup>1</sup></a><a href="/tags/%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%86%92%E9%99%A9/">竞争与冒险<sup>1</sup></a><a href="/tags/%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%E5%92%8C%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D/">异步复位和同步复位<sup>1</sup></a><a href="/tags/%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">元器件选型<sup>1</sup></a><a href="/tags/%E7%A7%AF%E5%88%86%E7%94%B5%E8%B7%AF/">积分电路<sup>1</sup></a><a href="/tags/%E5%BE%AE%E5%88%86%E7%94%B5%E8%B7%AF/">微分电路<sup>1</sup></a><a href="/tags/%E5%8A%A0%E6%B3%95%E7%94%B5%E8%B7%AF/">加法电路<sup>1</sup></a><a href="/tags/%E5%B7%AE%E5%88%86%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88%E5%87%8F%E6%B3%95%E7%94%B5%E8%B7%AF%EF%BC%89/">差分放大器（减法电路）<sup>1</sup></a></div></div></div></div><!-- keyboard--><!-- righhtside--><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><div class="back-home-button" tabindex="-1"><i class="back-home-button-icon solitude fas fa-bars-progress"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div></div><a id="site-name" href="/" title="返回博客主页"><img src="/img/pwa/cursor.ico" alt="Something Interesting"><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">BJT的基本应用电路</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fas fa-dice-d6"></i></a></div><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E6%A8%A1%E7%94%B5%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8/">模电原理及应用</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BJT/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>BJT</span></a></div></div></div></div><h1 class="post-title">BJT的基本应用电路</h1><div id="post-meta"><div class="meta-secondline"></div></div></div><article class="post-content article-container"><h1 id="BJT实现逻辑门"><a href="#BJT实现逻辑门" class="headerlink" title="BJT实现逻辑门"></a>BJT实现逻辑门</h1><p>BJT晶体管可以实现逻辑门，事实上，在场效应管（FET）被发明用于集成电路以前，各种逻辑门芯片中的电路就是用BJT晶体管来实现的。最早人们使用二极管与BJT组合来实现逻辑门，称为<strong>二极管-晶体管逻辑</strong>（Diode-Transistor Logic），简称<strong>DTL</strong>；后来改进为全部用BJT晶体管来实现逻辑门，称为<strong>晶体管-晶体管逻辑</strong>（Transistor-Transistor Logic），简称<strong>TTL</strong>。早期广为人知的TTL电平，就是基于这种用BJT晶体管实现的逻辑门。TTL的优点是响应速度比较快，缺点是功耗较大，所以后来基本被功耗更低的场效应管取代。</p>
+<p>我在这里梳理了几个最简单的逻辑门的实现——反相器、或非门、与非门，主要用来巩固概念，也便于区分BJT在逻辑电路和放大电路上应用的区别。即放大电路中，BJT都工作于放大区，而在用BJT实现逻辑门时，却要使BJT工作在饱和区和截止区，而不能使用放大区，这个是逻辑电路和放大电路的在使用BJT时的根本区别。</p>
+<span id="more"></span>
+
+<h2 id="反相器"><a href="#反相器" class="headerlink" title="反相器"></a>反相器</h2><p>反相器的功能很简单，就是将输入的电平反向输出：输入高电平——输出低电平，输入低电平——输出高电平。下面是反相器的实现电路：</p>
+<p><img src="https://i.loli.net/2021/09/26/wBYxdTXUWDe7Nab.png"></p>
+<p>在作逻辑分析时，我们一般做如下近似：将V<sub>BE</sub>的导通值视为0.7V，将典型值为0.1V-0.3V的饱和电压V<sub>CEsat</sub>近似视为0.2V。</p>
+<p>下面是反相器电路工作原理：</p>
+<ul>
+<li><p>当V<sub>i</sub>输入为0V时，BJT截止，V<sub>o</sub>输出电平即为5V。</p>
+</li>
+<li><p>当V<sub>i</sub>输入为5V时，BJT的CE端导通，产生电流I<sub>C</sub>，若此时BJT处于饱和区，V<sub>CE</sub>近似可视为饱和电压0.2V，此时输出电平Vo即为0.2V。</p>
+</li>
+</ul>
+<p>这个电路的关键点在于如何选取合适的R<sub>B</sub>与R<sub>C</sub>值以确保BJT在导通时确实工作于饱和区。一般可以先根据外部负载条件定出一个符合输出阻抗要求的R<sub>C</sub>，然后再根据饱和要求，用公式推算出能使BJT进入临界饱和的大致R<sub>B</sub>值，再加点余量。最后验证在高电平输入条件下，BJT在此R<sub>B</sub>配置下是否确实工作于饱和区。具体方法可参看下面的例题：</p>
+<p><strong>例题</strong>：在下图的反相器中，已知 <em>β&#x3D;100</em>，根据外部负载匹配，要求R<sub>C</sub>为500Ω，请选取合适的R<sub>B</sub>值使反相器能正常工作。</p>
+<p><img src="https://i.loli.net/2021/09/26/KNS78QgM2aHioFu.png"></p>
+<p>**解：**先计算出，在这个R<sub>C</sub>条件下，当BJT处于临界饱和时的I<sub>Csat</sub>值：</p>
+<p><img src="https://i.loli.net/2021/09/26/T53bxk9W2cRge1l.png"></p>
+<p>​      然后计算临界饱和时的I<sub>Bsat</sub>值（当处于临界饱和时，<em>β</em>仍视为100）：</p>
+<p><img src="https://i.loli.net/2021/09/26/MAQY6htdpVzjDyq.png"></p>
+<p>​      使此I<sub>Bsat</sub>成立的R<sub>Bsat</sub>为：</p>
+<p><img src="https://i.loli.net/2021/09/26/ASjhHU7n4fypgVX.png"></p>
+<p>​      为使BJT进入更深度的饱和，我们选取R<sub>B</sub>为比R<sub>Bsat</sub>更小的值，假定选取为20kΩ。</p>
+<p>**验证：**当R<sub>B</sub>为20kΩ时，I<sub>B</sub>为：</p>
+<p><img src="https://i.loli.net/2021/09/26/PQqBXoc4YOyKmv1.png"></p>
+<p>​      此时电流放大倍数<em>β</em>为：</p>
+<p><img src="https://i.loli.net/2021/09/26/riY6S2FwVfdWLEu.png"></p>
+<p>​      可知，在此R<sub>B</sub>值下，BJT导通时确实处于饱和区，原假设正确。</p>
+<h2 id="或非门"><a href="#或非门" class="headerlink" title="或非门"></a>或非门</h2><p>或非门BJT实现电路和输入输出真值表如下图所示（其中1表示高电平，0表示低电平）：</p>
+<p><img src="https://i.loli.net/2021/09/26/HMLmKAEa4kTUR9v.png"></p>
+<p>下面是或非门电路工作原理：</p>
+<ul>
+<li><p>当V<sub>i1</sub>和V<sub>i2</sub>输入都为0V时，晶体管Q1和Q2都截止，V<sub>o</sub>输出电平为5V。</p>
+</li>
+<li><p>当V<sub>i1</sub>输入为5V、V<sub>i2</sub>输入为0V时，晶体管Q1导通、Q2截止，由于Q1工作于饱和区，V<sub>CE1</sub>&#x3D;V<sub>CEsat</sub>≈0.2V，故V<sub>o</sub>输出电平为0.2V。</p>
+</li>
+<li><p>同样的，当V<sub>i2</sub>输入为5V时、V<sub>i1</sub>输入为0V时，晶体管Q2导通、Q1截止，V<sub>CE2</sub>&#x3D;V<sub>CEsat</sub>≈0.2V，故V<sub>o</sub>输出电平为0.2V。</p>
+</li>
+<li><p>当V<sub>i1</sub>和V<sub>i2</sub>都输入0V时，晶体管Q1和Q2都导通，V<sub>CE1</sub>&#x3D;V<sub>CE2</sub>&#x3D;V<sub>CEsat</sub>≈0.2V，故V<sub>o</sub>输出电平为0.2V。</p>
+</li>
+</ul>
+<p>关于如何配置R<sub>B1</sub>、R<sub>B2</sub>、R<sub>C</sub>的值使BJT晶体管工作于饱和区，这个和前面反相器的计算方法是类似的。</p>
+<h2 id="与非门"><a href="#与非门" class="headerlink" title="与非门"></a>与非门</h2><p>与非门的实现需要二极管的配合，其实现电路和真值表如下图所示：</p>
+<p><img src="https://i.loli.net/2021/09/26/dfnESeRirpK8Fhx.png"></p>
+<p>下面是与非门电路工作原理：</p>
+<ul>
+<li><p>当V<sub>i1</sub>和V<sub>i2</sub>输入中有任一个为0V时，输入二极管D<sub>i1</sub>或D<sub>i2</sub>就会导通，此时V<sub>1</sub>点的电压即为二极管的导通阈值电压0.7V。这个电压无法使右边的D<sub>1</sub>和Q<sub>1</sub>都导通，因为若要使D<sub>1</sub>和Q<sub>1</sub>的发射结都导通，V<sub>B</sub>点的电压起码需要0.7V，而V<sub>1</sub>点的电压需要0.7+0.7&#x3D;1.4V。而在V<sub>1</sub>只有0.7V的情况下，右边的D<sub>1</sub>和Q<sub>1</sub>的发射结每个只能分到0.35V左右的电压，故D<sub>1</sub>和Q<sub>1</sub>都截止，输出V<sub>o</sub>保持5V的高电平。</p>
+</li>
+<li><p>当V<sub>i1</sub>和V<sub>i2</sub>输入全都为5V时，输入二极管D<sub>i1</sub>和D<sub>i2</sub>全都截止，此时V<sub>CC</sub>会使R<sub>1</sub>、D<sub>1</sub>和Q<sub>1</sub>形成通路，V<sub>B</sub>点的电压为0.7V，V<sub>1</sub>点的电压为1.4V。由于Q<sub>1</sub>导通时工作于饱和状态，故输出V<sub>o</sub>为V<sub>CEsat</sub>约等于0.2V。</p>
+</li>
+</ul>
+<p>至于如何配置R<sub>1</sub>、R<sub>B</sub>、R<sub>C</sub>，原理和前面是一样的——根据输出阻抗匹配先定R<sub>C</sub>，然后计算为使Q<sub>1</sub>进入饱和区的R<sub>1</sub>，和反相器的计算方法也是类似的。R<sub>B</sub>称作下拉电阻，其主要作用是当Q<sub>1</sub>从饱和状态切换到截止状态时，使基区过剩的少数载流子有个渠道流掉，以减少切换开关时间。</p>
+<h2 id="关于TTL"><a href="#关于TTL" class="headerlink" title="关于TTL"></a>关于TTL</h2><p>​      在上面电路中，我们用<strong>DTL</strong>（二极管-晶体管逻辑）实现了与非门。如果要用传说中的<strong>TTL</strong>（晶体管-晶体管逻辑）又应该怎么实现呢。</p>
+<p>仍以上面的与非门为例，假设先去掉D<sub>i2</sub>，那么，在图中两个背靠背的二极管D<sub>i1</sub>和D<sub>1</sub>，其实可以看成是一个NPN型三极管，如下图所示：</p>
+<p><img src="https://i.loli.net/2021/09/26/Os4cWnK8xZ531IS.png"></p>
+<p>在分立元器件的BJT晶体管中，C极和E极的掺杂浓度是不对称的，所以分立元器件中不能像上图这样等效，但是在制作集成电路芯片时，是可以在片上做成像上面右图那样的对称管的。而且，在集成电路制作时还可以加入多个发射极，如下图所示：</p>
+<p><img src="https://i.loli.net/2021/09/26/ydcrJ9RQzIex5Sn.png"></p>
+<p>如此，就实现了一个二输入与非门的TTL电路。如果要实现n个输入的与非门，还可以加入n个发射极。当然，这种多发射极的BJT晶体管只能在集成电路芯片中实现，分立元器件的话是没有这种器件的。</p>
+<h1 id="BJT实现开关电路"><a href="#BJT实现开关电路" class="headerlink" title="BJT实现开关电路"></a>BJT实现开关电路</h1><h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>用BJT晶体管实现开关功能是经常会用到的实用电路。和逻辑门电路类似，当BJT用于开关电路时，也只工作于饱和区和截止区。开关功能的实现电路如下图所示，负载可以是发光二极管、电动机等等。</p>
+<p><img src="https://i.loli.net/2021/09/26/zyTnSMjDcA5B1lE.png"></p>
+<p>开关电路的工作原理如下：</p>
+<ul>
+<li>当V<sub>i</sub>输入0V时，晶体管截止，负载R<sub>L</sub>上没有电流通过；</li>
+<li>当V<sub>i</sub>输入高电平时（一般可等于VCC，也可以定义其他电平值），晶体管导通且进入饱和状态，负载R<sub>L</sub>上有电流通过，并且负载上的电压约等于V<sub>CC</sub>-V<sub>CEsat</sub>。</li>
+</ul>
+<p>开关电路的R<sub>B</sub>值的设计思路也和前面逻辑门相似，也是根据负载R<sub>L</sub>的实际情况，计算出能使晶体管进入饱和区的R<sub>B</sub>，然后再代入验算结果，如以下例题所示：</p>
+<p><strong>例题</strong>：在下面的开关电路中，V<sub>CC</sub>&#x3D;12V，电动机负载的有效电阻为R<sub>L</sub>&#x3D;5Ω，晶体管的<em>β</em>&#x3D;100，要求V<sub>i</sub>的开启电压为5V，试求：（1）能使电路工作的R<sub>B</sub>；（2）负载上的电流I<sub>L</sub>和负载功耗P<sub>L</sub>；（3）晶体管本身的耗损功率。</p>
+<p><img src="https://i.loli.net/2021/09/26/4SqXEHZrbcNU7dG.png"></p>
+<p><strong>解：</strong>（1）当晶体管临界饱和时：</p>
+<p><img src="https://i.loli.net/2021/09/26/XqvGAdOlfnQeWZ1.png"></p>
+<p>​      此时临界饱和电流I<sub>Csat</sub>为：</p>
+<p><img src="https://i.loli.net/2021/09/26/zd3t592TDPs8XIR.png"></p>
+<p>​      然后计算临界饱和时的I<sub>Bsat</sub>值（当处于临界饱和时，<em>β</em>仍视为100）：</p>
+<p><img src="https://i.loli.net/2021/09/26/ACT6jyIsrQzbEM7.png"></p>
+<p>​      使此I<sub>Bsat</sub>成立的R<sub>Bsat</sub>为：</p>
+<p><img src="https://i.loli.net/2021/09/26/7Lzd4D8tm3Jqga9.png"></p>
+<p>为使BJT进入更深度的饱和，我们选取R<sub>B</sub>为比R<sub>Bsat</sub>更小的值，假定选取为100Ω。</p>
+<p>**验证：**当R<sub>B</sub>为100Ω时，I<sub>B</sub>为：</p>
+<p><img src="https://i.loli.net/2021/09/26/XV5pbQduGmIJjOv.png"></p>
+<p>​      此时电流放大倍数为：</p>
+<p><img src="https://i.loli.net/2021/09/26/qz4QcWrPh1T8ASs.png"></p>
+<p>​      可知，在此R<sub>B</sub>值下，当V<sub>i</sub>输入5V使BJT导通时晶体管确实处于饱和区，原假设正确。</p>
+<p>（2）当晶体管饱和时，负载电流I<sub>L</sub>为：</p>
+<p><img src="https://i.loli.net/2021/09/26/C9I317ArMSi8yYt.png"></p>
+<p>​      负载上的功耗P<sub>L</sub>为：</p>
+<p><img src="https://i.loli.net/2021/09/26/Lgba1B3QKmcx2CH.png"></p>
+<p>（3）晶体管上的耗损功率P<sub>D</sub>为：</p>
+<p><img src="https://i.loli.net/2021/09/26/VZHojxTM6apEgCI.png"></p>
+<p>​      可以看到，晶体管上的耗损功率P<sub>D</sub>和负载功率P<sub>L</sub>比起来还是很小的。 </p>
+<p>（4）补充说明：</p>
+<p>本例中，负载为电动机，一般对于这种含有电感的负载（电动机、继电器线圈等），用晶体管直接去关断比较危险，因为当电感中的电流突变时，电感会产生非常大的感生电动势，严重时可能会超过晶体管的击穿电压而使晶体管损坏。</p>
+<p>所以一般的处理方法是在含有电感的负载旁边并联一个反向二极管，从而使得当晶体管关断时，电感中的剩余电流能够有回路泄掉，而不至于突变产生高压，如下图所示：</p>
+<p><img src="https://i.loli.net/2021/09/26/RLyOXe4vI5kwor3.png"></p>
+<h2 id="开关特性"><a href="#开关特性" class="headerlink" title="开关特性"></a>开关特性</h2><p>由于有内部PN结和少数载流子的存在，所以和二极管一样，BJT晶体管在导通和关断时也不是瞬间完成的，而是有一定的延迟时间，如下图所示：</p>
+<p><img src="https://i.loli.net/2021/09/26/QsOPoJKWgMFBkvI.png"></p>
+<p>主要参数：</p>
+<ul>
+<li><p>td：延迟时间（delay time），当基极输入变为高电平后，I<sub>C</sub>从0上升到目标值的10%所需的时间。</p>
+</li>
+<li><p>tr：上升时间（rise time），I<sub>C</sub>从10%上升到90%所需的时间。</p>
+</li>
+<li><p>ton：开启时间（on time），ton &#x3D; ts + tr，当I<sub>C</sub>从0上升到90%时，我们就可以认为晶体管已基本开启。</p>
+</li>
+<li><p>ts：存储时间（storage time），当基极开路或输入低电平后，I<sub>C</sub>从100%下降到90%所需的时间。</p>
+</li>
+<li><p>tf：下降时间（fall time），I<sub>C</sub>从90%下降到10%所需的时间。</p>
+</li>
+<li><p>toff：关断时间（off time），toff &#x3D; ts + tf，当I<sub>C</sub>从100%下降到10%时，我们就可以认为晶体管已基本关断。</p>
+</li>
+</ul>
+<p>这些参数在晶体管数据规格书中都会给出，以2N4123为例，在规格书Figure 2中，可读出这些参数值：</p>
+<p><img src="https://i.loli.net/2021/09/26/MNpQTq8rzmH2eg9.png"></p>
+<p>当I<sub>C</sub>&#x3D;20mA时，在图中可大致读出：</p>
+<p>​      td &#x3D; 13ns， tr &#x3D; 13ns， ts &#x3D; 110ns， tf &#x3D; 11ns</p>
+<ul>
+<li>开启时间为：ton &#x3D; td + tr &#x3D; 13ns + 13ns &#x3D; 26ns</li>
+<li>关断时间为：toff &#x3D; ts + tf &#x3D; 100ns + 11ns &#x3D; 111ns</li>
+</ul>
+<p>在要求不太高的功率开关场合，以上的延迟时间基本也够用了。另外有一类晶体管称为<strong>开关型晶体管</strong>（switching transistor），其开启和关断时间要比上面的值再小一个数量级，都只有十几个纳秒（如BSV52等），具体可参看相关数据规格手册。</p>
+<h1 id="BJT实现电流源"><a href="#BJT实现电流源" class="headerlink" title="BJT实现电流源"></a>BJT实现电流源</h1><h2 id="恒流源"><a href="#恒流源" class="headerlink" title="恒流源"></a>恒流源</h2><h3 id="简易恒流源"><a href="#简易恒流源" class="headerlink" title="简易恒流源"></a>简易恒流源</h3><p>用BJT晶体管可以构造一个简易的恒流源，实现电路如下：</p>
+<p><img src="https://i.loli.net/2021/09/29/oAXwfzFGusPWKy5.png"></p>
+<p>在学习采用分压偏置的射极放大电路的特性时，可以发现，分压偏置具有非常好的稳定性，几乎不受晶体管的<em>β</em>参数偏移的影响，因此可以用这个分压偏置电路来实现恒流源。其电路计算方法与分压偏置也是类似的：</p>
+<p>基极电压V<sub>B</sub>为：</p>
+<p><img src="https://i.loli.net/2021/09/29/XR1Adtk5My29nYO.png"></p>
+<p>发射极电压V<sub>E</sub>为：</p>
+<p><img src="https://i.loli.net/2021/09/29/8NnM9EJKLjpSD5v.png"></p>
+<p>最终输出电流为：</p>
+<p><img src="https://i.loli.net/2021/09/29/eUnOKzrY8E3WkFM.png"></p>
+<p>当然，这个恒流源假设BJT晶体管工作在正常的放大区内，所以负载的阻值R<sub>L<sub>不能太大，否则R<sub>L</sub>上会产生过大的压降，迫使VCE变小直至小于V<sub>CEsat</sub>而进入饱和区，最终导致电流源失效。所以一般只能用于低成本、对输出电流要求不高的场合。</p>
+<h3 id="改进的恒流源"><a href="#改进的恒流源" class="headerlink" title="改进的恒流源"></a>改进的恒流源</h3><p>上面的简易恒流源还有个缺点，就是输出电流受V<sub>CC</sub>的影响较大。若V<sub>CC</sub>有波动，基极偏置电压V<sub>B</sub>也会跟着产生波动，然后V<sub>E</sub>也跟着波动，最终导致输出电流也会波动变化，稳定性不好。</p>
+<p>那有什么低成本的稳压器件呢？有的，答案就是齐纳二极管。改进恒流源电路如下：</p>
+<p><img src="https://i.loli.net/2021/09/29/PNpTJGtyZ4YuzoC.png"></p>
+<p>如此，基极电压V<sub>B</sub>可以稳定在齐纳V<sub>Z</sub>，最终的输出电流为：</p>
+<p><img src="https://i.loli.net/2021/09/29/WDMS7CodtiEIbe8.png"></p>
+<p>从上式可见，输出电流表达式中没有V<sub>CC</sub>，因此输出电流不受V<sub>CC</sub>波动的影响。而且，齐纳二极管一般受温度影响也比较小，所以上面这个改进的恒流源电路有较好的稳定性。当然，前提还是要工作在BJT的放大区范围内才行。</p>
+<h3 id="用PNP管实现恒流源"><a href="#用PNP管实现恒流源" class="headerlink" title="用PNP管实现恒流源"></a>用PNP管实现恒流源</h3><p>上面的改进恒流源还有个问题，就是负载R<sub>L</sub>不能接地，只能悬空使用。若要使R<sub>L</sub>能接地，必须再想办法。考虑到PNP型晶体管的电流方向相反，集电极可以接地使用，因此可用PNP型来实现恒流源，电路如下：</p>
+<p><img src="https://i.loli.net/2021/09/29/9aIE6gsADmp2TZl.png"></p>
+<p>上图中，计算原理和前面是一样的，只是PNP晶体管的计算方向全部相反：</p>
+<p><img src="https://i.loli.net/2021/09/29/WqRJpkeIgMtfYzr.png"></p>
+<p>输出电流的最终表达式与前面使用NPN型晶体管的表达式是一样的。</p>
+<h2 id="镜像电流源"><a href="#镜像电流源" class="headerlink" title="镜像电流源"></a>镜像电流源</h2><p><strong>镜像电流源</strong>（Current Mirror）有时也被称为<strong>电流镜</strong>，是一种利用两个对称的晶体管产生恒流源的电路。不过，镜像电流源一般只应用于集成电路芯片内部的设计（比如运放的设计），很少在分立元件电路中使用。因为分立元器件很难找到两个放大系数一模一样的对称晶体管，而在集成电路芯片制造中做两个特性完全一致的片上晶体管是可以做到的。所以，一般如果不是专门从事IC设计的话，一般用不到这个电路。</p>
+<p>电流镜的基本实现原理见下图：</p>
+<p><img src="https://i.loli.net/2021/09/29/dcvZ8jTpLM9RyOA.png"></p>
+<p>其名称由来，是因为如果你通过调节V<sub>CC1</sub>和R<sub>in</sub>，得到了一个原始的电流I<sub>in</sub>；那么，在输出端可以得到一个和I<sub>in</sub>几乎一样大小的镜像电流I<sub>out</sub>，而不用管V<sub>CC2</sub>和负载R<sub>L</sub>的值（当然V<sub>CC2</sub>和R<sub>L</sub>不能太过分以致于超出正常工作范围）。</p>
+<p>其工作原理分析如下图所示：</p>
+<p><img src="https://i.loli.net/2021/09/29/vgGYwDfHN7AVslz.png"></p>
+<ul>
+<li>两个晶体管Q1和Q2的基极连接在一起，故它们的基极电压是相同的，记为V<sub>B</sub>。</li>
+<li>由于两个晶体管的特性是完全一致的，那么相同的基极电压V<sub>B</sub>应该产生相同的基极电流I<sub>B1</sub>和I<sub>B2</sub>。</li>
+<li>再由于两个晶体管的放大系数<em>β</em>也相同，那么集电极电流I<sub>C1</sub>和I<sub>C2</sub>也应该是相同的。</li>
+<li>输入电流I<sub>in</sub>&#x3D;I<sub>C1</sub>+I<sub>B1</sub>+I<sub>B2</sub>≈I<sub>C1</sub>，输出电流I<sub>out</sub>&#x3D;I<sub>C2</sub>，故输入电流I<sub>in</sub>和输出电流I<sub>out</sub>近似相等。</li>
+</ul>
+<p>最后的问题就是输入电流I<sub>in</sub>怎么算。由于Q1的集电极和基极短路，故：</p>
+<p><img src="https://i.loli.net/2021/09/29/bwpLIWgQE1rH6C2.png"></p>
+<p>那么，输入电流I<sub>in</sub>即为：</p>
+<p><img src="https://i.loli.net/2021/09/29/FkX9y2l1LutdY8U.png"></p>
+<p></br></br></br></br></br></p>
+<ul>
+<li>end</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">Jinbo Li</div><div class="post-copyright__author_desc"></div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="social-share"><a class="social-share-ico icon-qq" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E5%25BA%2594%25E7%2594%25A8%2F&amp;title=BJT%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8%E7%94%B5%E8%B7%AF&amp;desc=undefined&amp;summary=undefined&amp;site=BJT%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8%E7%94%B5%E8%B7%AF&amp;pics=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到QQ"><i class="solitude fab fa-qq"></i></a><a class="social-share-ico icon-weibo" target="_blank" rel="noopener" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E5%25BA%2594%25E7%2594%25A8%2F&amp;title=BJT%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8%E7%94%B5%E8%B7%AF&amp;pic=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到微博"><i class="solitude fab fa-weibo"></i></a><a class="social-share-ico icon-twitter" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E5%25BA%2594%25E7%2594%25A8%2F&amp;text=BJT%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8%E7%94%B5%E8%B7%AF" title="分享到Twitter"><i class="solitude fab fa-twitter"></i></a><a class="social-share-ico icon-facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E5%25BA%2594%25E7%2594%25A8%2F" title="分享到Facebook"><i class="solitude fab fa-facebook"></i></a><a class="social-share-ico icon-telegram" target="_blank" rel="noopener" href="https://t.me/share/url?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E5%25BA%2594%25E7%2594%25A8%2F&amp;text=BJT%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8%E7%94%B5%E8%B7%AF" title="分享到Telegram"><i class="solitude fab fa-telegram"></i></a><a class="social-share-ico icon-whatsapp" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text=BJT%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8%E7%94%B5%E8%B7%AF http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E5%25BA%2594%25E7%2594%25A8%2F" title="分享到WhatsApp"><i class="solitude fab fa-whatsapp"></i></a></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">Something Interesting</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BJT/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>BJT<span class="tagsPageCount">3</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/07/19/BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BJT的直流参数</div></div></a></div><div class="next-post pull-right"><a href="/2025/07/19/24V-5VBUCK%E7%A8%B3%E5%8E%8B%E7%94%B5%E8%B7%AF/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">24V-5V降压DC-DC稳压电路设计</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/avatar.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">Jinbo Li</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#BJT%E5%AE%9E%E7%8E%B0%E9%80%BB%E8%BE%91%E9%97%A8"><span class="toc-text">BJT实现逻辑门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E7%9B%B8%E5%99%A8"><span class="toc-text">反相器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%96%E9%9D%9E%E9%97%A8"><span class="toc-text">或非门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E%E9%9D%9E%E9%97%A8"><span class="toc-text">与非门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8ETTL"><span class="toc-text">关于TTL</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BJT%E5%AE%9E%E7%8E%B0%E5%BC%80%E5%85%B3%E7%94%B5%E8%B7%AF"><span class="toc-text">BJT实现开关电路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%85%B3%E7%89%B9%E6%80%A7"><span class="toc-text">开关特性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BJT%E5%AE%9E%E7%8E%B0%E7%94%B5%E6%B5%81%E6%BA%90"><span class="toc-text">BJT实现电流源</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%81%92%E6%B5%81%E6%BA%90"><span class="toc-text">恒流源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E6%98%93%E6%81%92%E6%B5%81%E6%BA%90"><span class="toc-text">简易恒流源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B%E7%9A%84%E6%81%92%E6%B5%81%E6%BA%90"><span class="toc-text">改进的恒流源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8PNP%E7%AE%A1%E5%AE%9E%E7%8E%B0%E6%81%92%E6%B5%81%E6%BA%90"><span class="toc-text">用PNP管实现恒流源</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E7%94%B5%E6%B5%81%E6%BA%90"><span class="toc-text">镜像电流源</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现"><div class="content"><span class="title" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现">全数字锁相环的Verilog实现</span><span class="categories" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">FPGA</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路">常见模拟电路</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识">一些硬件电路知识</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应"><div class="content"><span class="title" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应">开关电源如何降低纹波和改善动态响应</span><span class="categories" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型"><div class="content"><span class="title" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型">基本元器件的选型</span><span class="categories" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">模电原理及应用</span></div></a></div></div></div></div></main><footer id="footer"><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2025 By&nbsp;<a class="footer-bar-link" href="/"><img class="author-avatar" src="/img/pwa/favicon1.png">Jinbo Li</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude">主题：Solitude</a></div></div></div></div></footer></div><!-- right_menu--><!-- inject body--><div><script src="/js/utils.js?v=3.0.19"></script><script src="/js/main.js?v=3.0.19"></script><script src="/js/third_party/waterfall.min.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/tw_cn.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://fastly.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div class="js-pjax"></div></div><!-- pjax--><script>const pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+})
+
+document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+})
+
+document.addEventListener('pjax:complete', () => {
+    window.refreshFn()
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+    if (e.request.status === 404) {
+        pjax.loadUrl('/404.html')
+    }
+})</script><!-- google adsense--><!-- search--><!-- music--></body></html>
+        <script>
+            const posts = ["2025/07/19/全数字锁相环/","2025/07/19/模电常见电路/","2025/07/19/模电_数电/","2025/07/19/开关电源如何降低纹波/","2025/07/19/基本元器件选型/","2025/07/19/串行通信方式/","2025/07/19/shell_1/","2025/07/19/linux_5/","2025/07/19/linux_4/","2025/07/19/linux_3/","2025/07/19/linux_2/","2025/07/19/linux_1/","2025/07/19/fpga1/","2025/07/19/c++2/","2025/07/19/c++1/","2025/07/19/Buck电路/","2025/07/19/BJT与MOS管/","2025/07/19/BJT的直流参数/","2025/07/19/BJT的应用/","2025/07/19/24V-5VBUCK稳压电路/","2025/07/18/hello-world/","2020/04/26/Windows下搭建hexo博客总结/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>

@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BJT的直流参数 | Something Interesting</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon1.png"><!-- index.css--><link rel="stylesheet" href="/css/index.css?v=3.0.19"><!-- inject head--><link rel="canonical" href="http://example.com/2025/07/19/BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0/index.html"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><!-- Open Graph--><meta name="description" content="要了解一款BJT的参数，最真实且有效的方法无疑是厂家给出的数据规格书（datasheet）。本文以2N4123通用型BJT硅基晶体管为例，来了解一下应该如何阅读BJT的数据规格书，从而获取我们需要的相关参数。点击下载2N4123的数据规格书。 总体性能 打开datasheet后，首先看标题，可"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="Something Interesting"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon1.png"><link rel="apple-touch-icon" href="/img/pwa/favicon1.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.19' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: undefined,
+    runtime: '2025-07-18 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可"},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: false,
+    expire: false,
+};</script><!-- page-config head--><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: false,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body id="body"><!-- universe--><!-- background img--><!-- loading--><!-- console--><!-- sidebar--><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/Buck%E7%94%B5%E8%B7%AF/">Buck电路<sup>2</sup></a><a href="/tags/BJT/">BJT<sup>3</sup></a><a href="/tags/MOS%E7%AE%A1/">MOS管<sup>1</sup></a><a href="/tags/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/">开关电源<sup>2</sup></a><a href="/tags/FPGA%E5%99%A8%E4%BB%B6/">FPGA器件<sup>1</sup></a><a href="/tags/const/">const<sup>1</sup></a><a href="/tags/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/">Linux虚拟机安装<sup>1</sup></a><a href="/tags/Linux%E5%BF%AB%E6%8D%B7%E9%94%AE%E4%B8%8E%E5%91%BD%E4%BB%A4/">Linux快捷键与命令<sup>1</sup></a><a href="/tags/Linux%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">Linux文件操作<sup>1</sup></a><a href="/tags/NFS%E6%9C%8D%E5%8A%A1/">NFS服务<sup>1</sup></a><a href="/tags/Linux%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">Linux网络操作<sup>1</sup></a><a href="/tags/Vim/">Vim<sup>1</sup></a><a href="/tags/Shell%E7%BC%96%E7%A8%8B/">Shell编程<sup>1</sup></a><a href="/tags/%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/">串行通信<sup>1</sup></a><a href="/tags/UART/">UART<sup>1</sup></a><a href="/tags/IIC/">IIC<sup>1</sup></a><a href="/tags/SPI/">SPI<sup>1</sup></a><a href="/tags/DPLL/">DPLL<sup>1</sup></a><a href="/tags/Verilog/">Verilog<sup>1</sup></a><a href="/tags/%E5%80%8D%E9%A2%91%E5%99%A8/">倍频器<sup>1</sup></a><a href="/tags/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E7%90%86/">基尔霍夫定理<sup>1</sup></a><a href="/tags/%E5%BB%BA%E7%AB%8B%E6%97%B6%E9%97%B4%E5%92%8C%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4/">建立时间和保持时间<sup>1</sup></a><a href="/tags/%E7%BA%BF%E4%B8%8E/">线与<sup>1</sup></a><a href="/tags/%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%86%92%E9%99%A9/">竞争与冒险<sup>1</sup></a><a href="/tags/%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%E5%92%8C%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D/">异步复位和同步复位<sup>1</sup></a><a href="/tags/%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">元器件选型<sup>1</sup></a><a href="/tags/%E7%A7%AF%E5%88%86%E7%94%B5%E8%B7%AF/">积分电路<sup>1</sup></a><a href="/tags/%E5%BE%AE%E5%88%86%E7%94%B5%E8%B7%AF/">微分电路<sup>1</sup></a><a href="/tags/%E5%8A%A0%E6%B3%95%E7%94%B5%E8%B7%AF/">加法电路<sup>1</sup></a><a href="/tags/%E5%B7%AE%E5%88%86%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88%E5%87%8F%E6%B3%95%E7%94%B5%E8%B7%AF%EF%BC%89/">差分放大器（减法电路）<sup>1</sup></a></div></div></div></div><!-- keyboard--><!-- righhtside--><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><div class="back-home-button" tabindex="-1"><i class="back-home-button-icon solitude fas fa-bars-progress"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div></div><a id="site-name" href="/" title="返回博客主页"><img src="/img/pwa/cursor.ico" alt="Something Interesting"><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">BJT的直流参数</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fas fa-dice-d6"></i></a></div><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E6%A8%A1%E7%94%B5%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8/">模电原理及应用</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BJT/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>BJT</span></a></div></div></div></div><h1 class="post-title">BJT的直流参数</h1><div id="post-meta"><div class="meta-secondline"></div></div></div><article class="post-content article-container"><p>要了解一款BJT的参数，最真实且有效的方法无疑是厂家给出的数据规格书（datasheet）。本文以<strong>2N4123</strong>通用型BJT硅基晶体管为例，来了解一下应该如何阅读BJT的数据规格书，从而获取我们需要的相关参数。<a target="_blank" rel="noopener" href="https://www.onsemi.com/pub/Collateral/2N4123-D.PDF">点击下载2N4123的数据规格书</a>。 </p>
+<h1 id="总体性能"><a href="#总体性能" class="headerlink" title="总体性能"></a>总体性能</h1><p><img src="http://tva1.sinaimg.cn/large/006HPlntgy1gv1828hqk1j60j708bgnn02.jpg"></p>
+<span id="more"></span>
+
+<p>打开datasheet后，首先看标题，可以看到，这是<strong>2N4123、2N4124</strong>共用的一个datasheet，而且标明管子为<strong>通用型NPN硅基三极管</strong>。然后在在第一页的右侧，厂家给出了管脚识别方法和管体上的文字标记含义。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB58d7cdf4f12a5078b6f96d6f8e7f10fb?method=download&shareKey=0e189af2eaf73e8cb8f20580517ec6bd"></p>
+<h2 id="极限性能"><a href="#极限性能" class="headerlink" title="极限性能"></a>极限性能</h2><p>在第一页的主体篇幅部分，数据规格书列出了这个BJT晶体管的所有极限性能，这样做的用处我想应该是让使用者先建立起大体印象，不至于损坏晶体管。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB920da6a5162732935d5d6529a09435ce?method=download&shareKey=e1176e0475b6909d4c61455d00ebff59"></p>
+<p>以下是每项参数的详述：</p>
+<ul>
+<li><p>V<sub>CEO</sub>：基极开路情况下，CE间的击穿电压，在这一栏中，Value一列有两行，上行30V为2N4123的参数；下行25V为2N4124的参数。（后面我们都仅以2N4123的参数为例，不再分2种型号分开罗列描述。）</p>
+</li>
+<li><p>V<sub>CBO</sub>：发射极开路情况下，CB间的集电结结的反向击穿电压，为40V。</p>
+</li>
+<li><p>V<sub>EBO</sub>：集电极开路情况下，BE间发射结的反偏击穿电压，为5V。</p>
+</li>
+<li><p>I<sub>C</sub>-continuous：可承受的最大连续集电极电流，为200mA。</p>
+</li>
+<li><p>P<sub>D</sub>（@T<sub>A</sub>&#x3D;25℃）：环境温度为25℃时的最大损耗功率（T<sub>A</sub>中A的意思是“Ambient”），典型值为625mW、衰减系数为5mW&#x2F;℃，这两个是比较重要的参数。</p>
+</li>
+<li><p>P<sub>D</sub>（@T<sub>C</sub>&#x3D;25℃）：管体表面温度为25℃时的最大损耗功率（T<sub>C</sub>中C的意思是“Surface”），典型值为1.5W，比上面环境温度为25℃时的P<sub>D</sub>值大了近3倍。这个也很好理解，一般来说温度越高，晶体管的性能越差。在晶体管电流较大时，管体表面温度有可能远高于环境温度，所以限制了最大损耗功率的大小。只有在管体表面加装了面积很大且接触良好的散热片时，才能认为管体表面温度近似等于环境温度，而使用这个1.5W的标称值。</p>
+</li>
+<li><p>T<sub>J</sub>, T<sub>stg</sub>：工作温度范围与仓储温度范围，典型值为-55℃ ~ +150℃。</p>
+</li>
+<li><p>R<sub>θJA</sub>：内部PN结到环境之间的热阻，为200℃&#x2F;W。</p>
+</li>
+<li><p>R<sub>θJC</sub>：内部PN结到管体表面之间的热阻，为83.3℃&#x2F;W。</p>
+</li>
+</ul>
+<h2 id="最大损耗功率"><a href="#最大损耗功率" class="headerlink" title="最大损耗功率"></a>最大损耗功率</h2><p>由于BJT的CE极间有压降V<sub>CE</sub>、有电流I<sub>C</sub>，所以三极管本身也是要消耗功率的，而且还不小。根据“功率&#x3D;电压x电流”的公式，三极管的主要功耗产生在C、E极间（BE间和BC间由于基极电流I<sub>B</sub>太小，故可以忽略不记）。</p>
+<p>所以在做设计时，除了要保证V<sub>CE</sub>不能超过上面的V<sub>CEO</sub>、I<sub>C</sub>不能超过上面的I<sub>C</sub>-continuous以外，还要计算损耗功率是否会超限，如下图所示：</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB93d00cf15f39da8533f04922e5897c68?method=download&shareKey=526c85037fe1e0ad5a05ff012ec3843c"></p>
+<p>在上图中，P<sub>D</sub>功率曲线下方的绿色区域是安全区域，如果超出这个区域，就会导致晶体管损坏。</p>
+<p>衰减系数（Derate above 25℃）5.0mW&#x2F;℃是指，当温度高于25℃时，每升高1℃，最大损耗功率参数会降低5mW。比如，当环境温度上升到135℃时，本晶体管允许的最大损耗功率P<sub>D</sub>只有：</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB7b393fe932c3fd628441a3534f366c65?method=download&shareKey=3463dd42ee8b88a0e6ef0a730ab496e3"></p>
+<p>当环境温度上升到125℃时，本晶体管允许的最大损耗功率P<sub>D</sub>更是下降到了：</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB9cfb69aed33a7842d75cc0a424ac6354?method=download&shareKey=f20de5bc056205819e3690f0fc15d414"></p>
+<h1 id="具体性能参数"><a href="#具体性能参数" class="headerlink" title="具体性能参数"></a>具体性能参数</h1><p>从datasheet的第2页开始，就是具体的性能参数表格，下面我们就来一个个表格来看。</p>
+<h2 id="截止性能参数"><a href="#截止性能参数" class="headerlink" title="截止性能参数"></a>截止性能参数</h2><p><img src="https://note.youdao.com/yws/api/personal/file/WEB662760d61a5fd0d9c43d0ad30ac8b4a3?method=download&shareKey=8c17cc9d2074d50ec6f16835862da7cc"></p>
+<ul>
+<li>V<sub>(BR)CEO</sub>：、V<sub>(BR)CBO</sub>、V<sub>(BR)EBO</sub>：这3个参数在前面的总体性能表格中已经出现过，这里只是为了表格完整性再重复罗列一下而已。</li>
+<li>I<sub>CBO</sub>：指在E极开路，CB间加上20V的反偏电压时，集电结的漏电流，为50nA。一般我们可以通过这个参数计算I<sub>CEO</sub>,具体算式为：I<sub>CEO</sub> &#x3D; <em>β</em> I<sub>CBO</sub>。</li>
+<li>I<sub>EBO</sub>：指在C极开路，EB间加上20V的反偏电压时，发射结的漏电流，为50nA。</li>
+</ul>
+<h2 id="导通性能参数"><a href="#导通性能参数" class="headerlink" title="导通性能参数"></a>导通性能参数</h2><p><img src="https://note.youdao.com/yws/api/personal/file/WEB20a0acdc9c561fdbe69c26b0a1fcf992?method=download&shareKey=fe580f2af141afd5b904b3fc6b59fd9b"></p>
+<ul>
+<li>h<sub>FE</sub>：这个就是直流电流放大系数<em>β</em>（至于为什么要写成h<sub>FE</sub>，这个我们在BJT的交流分析中会讲）。这里我们在表格中可以看到，在I<sub>C</sub>的两个不同条件下，测得的放大系数不同。在第一个条件（I<sub>C</sub>&#x3D;2mA，V<sub>CE</sub>&#x3D;1.0V）时，直流放大系数<em>β</em>的值在50~150都是合格的；在第二个条件（I<sub>C</sub>&#x3D;50mA，V<sub>CE</sub>&#x3D;1.0V）下，放大系数<em>β</em>只有25。</li>
+<li>V<sub>CEsat</sub>：这个就是在共射放大电路中常用的CE间饱和电压，这里是0.3V。测试条件为I<sub>C</sub>&#x3D;50mA，I<sub>B</sub>&#x3D;5mA，可以看到，此时直流放大倍数I<sub>C</sub>&#x2F;I<sub>B</sub>&#x3D;10，远小于放大系数<em>β</em>正常最小值的50，说明确实是饱和了。</li>
+<li>V<sub>BEsat</sub>：测试条件和上面相同（晶体管处于饱和状态），此时BE间的电压即为V<sub>BEsat</sub>饱和电压（一般电路分析计算时不常用）。</li>
+</ul>
+<h2 id="小信号性能参数"><a href="#小信号性能参数" class="headerlink" title="小信号性能参数"></a>小信号性能参数</h2><p><img src="https://note.youdao.com/yws/api/personal/file/WEB9a5472abe5c9737565476623cf79cfbb?method=download&shareKey=b8200b8c3158443b2f4aeca89e63ff1b"></p>
+<p>小信号性能参数基本都为交流参数，这个等我们到BJT放大电路的交流分析时再讲。现在唯一需要看一下的是上图中的h<sub>fe</sub>参数（下标fe用小写），即交流电流放大系数<em>β</em><sub>ac</sub>。</p>
+<h1 id="特性曲线"><a href="#特性曲线" class="headerlink" title="特性曲线"></a>特性曲线</h1><p>数据规格书的第三部分是BJT晶体管的特性曲线，其中Figure1-8为交流特性曲线，Figure9-12为直流特性曲线。关于交流特性，我们放到以后再讲，这里我们仅分析Figue9~12的直流特性曲线。</p>
+<h2 id="直流增益"><a href="#直流增益" class="headerlink" title="直流增益"></a>直流增益</h2><p><img src="https://note.youdao.com/yws/api/personal/file/WEB23881d7503ce81c6b955c7123e3e4903?method=download&shareKey=39c9e7f904a615de59f2f420038d0bb0"></p>
+<p>上图为直流增益h<sub>FE</sub>（即直流<em>β</em>）随I<sub>C</sub>变化的曲线，测试条件为V<sub>CE</sub>&#x3D;1V。从图中我们可以看到，h<sub>FE</sub>值会受多种因素的影响，h<sub>FE</sub>不仅会随温变化而变化，还会随集电极电流I<sub>C</sub>的变化而变化。</p>
+<p>这里要说明一下的是纵坐标的表示方式，图中“NORMALIZED”称为**“归一化参数”**。即：把在+25℃和I<sub>C</sub>&#x3D;8mA条件下的h<sub>FE</sub>作为基准h<sub>FE</sub>值，其他条件下的h<sub>FE</sub>值相对于这个基准值的比值。这是个无量纲（即无单位）的参数，常用于表示某值随其他条件的相对变化量。</p>
+<h2 id="饱和电流范围"><a href="#饱和电流范围" class="headerlink" title="饱和电流范围"></a>饱和电流范围</h2><p><img src="https://note.youdao.com/yws/api/personal/file/WEBf3294beef126d0477144f67e8fac5046?method=download&shareKey=7d759b71b6600cb991d5a4889df3703e"></p>
+<p>上图为描述饱和区的特性曲线，看上去好像很复杂，其实，只要将其顺时针转90度，就是我们熟悉的图形了。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBe82cc4d7637c7e8a7abbc96739334328?method=download&shareKey=8fff97a820ec937fe6d667171a76f59b"></p>
+<p>上图就是我们非常熟悉的共射组态的输出特性曲线了，其中横坐标为V<sub>CE</sub>，纵坐标是I<sub>B</sub>（这个与我们先前学过的图形稍稍不同），其中每条曲线对应于一个I<sub>C</sub>。其实本质是一样的，只不过把我们以前图中的I<sub>B</sub>和I<sub>C</sub>互相调换了一下位置而已。图中橙色部分即为大致的饱和区。</p>
+<h2 id="导通时的电压特性"><a href="#导通时的电压特性" class="headerlink" title="导通时的电压特性"></a>导通时的电压特性</h2><p><img src="https://note.youdao.com/yws/api/personal/file/WEBf4c3fd9475525201bf8c18a8e6fa235d?method=download&shareKey=56b535ddceaff85a9fe34178155047b5"></p>
+<p>上图是进一步描述一些电压-电流特性的。其中V<sub>CEsat</sub>和V<sub>BEsat</sub>那两条曲线是描述饱和阈值特性的，测试条件为I<sub>C</sub>&#x2F;I<sub>B</sub>&#x3D;10，此时的直流放大倍数只有10，远小于正常的h<sub>FE</sub>值了，所以晶体管一定处于饱和状态。最下面那条曲线为饱和阈值电压V<sub>CEsat</sub>随I<sub>C</sub>变化的曲线；最上面那条曲线为饱和阈值电压V<sub>BEsat</sub>随I<sub>C</sub>变化的曲线。</p>
+<p>中间那条曲线为当V<sub>CE</sub>恒定保持1V时，V<sub>BE</sub>和I<sub>C</sub>的对应关系，此曲线其实和饱和没啥关系，只不过是厂家为了方便，把与I<sub>C</sub>对应的各种电压描述曲线都放到同一张图里了。</p>
+<h2 id="温度系数"><a href="#温度系数" class="headerlink" title="温度系数"></a>温度系数</h2><p><img src="https://note.youdao.com/yws/api/personal/file/WEB946f143d54e15e96a753efbba65f7d57?method=download&shareKey=38cbce30d66a12d27f7fd4053409dc8b"></p>
+<p>先不看图，单讲温度系数的含义。温度系数θ的意思是指，某些参数的值可能会随温度的变化而变化。比如，饱和阈值电压V<sub>CEsat</sub>，会随环境温度的变化而变化，它的温度系数就定义为：θ<sub>VC</sub>，其在某温度t下的计算式为：</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB302f2c6ffc3dc19b8543af423fd14c02?method=download&shareKey=ac931f783c516aded012f30c3b1a6e20"></p>
+<p>问题在于，θ<sub>VC</sub>这个值本身也不是固定的，它会随着I<sub>C</sub>的变化而变化。所以，图中上面那组横V字形的曲线组，就用来表示θ<sub>VC</sub>值在25℃以上和25℃以下时θ<sub>VC</sub>与I<sub>C</sub>的对应关系。同理，下面那组曲线表示θ<sub>VB</sub>和I<sub>C</sub>的对应关系。</p>
+<p></br></br></br></p>
+<ul>
+<li>end</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">Jinbo Li</div><div class="post-copyright__author_desc"></div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="social-share"><a class="social-share-ico icon-qq" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E7%259B%25B4%25E6%25B5%2581%25E5%258F%2582%25E6%2595%25B0%2F&amp;title=BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0&amp;desc=undefined&amp;summary=undefined&amp;site=BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0&amp;pics=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到QQ"><i class="solitude fab fa-qq"></i></a><a class="social-share-ico icon-weibo" target="_blank" rel="noopener" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E7%259B%25B4%25E6%25B5%2581%25E5%258F%2582%25E6%2595%25B0%2F&amp;title=BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0&amp;pic=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到微博"><i class="solitude fab fa-weibo"></i></a><a class="social-share-ico icon-twitter" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E7%259B%25B4%25E6%25B5%2581%25E5%258F%2582%25E6%2595%25B0%2F&amp;text=BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0" title="分享到Twitter"><i class="solitude fab fa-twitter"></i></a><a class="social-share-ico icon-facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E7%259B%25B4%25E6%25B5%2581%25E5%258F%2582%25E6%2595%25B0%2F" title="分享到Facebook"><i class="solitude fab fa-facebook"></i></a><a class="social-share-ico icon-telegram" target="_blank" rel="noopener" href="https://t.me/share/url?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E7%259B%25B4%25E6%25B5%2581%25E5%258F%2582%25E6%2595%25B0%2F&amp;text=BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0" title="分享到Telegram"><i class="solitude fab fa-telegram"></i></a><a class="social-share-ico icon-whatsapp" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text=BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0 http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E7%259A%2584%25E7%259B%25B4%25E6%25B5%2581%25E5%258F%2582%25E6%2595%25B0%2F" title="分享到WhatsApp"><i class="solitude fab fa-whatsapp"></i></a></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">Something Interesting</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BJT/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>BJT<span class="tagsPageCount">3</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/07/19/BJT%E4%B8%8EMOS%E7%AE%A1/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">BJT与MOS管</div></div></a></div><div class="next-post pull-right"><a href="/2025/07/19/BJT%E7%9A%84%E5%BA%94%E7%94%A8/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BJT的基本应用电路</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/avatar.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">Jinbo Li</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E4%BD%93%E6%80%A7%E8%83%BD"><span class="toc-text">总体性能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E9%99%90%E6%80%A7%E8%83%BD"><span class="toc-text">极限性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%8D%9F%E8%80%97%E5%8A%9F%E7%8E%87"><span class="toc-text">最大损耗功率</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%80%A7%E8%83%BD%E5%8F%82%E6%95%B0"><span class="toc-text">具体性能参数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%AA%E6%AD%A2%E6%80%A7%E8%83%BD%E5%8F%82%E6%95%B0"><span class="toc-text">截止性能参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E9%80%9A%E6%80%A7%E8%83%BD%E5%8F%82%E6%95%B0"><span class="toc-text">导通性能参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E4%BF%A1%E5%8F%B7%E6%80%A7%E8%83%BD%E5%8F%82%E6%95%B0"><span class="toc-text">小信号性能参数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%B9%E6%80%A7%E6%9B%B2%E7%BA%BF"><span class="toc-text">特性曲线</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B4%E6%B5%81%E5%A2%9E%E7%9B%8A"><span class="toc-text">直流增益</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A5%B1%E5%92%8C%E7%94%B5%E6%B5%81%E8%8C%83%E5%9B%B4"><span class="toc-text">饱和电流范围</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E9%80%9A%E6%97%B6%E7%9A%84%E7%94%B5%E5%8E%8B%E7%89%B9%E6%80%A7"><span class="toc-text">导通时的电压特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%A9%E5%BA%A6%E7%B3%BB%E6%95%B0"><span class="toc-text">温度系数</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现"><div class="content"><span class="title" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现">全数字锁相环的Verilog实现</span><span class="categories" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">FPGA</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路">常见模拟电路</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识">一些硬件电路知识</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应"><div class="content"><span class="title" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应">开关电源如何降低纹波和改善动态响应</span><span class="categories" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型"><div class="content"><span class="title" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型">基本元器件的选型</span><span class="categories" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">模电原理及应用</span></div></a></div></div></div></div></main><footer id="footer"><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2025 By&nbsp;<a class="footer-bar-link" href="/"><img class="author-avatar" src="/img/pwa/favicon1.png">Jinbo Li</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude">主题：Solitude</a></div></div></div></div></footer></div><!-- right_menu--><!-- inject body--><div><script src="/js/utils.js?v=3.0.19"></script><script src="/js/main.js?v=3.0.19"></script><script src="/js/third_party/waterfall.min.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/tw_cn.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://fastly.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div class="js-pjax"></div></div><!-- pjax--><script>const pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+})
+
+document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+})
+
+document.addEventListener('pjax:complete', () => {
+    window.refreshFn()
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+    if (e.request.status === 404) {
+        pjax.loadUrl('/404.html')
+    }
+})</script><!-- google adsense--><!-- search--><!-- music--></body></html>
+        <script>
+            const posts = ["2025/07/19/全数字锁相环/","2025/07/19/模电常见电路/","2025/07/19/模电_数电/","2025/07/19/开关电源如何降低纹波/","2025/07/19/基本元器件选型/","2025/07/19/串行通信方式/","2025/07/19/shell_1/","2025/07/19/linux_5/","2025/07/19/linux_4/","2025/07/19/linux_3/","2025/07/19/linux_2/","2025/07/19/linux_1/","2025/07/19/fpga1/","2025/07/19/c++2/","2025/07/19/c++1/","2025/07/19/Buck电路/","2025/07/19/BJT与MOS管/","2025/07/19/BJT的直流参数/","2025/07/19/BJT的应用/","2025/07/19/24V-5VBUCK稳压电路/","2025/07/18/hello-world/","2020/04/26/Windows下搭建hexo博客总结/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>

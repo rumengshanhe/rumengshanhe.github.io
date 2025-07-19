@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>开关电源如何降低纹波和改善动态响应 | Something Interesting</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon1.png"><!-- index.css--><link rel="stylesheet" href="/css/index.css?v=3.0.19"><!-- inject head--><link rel="canonical" href="http://example.com/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/index.html"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><!-- Open Graph--><meta name="description" content="开关电源如何降低纹波？1、加大电感值和输出电容值根据开关电源的公式，电感内电流波动大小和电感值成反比，输出纹波电压和输出电容值成反比，如下式，可以得出结论，加大电感值和输出电容值可以减小纹波。 Vripple&amp;#x3D;Imax&amp;#x2F;(Co×f) 通常的做法，对于输出电容，使用铝电解电容以达到"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="Something Interesting"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon1.png"><link rel="apple-touch-icon" href="/img/pwa/favicon1.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.19' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: undefined,
+    runtime: '2025-07-18 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可"},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: false,
+    expire: false,
+};</script><!-- page-config head--><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: false,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body id="body"><!-- universe--><!-- background img--><!-- loading--><!-- console--><!-- sidebar--><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/Buck%E7%94%B5%E8%B7%AF/">Buck电路<sup>2</sup></a><a href="/tags/BJT/">BJT<sup>3</sup></a><a href="/tags/MOS%E7%AE%A1/">MOS管<sup>1</sup></a><a href="/tags/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/">开关电源<sup>2</sup></a><a href="/tags/FPGA%E5%99%A8%E4%BB%B6/">FPGA器件<sup>1</sup></a><a href="/tags/const/">const<sup>1</sup></a><a href="/tags/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/">Linux虚拟机安装<sup>1</sup></a><a href="/tags/Linux%E5%BF%AB%E6%8D%B7%E9%94%AE%E4%B8%8E%E5%91%BD%E4%BB%A4/">Linux快捷键与命令<sup>1</sup></a><a href="/tags/Linux%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">Linux文件操作<sup>1</sup></a><a href="/tags/NFS%E6%9C%8D%E5%8A%A1/">NFS服务<sup>1</sup></a><a href="/tags/Linux%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">Linux网络操作<sup>1</sup></a><a href="/tags/Vim/">Vim<sup>1</sup></a><a href="/tags/Shell%E7%BC%96%E7%A8%8B/">Shell编程<sup>1</sup></a><a href="/tags/%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/">串行通信<sup>1</sup></a><a href="/tags/UART/">UART<sup>1</sup></a><a href="/tags/IIC/">IIC<sup>1</sup></a><a href="/tags/SPI/">SPI<sup>1</sup></a><a href="/tags/DPLL/">DPLL<sup>1</sup></a><a href="/tags/Verilog/">Verilog<sup>1</sup></a><a href="/tags/%E5%80%8D%E9%A2%91%E5%99%A8/">倍频器<sup>1</sup></a><a href="/tags/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E7%90%86/">基尔霍夫定理<sup>1</sup></a><a href="/tags/%E5%BB%BA%E7%AB%8B%E6%97%B6%E9%97%B4%E5%92%8C%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4/">建立时间和保持时间<sup>1</sup></a><a href="/tags/%E7%BA%BF%E4%B8%8E/">线与<sup>1</sup></a><a href="/tags/%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%86%92%E9%99%A9/">竞争与冒险<sup>1</sup></a><a href="/tags/%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%E5%92%8C%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D/">异步复位和同步复位<sup>1</sup></a><a href="/tags/%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">元器件选型<sup>1</sup></a><a href="/tags/%E7%A7%AF%E5%88%86%E7%94%B5%E8%B7%AF/">积分电路<sup>1</sup></a><a href="/tags/%E5%BE%AE%E5%88%86%E7%94%B5%E8%B7%AF/">微分电路<sup>1</sup></a><a href="/tags/%E5%8A%A0%E6%B3%95%E7%94%B5%E8%B7%AF/">加法电路<sup>1</sup></a><a href="/tags/%E5%B7%AE%E5%88%86%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88%E5%87%8F%E6%B3%95%E7%94%B5%E8%B7%AF%EF%BC%89/">差分放大器（减法电路）<sup>1</sup></a></div></div></div></div><!-- keyboard--><!-- righhtside--><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><div class="back-home-button" tabindex="-1"><i class="back-home-button-icon solitude fas fa-bars-progress"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div></div><a id="site-name" href="/" title="返回博客主页"><img src="/img/pwa/cursor.ico" alt="Something Interesting"><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">开关电源如何降低纹波和改善动态响应</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fas fa-dice-d6"></i></a></div><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E6%A8%A1%E7%94%B5%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8/">模电原理及应用</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>开关电源</span></a></div></div></div></div><h1 class="post-title">开关电源如何降低纹波和改善动态响应</h1><div id="post-meta"><div class="meta-secondline"></div></div></div><article class="post-content article-container"><h1 id="开关电源如何降低纹波？"><a href="#开关电源如何降低纹波？" class="headerlink" title="开关电源如何降低纹波？"></a>开关电源如何降低纹波？</h1><h2 id="1、加大电感值和输出电容值"><a href="#1、加大电感值和输出电容值" class="headerlink" title="1、加大电感值和输出电容值"></a>1、加大电感值和输出电容值</h2><p>根据开关电源的公式，电感内电流波动大小和电感值成反比，输出纹波电压和输出电容值成反比，如下式，可以得出结论，加大电感值和输出电容值可以减小纹波。</p>
+<p><em><strong>Vripple&#x3D;Imax&#x2F;(Co×f)</strong></em></p>
+<p>通常的做法，对于输出电容，使用铝电解电容以达到大容量的目的。但是电解电容在抑制高频噪声方面效果不是很好，而且ESR也比较大，所以会在它旁边并联一个陶瓷电容，来弥补铝电解电容的不足。同时，开关电源工作时，输入端的电压Vin不变，但是电流是随开关变化的。这时当开关断开时，输入电源不会很好地提供电流，通常在靠近电流输入端(以Buck型为例，是Switch附近)，并联电容来提供电流。</p>
+<p>上面这种做法对减小纹波的作用是有限的。电感的话，因为体积限制，电感不会做的很大；电容的话，输出电容增加到一定程度，对减小纹波就没有明显的效果了；增加开关频率的话，又会增加开关损耗。所以在要求比较严格的场合，这种方法并不是很好。</p>
+<span id="more"></span>
+
+<h2 id="2、二级滤波——再加一级LC滤波器"><a href="#2、二级滤波——再加一级LC滤波器" class="headerlink" title="2、二级滤波——再加一级LC滤波器"></a>2、二级滤波——再加一级LC滤波器</h2><p>LC滤波器对噪声纹波的抑制作用比较明显，根据要去除的纹波频率选择合适的电感电容构成滤波电路，一般能够很好的减小纹波。选用这种方法滤除纹波，又会面临两种选择：</p>
+<p>采样点选在LC滤波器之前，输出电压会降低。因为任何电感都有一个直流电阻，当有电流输出时，在电感上会有压降产生，导致电源的输出电压降低，而且这个压降是随输出电流变化的。</p>
+<p>采样点选在LC滤波器之后，这样输出电压就是我们所希望得到的电压。但是这样在电源系统内部引入了一个电感和一个电容，有可能会导致系统不稳定。关于电源系统稳定，可以查阅更多资料。</p>
+<h2 id="3、开关电源输出之后，接LDO滤波"><a href="#3、开关电源输出之后，接LDO滤波" class="headerlink" title="3、开关电源输出之后，接LDO滤波"></a>3、开关电源输出之后，接LDO滤波</h2><p>这是减少纹波和噪声最有效的办法，优势很明显，输出电压恒定，不需要改变原有的反馈系统，但也是成本最高，功耗最高的办法。 任何一款LDO都有一项指标——噪音抑制比，是一条频率—幅度（dB）曲线，这也是选择LDO产品的依据。</p>
+<p>对减小纹波，开关电源的PCB布线也非常关键，这是个很赫手的问题，对于高频噪声，由于频率高幅值较大，后级滤波虽然有一定作用，但效果不明显，简单的做法是在二极管上并电容C或RC，或串联电感。</p>
+<h2 id="4、在二极管上并联电容或RC支路"><a href="#4、在二极管上并联电容或RC支路" class="headerlink" title="4、在二极管上并联电容或RC支路"></a>4、在二极管上并联电容或RC支路</h2><p>二极管高速导通、截止时，要考虑寄生参数。在二极管反向恢复期间，等效电感和等效电容成为一个LC振荡器，产生高频振荡。为了抑制这种高频振荡，需在二极管两端并联电容C或RC缓冲网络。电阻一般取10Ω-100 Ω，电容取4.7pF-2.2nF。在二极管上并联的电容或者RC，其取值要经过反复试验才能确定。如果选用不当，反而会造成更严重的振荡。对高频噪声要求严格的话，可以采用<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E8%BD%AF%E5%BC%80%E5%85%B3/2126984">软开关技术</a>。</p>
+<h2 id="5、二极管后接电感"><a href="#5、二极管后接电感" class="headerlink" title="5、二极管后接电感"></a>5、二极管后接电感</h2><p>这也是常用的抑制高频噪声的方法。针对产生噪声的频率，选择合适的电感元件，同样能够有效地抑制噪声。需要注意的是，电感的额定电流要满足实际的要求。</p>
+<h1 id="如何改善开关电源的动态响应？"><a href="#如何改善开关电源的动态响应？" class="headerlink" title="如何改善开关电源的动态响应？"></a>如何改善开关电源的动态响应？</h1><h2 id="1、适当改善反馈响应速率"><a href="#1、适当改善反馈响应速率" class="headerlink" title="1、适当改善反馈响应速率"></a>1、适当改善反馈响应速率</h2><p>如适当减小431上RC电路中的电容量、增加光耦电流、减小电流检测PIN脚上RC电路中的电容值，但需注意噪声、重载开机问题；另外，这一方案也受制于实际设计方案的选择：<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35998770">PWM方式</a>受最大占空比的限制(Flyback：约0.8，单端正激0.5，其他如Push-pull、Half-bridge，Full-bridge等为0.8，Boost为0.9等)，因此设计初期最大占空比的选择就应当保留一定的余量;<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35998770">PFM方式</a>也受制于工作频率限制，以免产生噪声或EMI的问题。<br>在容许的情况下(较低的电容电压)，尽可能让占空比或开关频率在动态情形下逐步增大，以避免如电流应力加大等问题;</p>
+<h2 id="2、适当降低输出储能电感的感量"><a href="#2、适当降低输出储能电感的感量" class="headerlink" title="2、适当降低输出储能电感的感量"></a>2、适当降低输出储能电感的感量</h2><p>电感中的电流不能突变，这是影响输出动态响应的关键，尤其在CCM（连续导通）模式的时候，因此，适当降低感量可以改善动态响应，但需要考虑轻载时的反馈稳定性问题(CCM转变成DCM会造成系统不稳定)。</p>
+<h2 id="3、增加电容容量或数量"><a href="#3、增加电容容量或数量" class="headerlink" title="3、增加电容容量或数量"></a>3、增加电容容量或数量</h2><p>电容的电流可以突变，因此，如果Layout空间允许的话，可以考虑适当考虑<strong>增加电容容量或数量</strong>来改善。通常采用大容量电解电容，这些电解电容能够在最初负载瞬态变化通过时对负载提供支持。 </p>
+<h2 id="4、采用多个变换器并联方案"><a href="#4、采用多个变换器并联方案" class="headerlink" title="4、采用多个变换器并联方案"></a>4、采用多个变换器并联方案</h2><p>成本会较高，这在电流变化速率要求较高的场合(如CPU供电的3~6相V-core电路)会用到。</p>
+<h2 id="5、增加开关频率"><a href="#5、增加开关频率" class="headerlink" title="5、增加开关频率"></a>5、增加开关频率</h2><p>以更快的速度传递能量，但需考虑元器件的频率特性、EMC及效率等问题。</p>
+<p></br></br></br></br></br></br></p>
+<ul>
+<li>end</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">Jinbo Li</div><div class="post-copyright__author_desc"></div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="social-share"><a class="social-share-ico icon-qq" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E5%25BC%2580%25E5%2585%25B3%25E7%2594%25B5%25E6%25BA%2590%25E5%25A6%2582%25E4%25BD%2595%25E9%2599%258D%25E4%25BD%258E%25E7%25BA%25B9%25E6%25B3%25A2%2F&amp;title=%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2%E5%92%8C%E6%94%B9%E5%96%84%E5%8A%A8%E6%80%81%E5%93%8D%E5%BA%94&amp;desc=undefined&amp;summary=undefined&amp;site=%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2%E5%92%8C%E6%94%B9%E5%96%84%E5%8A%A8%E6%80%81%E5%93%8D%E5%BA%94&amp;pics=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到QQ"><i class="solitude fab fa-qq"></i></a><a class="social-share-ico icon-weibo" target="_blank" rel="noopener" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E5%25BC%2580%25E5%2585%25B3%25E7%2594%25B5%25E6%25BA%2590%25E5%25A6%2582%25E4%25BD%2595%25E9%2599%258D%25E4%25BD%258E%25E7%25BA%25B9%25E6%25B3%25A2%2F&amp;title=%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2%E5%92%8C%E6%94%B9%E5%96%84%E5%8A%A8%E6%80%81%E5%93%8D%E5%BA%94&amp;pic=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到微博"><i class="solitude fab fa-weibo"></i></a><a class="social-share-ico icon-twitter" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E5%25BC%2580%25E5%2585%25B3%25E7%2594%25B5%25E6%25BA%2590%25E5%25A6%2582%25E4%25BD%2595%25E9%2599%258D%25E4%25BD%258E%25E7%25BA%25B9%25E6%25B3%25A2%2F&amp;text=%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2%E5%92%8C%E6%94%B9%E5%96%84%E5%8A%A8%E6%80%81%E5%93%8D%E5%BA%94" title="分享到Twitter"><i class="solitude fab fa-twitter"></i></a><a class="social-share-ico icon-facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E5%25BC%2580%25E5%2585%25B3%25E7%2594%25B5%25E6%25BA%2590%25E5%25A6%2582%25E4%25BD%2595%25E9%2599%258D%25E4%25BD%258E%25E7%25BA%25B9%25E6%25B3%25A2%2F" title="分享到Facebook"><i class="solitude fab fa-facebook"></i></a><a class="social-share-ico icon-telegram" target="_blank" rel="noopener" href="https://t.me/share/url?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E5%25BC%2580%25E5%2585%25B3%25E7%2594%25B5%25E6%25BA%2590%25E5%25A6%2582%25E4%25BD%2595%25E9%2599%258D%25E4%25BD%258E%25E7%25BA%25B9%25E6%25B3%25A2%2F&amp;text=%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2%E5%92%8C%E6%94%B9%E5%96%84%E5%8A%A8%E6%80%81%E5%93%8D%E5%BA%94" title="分享到Telegram"><i class="solitude fab fa-telegram"></i></a><a class="social-share-ico icon-whatsapp" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text=%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2%E5%92%8C%E6%94%B9%E5%96%84%E5%8A%A8%E6%80%81%E5%93%8D%E5%BA%94 http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E5%25BC%2580%25E5%2585%25B3%25E7%2594%25B5%25E6%25BA%2590%25E5%25A6%2582%25E4%25BD%2595%25E9%2599%258D%25E4%25BD%258E%25E7%25BA%25B9%25E6%25B3%25A2%2F" title="分享到WhatsApp"><i class="solitude fab fa-whatsapp"></i></a></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">Something Interesting</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>开关电源<span class="tagsPageCount">2</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">一些硬件电路知识</div></div></a></div><div class="next-post pull-right"><a href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">基本元器件的选型</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/avatar.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">Jinbo Li</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2%EF%BC%9F"><span class="toc-text">开关电源如何降低纹波？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E5%8A%A0%E5%A4%A7%E7%94%B5%E6%84%9F%E5%80%BC%E5%92%8C%E8%BE%93%E5%87%BA%E7%94%B5%E5%AE%B9%E5%80%BC"><span class="toc-text">1、加大电感值和输出电容值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E4%BA%8C%E7%BA%A7%E6%BB%A4%E6%B3%A2%E2%80%94%E2%80%94%E5%86%8D%E5%8A%A0%E4%B8%80%E7%BA%A7LC%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="toc-text">2、二级滤波——再加一级LC滤波器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E8%BE%93%E5%87%BA%E4%B9%8B%E5%90%8E%EF%BC%8C%E6%8E%A5LDO%E6%BB%A4%E6%B3%A2"><span class="toc-text">3、开关电源输出之后，接LDO滤波</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E5%9C%A8%E4%BA%8C%E6%9E%81%E7%AE%A1%E4%B8%8A%E5%B9%B6%E8%81%94%E7%94%B5%E5%AE%B9%E6%88%96RC%E6%94%AF%E8%B7%AF"><span class="toc-text">4、在二极管上并联电容或RC支路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E4%BA%8C%E6%9E%81%E7%AE%A1%E5%90%8E%E6%8E%A5%E7%94%B5%E6%84%9F"><span class="toc-text">5、二极管后接电感</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E6%94%B9%E5%96%84%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E7%9A%84%E5%8A%A8%E6%80%81%E5%93%8D%E5%BA%94%EF%BC%9F"><span class="toc-text">如何改善开关电源的动态响应？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E9%80%82%E5%BD%93%E6%94%B9%E5%96%84%E5%8F%8D%E9%A6%88%E5%93%8D%E5%BA%94%E9%80%9F%E7%8E%87"><span class="toc-text">1、适当改善反馈响应速率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E9%80%82%E5%BD%93%E9%99%8D%E4%BD%8E%E8%BE%93%E5%87%BA%E5%82%A8%E8%83%BD%E7%94%B5%E6%84%9F%E7%9A%84%E6%84%9F%E9%87%8F"><span class="toc-text">2、适当降低输出储能电感的感量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E5%A2%9E%E5%8A%A0%E7%94%B5%E5%AE%B9%E5%AE%B9%E9%87%8F%E6%88%96%E6%95%B0%E9%87%8F"><span class="toc-text">3、增加电容容量或数量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E9%87%87%E7%94%A8%E5%A4%9A%E4%B8%AA%E5%8F%98%E6%8D%A2%E5%99%A8%E5%B9%B6%E8%81%94%E6%96%B9%E6%A1%88"><span class="toc-text">4、采用多个变换器并联方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E5%A2%9E%E5%8A%A0%E5%BC%80%E5%85%B3%E9%A2%91%E7%8E%87"><span class="toc-text">5、增加开关频率</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现"><div class="content"><span class="title" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现">全数字锁相环的Verilog实现</span><span class="categories" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">FPGA</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路">常见模拟电路</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识">一些硬件电路知识</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应"><div class="content"><span class="title" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应">开关电源如何降低纹波和改善动态响应</span><span class="categories" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型"><div class="content"><span class="title" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型">基本元器件的选型</span><span class="categories" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">模电原理及应用</span></div></a></div></div></div></div></main><footer id="footer"><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2025 By&nbsp;<a class="footer-bar-link" href="/"><img class="author-avatar" src="/img/pwa/favicon1.png">Jinbo Li</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude">主题：Solitude</a></div></div></div></div></footer></div><!-- right_menu--><!-- inject body--><div><script src="/js/utils.js?v=3.0.19"></script><script src="/js/main.js?v=3.0.19"></script><script src="/js/third_party/waterfall.min.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/tw_cn.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://fastly.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div class="js-pjax"></div></div><!-- pjax--><script>const pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+})
+
+document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+})
+
+document.addEventListener('pjax:complete', () => {
+    window.refreshFn()
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+    if (e.request.status === 404) {
+        pjax.loadUrl('/404.html')
+    }
+})</script><!-- google adsense--><!-- search--><!-- music--></body></html>
+        <script>
+            const posts = ["2025/07/19/全数字锁相环/","2025/07/19/模电常见电路/","2025/07/19/模电_数电/","2025/07/19/开关电源如何降低纹波/","2025/07/19/基本元器件选型/","2025/07/19/串行通信方式/","2025/07/19/shell_1/","2025/07/19/linux_5/","2025/07/19/linux_4/","2025/07/19/linux_3/","2025/07/19/linux_2/","2025/07/19/linux_1/","2025/07/19/fpga1/","2025/07/19/c++2/","2025/07/19/c++1/","2025/07/19/Buck电路/","2025/07/19/BJT与MOS管/","2025/07/19/BJT的直流参数/","2025/07/19/BJT的应用/","2025/07/19/24V-5VBUCK稳压电路/","2025/07/18/hello-world/","2020/04/26/Windows下搭建hexo博客总结/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>

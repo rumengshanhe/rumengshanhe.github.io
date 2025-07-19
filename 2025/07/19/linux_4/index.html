@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>第四篇  使用NFS服务实现Linux间文件共享 | Something Interesting</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon1.png"><!-- index.css--><link rel="stylesheet" href="/css/index.css?v=3.0.19"><!-- inject head--><link rel="canonical" href="http://example.com/2025/07/19/linux_4/index.html"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><!-- Open Graph--><meta name="description" content="网络操作开始之前，先了解一下Windows下和Linux下各自的基本网络操作，以备后用；Linux的网络命令比较多，Linux网络操作命令的一个特点是，命令参数选项和功能很多，一个命令往往还可以实现其它命令的功能，许多细节以自行查询为宜。 查看IP地址Windows下1ipconfig &amp;#x2F;al"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="Something Interesting"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon1.png"><link rel="apple-touch-icon" href="/img/pwa/favicon1.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.19' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: undefined,
+    runtime: '2025-07-18 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可"},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: false,
+    expire: false,
+};</script><!-- page-config head--><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: false,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body id="body"><!-- universe--><!-- background img--><!-- loading--><!-- console--><!-- sidebar--><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/Buck%E7%94%B5%E8%B7%AF/">Buck电路<sup>2</sup></a><a href="/tags/BJT/">BJT<sup>3</sup></a><a href="/tags/MOS%E7%AE%A1/">MOS管<sup>1</sup></a><a href="/tags/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/">开关电源<sup>2</sup></a><a href="/tags/FPGA%E5%99%A8%E4%BB%B6/">FPGA器件<sup>1</sup></a><a href="/tags/const/">const<sup>1</sup></a><a href="/tags/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/">Linux虚拟机安装<sup>1</sup></a><a href="/tags/Linux%E5%BF%AB%E6%8D%B7%E9%94%AE%E4%B8%8E%E5%91%BD%E4%BB%A4/">Linux快捷键与命令<sup>1</sup></a><a href="/tags/Linux%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">Linux文件操作<sup>1</sup></a><a href="/tags/NFS%E6%9C%8D%E5%8A%A1/">NFS服务<sup>1</sup></a><a href="/tags/Linux%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">Linux网络操作<sup>1</sup></a><a href="/tags/Vim/">Vim<sup>1</sup></a><a href="/tags/Shell%E7%BC%96%E7%A8%8B/">Shell编程<sup>1</sup></a><a href="/tags/%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/">串行通信<sup>1</sup></a><a href="/tags/UART/">UART<sup>1</sup></a><a href="/tags/IIC/">IIC<sup>1</sup></a><a href="/tags/SPI/">SPI<sup>1</sup></a><a href="/tags/DPLL/">DPLL<sup>1</sup></a><a href="/tags/Verilog/">Verilog<sup>1</sup></a><a href="/tags/%E5%80%8D%E9%A2%91%E5%99%A8/">倍频器<sup>1</sup></a><a href="/tags/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E7%90%86/">基尔霍夫定理<sup>1</sup></a><a href="/tags/%E5%BB%BA%E7%AB%8B%E6%97%B6%E9%97%B4%E5%92%8C%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4/">建立时间和保持时间<sup>1</sup></a><a href="/tags/%E7%BA%BF%E4%B8%8E/">线与<sup>1</sup></a><a href="/tags/%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%86%92%E9%99%A9/">竞争与冒险<sup>1</sup></a><a href="/tags/%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%E5%92%8C%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D/">异步复位和同步复位<sup>1</sup></a><a href="/tags/%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">元器件选型<sup>1</sup></a><a href="/tags/%E7%A7%AF%E5%88%86%E7%94%B5%E8%B7%AF/">积分电路<sup>1</sup></a><a href="/tags/%E5%BE%AE%E5%88%86%E7%94%B5%E8%B7%AF/">微分电路<sup>1</sup></a><a href="/tags/%E5%8A%A0%E6%B3%95%E7%94%B5%E8%B7%AF/">加法电路<sup>1</sup></a><a href="/tags/%E5%B7%AE%E5%88%86%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88%E5%87%8F%E6%B3%95%E7%94%B5%E8%B7%AF%EF%BC%89/">差分放大器（减法电路）<sup>1</sup></a></div></div></div></div><!-- keyboard--><!-- righhtside--><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><div class="back-home-button" tabindex="-1"><i class="back-home-button-icon solitude fas fa-bars-progress"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div></div><a id="site-name" href="/" title="返回博客主页"><img src="/img/pwa/cursor.ico" alt="Something Interesting"><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">第四篇  使用NFS服务实现Linux间文件共享</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fas fa-dice-d6"></i></a></div><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/Linux/">Linux</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/NFS%E6%9C%8D%E5%8A%A1/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>NFS服务</span></a><a class="post-meta__tags" href="/tags/Linux%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>Linux网络操作</span></a></div></div></div></div><h1 class="post-title">第四篇  使用NFS服务实现Linux间文件共享</h1><div id="post-meta"><div class="meta-secondline"></div></div></div><article class="post-content article-container"><h1 id="网络操作"><a href="#网络操作" class="headerlink" title="网络操作"></a>网络操作</h1><p>开始之前，先了解一下Windows下和Linux下各自的基本网络操作，以备后用；</br><br><em><strong>Linux</strong></em>的网络命令比较多，<em><strong>Linux</strong></em>网络操作命令的一个特点是，命令参数选项和功能很多，一个命令往往还可以实现其它命令的功能，许多细节以自行查询为宜。</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/F9A4356BBBC64B3BAA604FE8E71849AE?method=download&amp;amp;shareKey=48a9dfcbc02c9bd8e1050a093d34d985"></p>
+<span id="more"></span>
+
+<h2 id="查看IP地址"><a href="#查看IP地址" class="headerlink" title="查看IP地址"></a>查看IP地址</h2><h3 id="Windows下"><a href="#Windows下" class="headerlink" title="Windows下"></a>Windows下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /all</span><br></pre></td></tr></table></figure>
+
+<p>得到Windows下主机IP地址为<em>192.168.0.106</em>；</p>
+<h3 id="Linux下"><a href="#Linux下" class="headerlink" title="Linux下"></a>Linux下</h3><p>Linux虚拟机的网络设置有两个问题需要注意</p>
+<h4 id="注意问题"><a href="#注意问题" class="headerlink" title="注意问题"></a>注意问题</h4><blockquote>
+<p>问题1：</br><br>确保虚拟机的网络为桥接方式!!!</br><br>问题2：</br><br>确保网卡处于激活状态!!!</br><br>查看方法如下：</br></p>
+<ul>
+<li>输入命令：<code>system-config-network</code></li>
+<li>会出现弹窗，检查eth0是否为活跃状态，如果不是活跃状态，激活即可。</li>
+</ul>
+</blockquote>
+<p><img src="https://note.youdao.com/yws/api/personal/file/F31F15FEA656434A8DDF51786372C396?method=download&amp;amp;shareKey=9f1f08460881cef86078a2f9057df5a3"></p>
+<h4 id="查看ip地址"><a href="#查看ip地址" class="headerlink" title="查看ip地址"></a>查看ip地址</h4><p>命令：<code>ifconfig</code></br><br>得到Linux下的主机IP地址为<em>192.168.10.183</em></p>
+<h2 id="测试连通性"><a href="#测试连通性" class="headerlink" title="测试连通性"></a>测试连通性</h2><h3 id="重启网络"><a href="#重启网络" class="headerlink" title="重启网络"></a>重启网络</h3><p><code>service network restart</code> </p>
+<h3 id="测试连通性-1"><a href="#测试连通性-1" class="headerlink" title="测试连通性"></a>测试连通性</h3><p>在Windows命令行中，看是否可以ping通Linux主机。</br><br><code>ping 192.168.10.183</code><br><img src="https://note.youdao.com/yws/api/personal/file/AC6473A86C1243FD95206378EE706E44?method=download&amp;amp;shareKey=c1e010f81238db1ccf748bf2cf2b28eb"></p>
+<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><h3 id="临时指定IP"><a href="#临时指定IP" class="headerlink" title="临时指定IP"></a>临时指定IP</h3><p><code>ifconfig eth0 192.168.0.?(10-253)</code></p>
+<blockquote>
+<p>注意：同一局域网内IP地址不能重复</p>
+</blockquote>
+<h3 id="终止命令执行组合键"><a href="#终止命令执行组合键" class="headerlink" title="终止命令执行组合键"></a>终止命令执行组合键</h3><p> <em><strong>ctrl + c</strong></em></p>
+<h3 id="从服务器下载资源"><a href="#从服务器下载资源" class="headerlink" title="从服务器下载资源"></a>从服务器下载资源</h3><h4 id="测试网络是否连通"><a href="#测试网络是否连通" class="headerlink" title="测试网络是否连通"></a>测试网络是否连通</h4><p><code>ping 192.168.0.254 -c 3</code></p>
+<blockquote>
+<p>192.168.0.254是服务器的IP地址，关于如何在个人主机上搭建服务器，在下一篇详述。</p>
+</blockquote>
+<h4 id="查看共享文件"><a href="#查看共享文件" class="headerlink" title="查看共享文件"></a>查看共享文件</h4><blockquote>
+<p>[root@localhost linux]# <code>showmount -e 192.168.0.254</code></br><br>Export list for 192.168.0.254:</br><br>&#x2F;example 1      *		</br><br>&#x2F;example 2   *		</br><br>&#x2F;example 3 *		</br></p>
+</blockquote>
+<p>上述三个目录便是服务器端分享的文件目录</p>
+<h4 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h4><p>挂载共享目录到本机</br></p>
+<p><code>mount 192.168.0.254:/27_course /mnt</code></p>
+<h4 id="下载到本机"><a href="#下载到本机" class="headerlink" title="下载到本机"></a>下载到本机</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /zhangsan      //创建一个下载目录&lt;/br&gt;</span><br><span class="line">\cp /mnt/* /zhangsan -rf     //拷贝文件</span><br></pre></td></tr></table></figure>
+
+<h4 id="解挂"><a href="#解挂" class="headerlink" title="解挂"></a>解挂</h4><p><code>umount /mnt</code></p>
+<hr>
+<h1 id="实现NFS服务"><a href="#实现NFS服务" class="headerlink" title="实现NFS服务"></a>实现<em><strong>NFS</strong></em>服务</h1><p><strong>NFS</strong> ：<em>Network File System</em>，即网络文件系统。是由<strong>Sun</strong>公司开发的一个基于内核的文件系统，基于<strong>RPC</strong>（远程过程调用协议）实现。通过使用NFS服务，用户和程序可以像访问本地文件一样访问远端系统上的文件。</p>
+<h2 id="服务器端配置"><a href="#服务器端配置" class="headerlink" title="服务器端配置"></a>服务器端配置</h2><h3 id="获取镜像文件"><a href="#获取镜像文件" class="headerlink" title="获取镜像文件"></a>获取镜像文件</h3><p>把系统镜像存放到 <em>&#x2F;tools&#x2F;</em> 目录下，检查是否已存在</br></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /tools/rhel55.iso</span><br></pre></td></tr></table></figure>
+
+<!--more-->
+
+<h3 id="挂载镜像文件"><a href="#挂载镜像文件" class="headerlink" title="挂载镜像文件"></a>挂载镜像文件</h3><p>在根目录下创建 <em>&#x2F;iso</em> 文件夹作为挂载点。</br></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /iso</span><br><span class="line"></span><br><span class="line">mount -t iso9660 -o loop /tools/rhel55.iso /iso</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置yum"><a href="#配置yum" class="headerlink" title="配置yum"></a>配置<em>yum</em></h3><h4 id="打开yum配置文件"><a href="#打开yum配置文件" class="headerlink" title="打开yum配置文件"></a>打开<em>yum</em>配置文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/yum.repos.d/rhel-debuginfo.repo</span><br></pre></td></tr></table></figure>
+
+<h4 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h4><table>
+<thead>
+<tr>
+<th>文件内容</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[rhel-debuginfo]</td>
+<td>表示标签</td>
+</tr>
+<tr>
+<td>name&#x3D;Red Hat Enterprise Linux $releasever - $basearch - Debug</td>
+<td>表示名字</td>
+</tr>
+<tr>
+<td>baseurl&#x3D;<a href="ftp://ftp.redhat.com/pub/redhat/linux/enterprise/%E3%80%82%E3%80%82%E3%80%82">ftp://ftp.redhat.com/pub/redhat/linux/enterprise/。。。</a></td>
+<td>表示路径</td>
+</tr>
+<tr>
+<td>file:&#x2F;&#x2F;</td>
+<td>表示本地文件</td>
+</tr>
+<tr>
+<td>enabled&#x3D;0</td>
+<td>0 表示关闭、1 表示开启</td>
+</tr>
+<tr>
+<td>gpgcheck&#x3D;1</td>
+<td>0 表示不校验、1 表示校验</td>
+</tr>
+</tbody></table>
+<h4 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h4><p>修改文件内容如下：</p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/7BECEE5ACF054CB9ACD9E3092BED669F?method=download&amp;amp;shareKey=4fbdfd56b354b55d10bc8b61b0472a58">
+			</p>
+<h3 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h3><p>清空以前配置并重新加载现在配置</br></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum clean all</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="安装NFS服务"><a href="#安装NFS服务" class="headerlink" title="安装NFS服务"></a>安装NFS服务</h3><h4 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h4><p>安装命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install nfs*</span><br></pre></td></tr></table></figure>
+<p>卸载命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum erase nfs*</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置-NFC-服务"><a href="#配置-NFC-服务" class="headerlink" title="配置 NFC 服务"></a>配置 <em>NFC</em> 服务</h3><h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>在 <em>&#x2F;etc&#x2F;</em> 目录下创建配置文件</br></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/exports</span><br></pre></td></tr></table></figure>
+<p>然后按照以下格式输入内容。</p>
+<h4 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h4><p>共享目录名(必须是绝对路径)  client(option)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/example1 *(ro)</span><br><span class="line">/example2 *(rw)</span><br><span class="line">/example3 *(ro)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em><strong>client</strong></em> :</br><br>    * : 表示所有可以ping通的客户端</br><br><em><strong>option</strong></em> :</br><br><strong>ro</strong> : 表示只读</br><br><strong>rw</strong> : 表示可读可写</p>
+</blockquote>
+<h3 id="重启-NFS-服务"><a href="#重启-NFS-服务" class="headerlink" title="重启 NFS 服务"></a>重启 <em>NFS</em> 服务</h3><h4 id="命令-1"><a href="#命令-1" class="headerlink" title="命令"></a>命令</h4><p><code>service nfs restart</code></p>
+<hr>
+<h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h2><h3 id="检测网络是否连通"><a href="#检测网络是否连通" class="headerlink" title="检测网络是否连通"></a>检测网络是否连通</h3><p><code>service network restart</code></p>
+<h3 id="查看共享文件-1"><a href="#查看共享文件-1" class="headerlink" title="查看共享文件"></a>查看共享文件</h3><p><code>showmount -e service_ip</code></p>
+<h3 id="挂载-1"><a href="#挂载-1" class="headerlink" title="挂载"></a>挂载</h3><p><code>mount service_ip:sharedir  /mnt</code></p>
+<h3 id="拷贝"><a href="#拷贝" class="headerlink" title="拷贝"></a>拷贝</h3><p><code>cp /mnt /dest_dir</code></p>
+<h3 id="解挂-1"><a href="#解挂-1" class="headerlink" title="解挂"></a>解挂</h3><p><code>umount /mnt</code></p>
+<hr>
+<p></br></br></br></br></br></p>
+<ul>
+<li>end</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">Jinbo Li</div><div class="post-copyright__author_desc"></div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="social-share"><a class="social-share-ico icon-qq" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2Flinux_4%2F&amp;title=%E7%AC%AC%E5%9B%9B%E7%AF%87%20%20%E4%BD%BF%E7%94%A8NFS%E6%9C%8D%E5%8A%A1%E5%AE%9E%E7%8E%B0Linux%E9%97%B4%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB&amp;desc=undefined&amp;summary=undefined&amp;site=%E7%AC%AC%E5%9B%9B%E7%AF%87%20%20%E4%BD%BF%E7%94%A8NFS%E6%9C%8D%E5%8A%A1%E5%AE%9E%E7%8E%B0Linux%E9%97%B4%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB&amp;pics=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到QQ"><i class="solitude fab fa-qq"></i></a><a class="social-share-ico icon-weibo" target="_blank" rel="noopener" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2Flinux_4%2F&amp;title=%E7%AC%AC%E5%9B%9B%E7%AF%87%20%20%E4%BD%BF%E7%94%A8NFS%E6%9C%8D%E5%8A%A1%E5%AE%9E%E7%8E%B0Linux%E9%97%B4%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB&amp;pic=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到微博"><i class="solitude fab fa-weibo"></i></a><a class="social-share-ico icon-twitter" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2Flinux_4%2F&amp;text=%E7%AC%AC%E5%9B%9B%E7%AF%87%20%20%E4%BD%BF%E7%94%A8NFS%E6%9C%8D%E5%8A%A1%E5%AE%9E%E7%8E%B0Linux%E9%97%B4%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB" title="分享到Twitter"><i class="solitude fab fa-twitter"></i></a><a class="social-share-ico icon-facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2Flinux_4%2F" title="分享到Facebook"><i class="solitude fab fa-facebook"></i></a><a class="social-share-ico icon-telegram" target="_blank" rel="noopener" href="https://t.me/share/url?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2Flinux_4%2F&amp;text=%E7%AC%AC%E5%9B%9B%E7%AF%87%20%20%E4%BD%BF%E7%94%A8NFS%E6%9C%8D%E5%8A%A1%E5%AE%9E%E7%8E%B0Linux%E9%97%B4%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB" title="分享到Telegram"><i class="solitude fab fa-telegram"></i></a><a class="social-share-ico icon-whatsapp" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text=%E7%AC%AC%E5%9B%9B%E7%AF%87%20%20%E4%BD%BF%E7%94%A8NFS%E6%9C%8D%E5%8A%A1%E5%AE%9E%E7%8E%B0Linux%E9%97%B4%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2Flinux_4%2F" title="分享到WhatsApp"><i class="solitude fab fa-whatsapp"></i></a></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">Something Interesting</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/NFS%E6%9C%8D%E5%8A%A1/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>NFS服务<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/Linux%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>Linux网络操作<span class="tagsPageCount">1</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/07/19/linux_5/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">第五篇  Vim 用法小结</div></div></a></div><div class="next-post pull-right"><a href="/2025/07/19/linux_3/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">第三篇  简单文件操作</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/avatar.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">Jinbo Li</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C"><span class="toc-text">网络操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8BIP%E5%9C%B0%E5%9D%80"><span class="toc-text">查看IP地址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows%E4%B8%8B"><span class="toc-text">Windows下</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux%E4%B8%8B"><span class="toc-text">Linux下</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E9%97%AE%E9%A2%98"><span class="toc-text">注意问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8Bip%E5%9C%B0%E5%9D%80"><span class="toc-text">查看ip地址</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%BF%9E%E9%80%9A%E6%80%A7"><span class="toc-text">测试连通性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E7%BD%91%E7%BB%9C"><span class="toc-text">重启网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%BF%9E%E9%80%9A%E6%80%A7-1"><span class="toc-text">测试连通性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%93%8D%E4%BD%9C"><span class="toc-text">其他操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B4%E6%97%B6%E6%8C%87%E5%AE%9AIP"><span class="toc-text">临时指定IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%88%E6%AD%A2%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E7%BB%84%E5%90%88%E9%94%AE"><span class="toc-text">终止命令执行组合键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8B%E8%BD%BD%E8%B5%84%E6%BA%90"><span class="toc-text">从服务器下载资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%BD%91%E7%BB%9C%E6%98%AF%E5%90%A6%E8%BF%9E%E9%80%9A"><span class="toc-text">测试网络是否连通</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6"><span class="toc-text">查看共享文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8C%82%E8%BD%BD"><span class="toc-text">挂载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%88%B0%E6%9C%AC%E6%9C%BA"><span class="toc-text">下载到本机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%8C%82"><span class="toc-text">解挂</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0NFS%E6%9C%8D%E5%8A%A1"><span class="toc-text">实现NFS服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-text">服务器端配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6"><span class="toc-text">获取镜像文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%82%E8%BD%BD%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6"><span class="toc-text">挂载镜像文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEyum"><span class="toc-text">配置yum</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%93%E5%BC%80yum%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">打开yum配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AB%E4%B9%89"><span class="toc-text">含义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9"><span class="toc-text">修改</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD"><span class="toc-text">重载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85NFS%E6%9C%8D%E5%8A%A1"><span class="toc-text">安装NFS服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-text">命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-NFC-%E6%9C%8D%E5%8A%A1"><span class="toc-text">配置 NFC 服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F"><span class="toc-text">格式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AF-NFS-%E6%9C%8D%E5%8A%A1"><span class="toc-text">重启 NFS 服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4-1"><span class="toc-text">命令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-text">客户端配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E7%BD%91%E7%BB%9C%E6%98%AF%E5%90%A6%E8%BF%9E%E9%80%9A"><span class="toc-text">检测网络是否连通</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6-1"><span class="toc-text">查看共享文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%82%E8%BD%BD-1"><span class="toc-text">挂载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%B7%E8%B4%9D"><span class="toc-text">拷贝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%8C%82-1"><span class="toc-text">解挂</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现"><div class="content"><span class="title" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现">全数字锁相环的Verilog实现</span><span class="categories" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">FPGA</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路">常见模拟电路</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识">一些硬件电路知识</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应"><div class="content"><span class="title" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应">开关电源如何降低纹波和改善动态响应</span><span class="categories" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型"><div class="content"><span class="title" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型">基本元器件的选型</span><span class="categories" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">模电原理及应用</span></div></a></div></div></div></div></main><footer id="footer"><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2025 By&nbsp;<a class="footer-bar-link" href="/"><img class="author-avatar" src="/img/pwa/favicon1.png">Jinbo Li</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude">主题：Solitude</a></div></div></div></div></footer></div><!-- right_menu--><!-- inject body--><div><script src="/js/utils.js?v=3.0.19"></script><script src="/js/main.js?v=3.0.19"></script><script src="/js/third_party/waterfall.min.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/tw_cn.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://fastly.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div class="js-pjax"></div></div><!-- pjax--><script>const pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+})
+
+document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+})
+
+document.addEventListener('pjax:complete', () => {
+    window.refreshFn()
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+    if (e.request.status === 404) {
+        pjax.loadUrl('/404.html')
+    }
+})</script><!-- google adsense--><!-- search--><!-- music--></body></html>
+        <script>
+            const posts = ["2025/07/19/全数字锁相环/","2025/07/19/模电常见电路/","2025/07/19/模电_数电/","2025/07/19/开关电源如何降低纹波/","2025/07/19/基本元器件选型/","2025/07/19/串行通信方式/","2025/07/19/shell_1/","2025/07/19/linux_5/","2025/07/19/linux_4/","2025/07/19/linux_3/","2025/07/19/linux_2/","2025/07/19/linux_1/","2025/07/19/fpga1/","2025/07/19/c++2/","2025/07/19/c++1/","2025/07/19/Buck电路/","2025/07/19/BJT与MOS管/","2025/07/19/BJT的直流参数/","2025/07/19/BJT的应用/","2025/07/19/24V-5VBUCK稳压电路/","2025/07/18/hello-world/","2020/04/26/Windows下搭建hexo博客总结/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>

@@ -1,0 +1,261 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BJT与MOS管 | Something Interesting</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon1.png"><!-- index.css--><link rel="stylesheet" href="/css/index.css?v=3.0.19"><!-- inject head--><link rel="canonical" href="http://example.com/2025/07/19/BJT%E4%B8%8EMOS%E7%AE%A1/index.html"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><!-- Open Graph--><meta name="description" content="三极管三极管，全称应为半导体三极管，也称双极型晶体管、晶体三极管，是一种控制电流的半导体器件。其作用是把微弱信号放大成幅度值较大的电信号，也用作无触点开关。 三极管是半导体基本元器件之一，具有电流放大作用，是电子电路的核心元件。三极管是在一块半导体基片上制作两个相距很近的PN结，两个PN结把整块半"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="Something Interesting"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon1.png"><link rel="apple-touch-icon" href="/img/pwa/favicon1.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.19' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: undefined,
+    runtime: '2025-07-18 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可"},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: false,
+    expire: false,
+};</script><!-- page-config head--><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: false,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body id="body"><!-- universe--><!-- background img--><!-- loading--><!-- console--><!-- sidebar--><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/Buck%E7%94%B5%E8%B7%AF/">Buck电路<sup>2</sup></a><a href="/tags/BJT/">BJT<sup>3</sup></a><a href="/tags/MOS%E7%AE%A1/">MOS管<sup>1</sup></a><a href="/tags/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/">开关电源<sup>2</sup></a><a href="/tags/FPGA%E5%99%A8%E4%BB%B6/">FPGA器件<sup>1</sup></a><a href="/tags/const/">const<sup>1</sup></a><a href="/tags/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/">Linux虚拟机安装<sup>1</sup></a><a href="/tags/Linux%E5%BF%AB%E6%8D%B7%E9%94%AE%E4%B8%8E%E5%91%BD%E4%BB%A4/">Linux快捷键与命令<sup>1</sup></a><a href="/tags/Linux%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">Linux文件操作<sup>1</sup></a><a href="/tags/NFS%E6%9C%8D%E5%8A%A1/">NFS服务<sup>1</sup></a><a href="/tags/Linux%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">Linux网络操作<sup>1</sup></a><a href="/tags/Vim/">Vim<sup>1</sup></a><a href="/tags/Shell%E7%BC%96%E7%A8%8B/">Shell编程<sup>1</sup></a><a href="/tags/%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/">串行通信<sup>1</sup></a><a href="/tags/UART/">UART<sup>1</sup></a><a href="/tags/IIC/">IIC<sup>1</sup></a><a href="/tags/SPI/">SPI<sup>1</sup></a><a href="/tags/DPLL/">DPLL<sup>1</sup></a><a href="/tags/Verilog/">Verilog<sup>1</sup></a><a href="/tags/%E5%80%8D%E9%A2%91%E5%99%A8/">倍频器<sup>1</sup></a><a href="/tags/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E7%90%86/">基尔霍夫定理<sup>1</sup></a><a href="/tags/%E5%BB%BA%E7%AB%8B%E6%97%B6%E9%97%B4%E5%92%8C%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4/">建立时间和保持时间<sup>1</sup></a><a href="/tags/%E7%BA%BF%E4%B8%8E/">线与<sup>1</sup></a><a href="/tags/%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%86%92%E9%99%A9/">竞争与冒险<sup>1</sup></a><a href="/tags/%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%E5%92%8C%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D/">异步复位和同步复位<sup>1</sup></a><a href="/tags/%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">元器件选型<sup>1</sup></a><a href="/tags/%E7%A7%AF%E5%88%86%E7%94%B5%E8%B7%AF/">积分电路<sup>1</sup></a><a href="/tags/%E5%BE%AE%E5%88%86%E7%94%B5%E8%B7%AF/">微分电路<sup>1</sup></a><a href="/tags/%E5%8A%A0%E6%B3%95%E7%94%B5%E8%B7%AF/">加法电路<sup>1</sup></a><a href="/tags/%E5%B7%AE%E5%88%86%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88%E5%87%8F%E6%B3%95%E7%94%B5%E8%B7%AF%EF%BC%89/">差分放大器（减法电路）<sup>1</sup></a></div></div></div></div><!-- keyboard--><!-- righhtside--><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><div class="back-home-button" tabindex="-1"><i class="back-home-button-icon solitude fas fa-bars-progress"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div></div><a id="site-name" href="/" title="返回博客主页"><img src="/img/pwa/cursor.ico" alt="Something Interesting"><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">BJT与MOS管</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fas fa-dice-d6"></i></a></div><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E6%A8%A1%E7%94%B5%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8/">模电原理及应用</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BJT/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>BJT</span></a><a class="post-meta__tags" href="/tags/MOS%E7%AE%A1/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>MOS管</span></a></div></div></div></div><h1 class="post-title">BJT与MOS管</h1><div id="post-meta"><div class="meta-secondline"></div></div></div><article class="post-content article-container"><h1 id="三极管"><a href="#三极管" class="headerlink" title="三极管"></a>三极管</h1><p><strong>三极管</strong>，全称应为半导体三极管，也称双极型<a target="_blank" rel="noopener" href="https://www.eefocus.com/baike/487301">晶体管</a>、晶体三极管，是一种控制电流的半导体器件。其作用是把微弱信号放大成幅度值较大的电信号，也用作无<a target="_blank" rel="noopener" href="https://www.eefocus.com/baike/493830">触点开关</a>。 </p>
+<p><strong>三极管</strong>是半导体基本元器件之一，具有电流放大作用，是电子电路的核心元件。三极管是在一块半导体基片上制作两个相距很近的PN结，两个PN结把整块半导体分成三部分，中间部分是基区，两侧部分是发射区和集电区，排列方式有PNP和NPN两种。 </p>
+<p><strong>三极管</strong>具有电流放大作用，其实质是三极管能以基极电流微小的变化量来控制集电极电流较大的变化量。这是三极管最基本的和最重要的特性。 </p>
+<div style='text-align: center;'>
+
+<p><img src="https://upload.semidata.info/new.eefocus.com/article/image/2021/01/07/5ff6bddbac650-thumb.jpg" alt="晶体三极管符号"></p>
+</div>
+
+<span id="more"></span>
+
+<h2 id="三极管参数"><a href="#三极管参数" class="headerlink" title="三极管参数"></a>三极管参数</h2><p>晶体管的主要参数有电流放大系数、耗散功率、频率特性、反向电流等。</p>
+<h3 id="电流放大系数"><a href="#电流放大系数" class="headerlink" title="电流放大系数"></a>电流放大系数</h3><p>也称电流放大倍数，用来表示晶体管放大能力。 根据晶体管工作状态的不同，电流放大系数又分为直流电流放大系数和交流电流放大系数。 直流电流放大系数 直流电流放大系数也称静态电流放大系数或直流放大倍数，是指在静态无变化信号输入时，晶体管集电极电流 IC 与基极电流 IB 的比值，一般用 hFE 或β表示。 交流电流放大系数 交流电流放大系数也称动态电流放大系数或交流放大倍数，是指在交流状态下，晶体管集电极电流变化量△IC 与基极电流变化量△IB 的比值，一般用 hFE 或β表示。 </p>
+<h3 id="耗散功率"><a href="#耗散功率" class="headerlink" title="耗散功率"></a>耗散功率</h3><p>也称集电极最大允许耗散功率 PCM，是指晶体管参数变化不超过规定允许值时的最大集电极耗散功率。 耗散功率与晶体管的最高允许结温和集电极最大电流有密切关系。晶体管在使用时，其实际功耗不允许超过 PCM 值，否则会造成晶体管因过载而损坏。 通常将耗散功率 PCM 小于 1W 的晶体管称为小功率晶体管，PCM 等于或大于 1W、小于 5W 的晶体管被称为中功率晶体管，将 PCM 等于或大于 5W 的晶体管称为大功率晶体管。</p>
+<h3 id="频率特性"><a href="#频率特性" class="headerlink" title="频率特性"></a>频率特性</h3><p>主要包括特征频率 fT 和最高振荡频率 fM 等。 特征频率 fT 晶体管的工作频率超过截止频率 fβ或 fα时，其电流放大系数β值将随着频率的升高而下降。特征频率是指β值降为 1 时晶体管的工作频率。 最高振荡频率 fM 最高振荡频率是指晶体管的功率增益降为 1 时所对应的频率。 </p>
+<h3 id="反向电流"><a href="#反向电流" class="headerlink" title="反向电流"></a>反向电流</h3><p>包括其集电极—基极之间的反向电流 ICBO 和集电极—发射极之间的反向击穿电流 ICEO。 ICBO 也称集电结反向漏电电流，是指当晶体管的发射极开路时，集电极与基极之间的反向电流。ICBO 对温度较敏感，该值越小，说明晶体管的温度特性越好。ICEO 是指当晶体管的基极开路时，其集电极与发射极之间的反向漏电电流，也称穿透电流。此电流值越小，说明晶体管的性能越好。</p>
+<h2 id="晶体三极管作用"><a href="#晶体三极管作用" class="headerlink" title="晶体三极管作用"></a>晶体三极管作用</h2><p>晶体三极管具有电流放大作用，其实质是三极管能以基极电流微小的变化量来控制集电极电流较大的变化量。这是三极管最基本的和最重要的特性。我们将ΔIc&#x2F;ΔIb 的比值称为晶体三极管的电流放大倍数，用符号“β”表示。电流放大倍数对于某一只三极管来说是一个定值，但随着三极管工作时基极电流的变化也会有一定的改变。晶体三极管还具有开关作用。基极电流的增大，不能使集电极电流继续增大 时，三极管就进入了饱和状态。进入饱和状态之后，三极管的集电极跟发射极之间的电压将很小，可以理解为 一个开关闭合了。这样我们就可以拿三极管来当作开关使用：当基极电流为 0 时，三极管集电极电流为 0（这叫做三极管截止），相当于开关断开；当基极电流很 大，以至于三极管饱和时，相当于开关闭合。如果三极管主要工作在截止和饱和状态，那么这样的三极管我们一般把它叫做开关管。</p>
+<p><img src="https://upload.semidata.info/new.eefocus.com/article/image/2021/01/07/5ff6bde1c7715-thumb.jpg" alt="晶体三极管封装"></p>
+<h2 id="晶体三极管结构"><a href="#晶体三极管结构" class="headerlink" title="晶体三极管结构"></a>晶体三极管结构</h2><p>晶体三极管是在一块半导体基片上制作两个相距很近的 PN 结，两个 PN 结把整块半导体分成三部分，中间部分是基区，两侧部分是发射区和集电区，排列方式有 PNP 和 NPN 两种。晶体三极管是一种控制电流的半导体器件其作用是把微弱信号放大成幅度值较大的电信号， 也用作无触点开关。</p>
+<p><img src="https://upload.semidata.info/new.eefocus.com/article/image/2021/01/07/5ff6bddeafb80-thumb.jpg" alt="晶体三极管结构"></p>
+<h1 id="MOS管"><a href="#MOS管" class="headerlink" title="MOS管"></a><strong>MOS</strong>管</h1><p>MOS管的英文全称叫MOSFET(Metal Oxide Semiconductor Field Effect Transistor)，即金属氧化物半导体型场效应管，属于场效应管中的绝缘栅型。因此，MOS管有时被称为绝缘栅场效应管。在一般电子电路中，MOS管通常被用于放大电路或开关电路。</p>
+<h2 id="MOS管的构造"><a href="#MOS管的构造" class="headerlink" title="MOS管的构造"></a>MOS管的构造</h2><p>在一块掺杂浓度较低的P型半导体硅衬底上，用半导体光刻、扩散工艺制作两个高掺杂浓度的N+区，并用金属铝引出两个电极，分别作为漏极D和源极S。然后在漏极和源极之间的P型半导体表面复盖一层很薄的二氧化硅(Si02)绝缘层膜，在再这个绝缘层膜上装上一个铝电极，作为栅极G。这就构成了一个N沟道(NPN型)增强型MOS管，显然它的栅极和其它电极间是绝缘的。</p>
+<p><img src="https://i.loli.net/2021/08/17/1LzfdoA4exPRCiF.png" alt="N沟道增强型场效应管"></p>
+<p>同样用上述相同的方法在一块掺杂浓度较低的N型半导体硅衬底上，用半导体光刻、扩散工艺制作两个高掺杂浓度的P+区，及上述相同的栅极制作过程，就成为一个P沟道(PNP型)增强型MOS管。</p>
+<h2 id="MOS管的工作原理"><a href="#MOS管的工作原理" class="headerlink" title="MOS管的工作原理"></a>MOS管的工作原理</h2><p>增强型MOS管的漏极D和源极S之间有两个背靠背的PN结。当栅-源电压VGS&#x3D;0时，即使加上漏-源电压VDS，总有一个PN结处于反偏状态，漏-源极间没有导电沟道(没有电流流过)，所以这时漏极电流ID&#x3D;0。</p>
+<p>此时若在栅-源极间加上正向电压，即VGS&gt;0，则栅极和硅衬底之间的SiO2绝缘层中便产生一个栅极指向P型硅衬底的电场，由于氧化物层是绝缘的，栅极所加电压VGS无法形成电流，氧化物层的两边就形成了一个电容，VGS等效是对这个电容充电，并形成一个电场，随着VGS逐渐升高，受栅极正电压的吸引，在这个电容的另一边就聚集大量的电子并形成了一个从漏极到源极的N型导电沟道，当VGS大于管子的开启电压VT(一般约为2V)时，N沟道管开始导通，形成漏极电流ID，我们把开始形成沟道时的栅-源极电压称为开启电压，一般用VT表示。</p>
+<p>控制栅极电压VGS的大小改变了电场的强弱，就可以达到控制漏极电流ID的大小的目的，这也是MOS管用电场来控制电流的一个重要特点，所以也称之为场效应管。</p>
+<h2 id="MOS管的特性"><a href="#MOS管的特性" class="headerlink" title="MOS管的特性"></a>MOS管的特性</h2><p>上述MOS管的工作原理中可以看出，MOS管的栅极G和源极S之间是绝缘的，由于Sio2绝缘层的存在，在栅极G和源极S之间等效是一个电容存在，电压VGS产生电场从而导致源极-漏极电流的产生。此时的栅极电压VGS决定了漏极电流的大小，控制栅极电压VGS的大小就可以控制漏极电流ID的大小。这就可以得出如下结论：</p>
+<ul>
+<li><p>MOS管是一个由改变电压来控制电流的器件，所以是电压器件。</p>
+</li>
+<li><p>MOS管道输入特性为容性特性，所以输入阻抗极高。</p>
+</li>
+</ul>
+<h1 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h1><h2 id="MOS管和晶体三极管相比的重要特性"><a href="#MOS管和晶体三极管相比的重要特性" class="headerlink" title="MOS管和晶体三极管相比的重要特性"></a>MOS管和晶体三极管相比的重要特性</h2><ul>
+<li>场效应管的源极S、栅极G、漏极D分别对应于三极管的发射极e、基极b、集电极c，它们的作用相似。</li>
+</ul>
+<ul>
+<li>场效应管是电压控制电流器件，由VGS控制ID，普通的晶体三极管是电流控制电流器件，由IB控制IC。MOS管道放大系数是(跨导gm)当栅极电压改变一伏时能引起漏极电流变化多少安培。晶体三极管是电流放大系数(贝塔β)当基极电流改变一毫安时能引起集电极电流变化多少。</li>
+</ul>
+<ul>
+<li>场效应管栅极和其它电极是绝缘的，不产生电流;而三极管工作时基极电流IB决定集电极电流IC。因此场效应管的输入电阻比三极管的输入电阻高的多。</li>
+<li>场效应管只有多数载流子参与导电;三极管有多数载流子和少数载流子两种载流子参与导电，因少数载流子浓度受温度、辐射等因素影响较大，所以场效应管比三极管的温度稳定性好。</li>
+<li>场效应管在源极未与衬底连在一起时，源极和漏极可以互换使用，且特性变化不大，而三极管的集电极与发射极互换使用时，其特性差异很大，b值将减小很多。</li>
+<li>场效应管的噪声系数很小，在低噪声放大电路的输入级及要求信噪比较高的电路中要选用场效应管。</li>
+<li>场效应管和普通晶体三极管均可组成各种放大电路和开关电路，但是场效应管制造工艺简单，并且又具有普通晶体三极管不能比拟的优秀特性，在各种电路及应用中正逐步的取代普通晶体三极管，目前的大规模和超大规模集成电路中，已经广泛的采用场效应管。</li>
+</ul>
+<h2 id="在开关电源电路中，大功率MOS管和大功率晶体三极管相比MOS管的优点"><a href="#在开关电源电路中，大功率MOS管和大功率晶体三极管相比MOS管的优点" class="headerlink" title="在开关电源电路中，大功率MOS管和大功率晶体三极管相比MOS管的优点"></a>在开关电源电路中，大功率MOS管和大功率晶体三极管相比MOS管的优点</h2><ul>
+<li><p>输入阻抗高，驱动功率小——由于栅源之间是二氧化硅(SiO2)绝缘层，栅源之间的直流电阻基本上就是SiO2绝缘电阻，一般达100MΩ左右，交流输入阻抗基本上就是输入电容的容抗。由于输入阻抗高，对激励信号不会产生压降，有电压就可以驱动，所以驱动功率极小(灵敏度高)。一般的晶体三极管必需有基极电压Vb，再产生基极电流Ib，才能驱动集电极电流的产生。晶体三极管的驱动是需要功率的(Vb×Ib)。</p>
+</li>
+<li><p>开关速度快——MOSFET的开关速度和输入的容性特性的有很大关系，由于输入容性特性的存在，使开关的速度变慢，但是在作为开关运用时，可降低驱动电路内阻，加快开关速度(输入采用了后述的“灌流电路”驱动，加快了容性的充放电的时间)。MOSFET只靠多子导电，不存在少子储存效应，因而关断过程非常迅速，开关时间在10—100ns之间，工作频率可达100kHz以上，普通的晶体三极管由于少数载流子的存储效应，使开关总有滞后现象，影响开关速度的提高(目前采用MOS管的开关电源其工作频率可以轻易的做到100K&#x2F;S～150K&#x2F;S,这对于普通的大功率晶体三极管来说是难以想象的)。</p>
+</li>
+<li><p>无二次击穿——由于普通的功率晶体三极管具有当温度上升就会导致集电极电流上升(正的温度～电流特性)的现象，而集电极电流的上升又会导致温度进一步的上升，温度进一步的上升，更进一步的导致集电极电流的上升这一恶性循环。而晶体三极管的耐压VCEO随管温度升高是逐步下降，这就形成了管温继续上升、耐压继续下降最终导致晶体三极管的击穿，这是一种导致电视机开关电源管和行输出管损坏率占95%的破环性的热电击穿现象，也称为二次击穿现象。MOS管具有和普通晶体三极管相反的温度～电流特性，即当管温度(或环境温度)上升时，沟道电流IDS反而下降。例如;一只IDS&#x3D;10A的MOSFET开关管，当VGS控制电压不变时，在250C温度下IDS&#x3D;3A，当芯片温度升高为1000C时，IDS降低到2A，这种因温度上升而导致沟道电流IDS下降的负温度电流特性，使之不会产生恶性循环而热击穿。也就是MOS管没有二次击穿现象，可见采用MOS管作为开关管，其开关管的损坏率大幅度的降低，近两年电视机开关电源采用MOS管代替过去的普通晶体三极管后，开关管损坏率大大降低也是一个极好的证明。</p>
+</li>
+<li><p>MOS管导通后其导通特性呈纯阻性——普通晶体三极管在饱和导通是，几乎是直通，有一个极低的压降，称为饱和压降，既然有一个压降，那么也就是;普通晶体三极管在饱和导通后等效是一个阻值极小的电阻，但是这个等效的电阻是一个非线性的电阻(电阻上的电压和流过的电流不能符合欧姆定律)，而MOS管作为开关管应用，在饱和导通后也存在一个阻值极小的电阻，但是这个电阻等效一个线性电阻，其电阻的阻值和两端的电压降和流过的电流符合欧姆定律的关系，电流大压降就大，电流小压降就小，导通后既然等效是一个线性元件，线性元件就可以并联应用，当这样两个电阻并联在一起，就有一个自动电流平衡的作用，所以MOS管在一个管子功率不够的时候，可以多管并联应用，且不必另外增加平衡措施(非线性器件是不能直接并联应用的)。</p>
+</li>
+</ul>
+<p> MOS管和普通的晶体三极管相比，有以上四项优点，就足以使MOS管在开关运用状态下完全取代普通的晶体三极管。目前的技术MOS管道VDS能做到1000V，只能作为开关电源的开关管应用，随着制造工艺的不断进步，VDS的不断提高，取代显像管电视机的行输出管也是近期能实现的。</p>
+<p>MOS管和普通晶体三极管相比，有诸多的优点，但是在作为大功率开关管应用时，由于MOS管具有的容性输入特性，MOS管的输入端，等于是一个小电容器，输入的开关激励信号，实际上是在对这个电容进行反复的充电、放电的过程，在充放电的过程中，使MOS管道导通和关闭产生了滞后，使“开”与“关”的过程变慢，这是开关元件不能允许的(功耗增加，烧坏开关管)。</p>
+<p>压波形变成B的畸变波形，导致开关管不能正常开关工作而损坏，解决的方法就是，只要R足够的小，甚至没有阻值，激励信号能提供足够的电流，就能使等效电容迅速的充电、放电，这样MOS开关管就能迅速的“开”、“关”，保证了正常工作。由于激励信号是有内阻的，信号的激励电流也是有限度，我们在作为开关管的MOS管的输入部分，增加一个减少内阻、增加激励电流的“灌流电路”来解决此问题。</p>
+<p></br></br></br></br></br></p>
+<ul>
+<li>end</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">Jinbo Li</div><div class="post-copyright__author_desc"></div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="social-share"><a class="social-share-ico icon-qq" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E4%25B8%258EMOS%25E7%25AE%25A1%2F&amp;title=BJT%E4%B8%8EMOS%E7%AE%A1&amp;desc=undefined&amp;summary=undefined&amp;site=BJT%E4%B8%8EMOS%E7%AE%A1&amp;pics=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到QQ"><i class="solitude fab fa-qq"></i></a><a class="social-share-ico icon-weibo" target="_blank" rel="noopener" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E4%25B8%258EMOS%25E7%25AE%25A1%2F&amp;title=BJT%E4%B8%8EMOS%E7%AE%A1&amp;pic=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到微博"><i class="solitude fab fa-weibo"></i></a><a class="social-share-ico icon-twitter" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E4%25B8%258EMOS%25E7%25AE%25A1%2F&amp;text=BJT%E4%B8%8EMOS%E7%AE%A1" title="分享到Twitter"><i class="solitude fab fa-twitter"></i></a><a class="social-share-ico icon-facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E4%25B8%258EMOS%25E7%25AE%25A1%2F" title="分享到Facebook"><i class="solitude fab fa-facebook"></i></a><a class="social-share-ico icon-telegram" target="_blank" rel="noopener" href="https://t.me/share/url?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E4%25B8%258EMOS%25E7%25AE%25A1%2F&amp;text=BJT%E4%B8%8EMOS%E7%AE%A1" title="分享到Telegram"><i class="solitude fab fa-telegram"></i></a><a class="social-share-ico icon-whatsapp" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text=BJT%E4%B8%8EMOS%E7%AE%A1 http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2FBJT%25E4%25B8%258EMOS%25E7%25AE%25A1%2F" title="分享到WhatsApp"><i class="solitude fab fa-whatsapp"></i></a></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">Something Interesting</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/BJT/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>BJT<span class="tagsPageCount">3</span></span></a><a class="post-meta__tags" href="/tags/MOS%E7%AE%A1/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>MOS管<span class="tagsPageCount">1</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/07/19/Buck%E7%94%B5%E8%B7%AF/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Buck电路是怎么实现降压的?</div></div></a></div><div class="next-post pull-right"><a href="/2025/07/19/BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BJT的直流参数</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/avatar.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">Jinbo Li</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E6%9E%81%E7%AE%A1"><span class="toc-text">三极管</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E6%9E%81%E7%AE%A1%E5%8F%82%E6%95%B0"><span class="toc-text">三极管参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E6%B5%81%E6%94%BE%E5%A4%A7%E7%B3%BB%E6%95%B0"><span class="toc-text">电流放大系数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%80%97%E6%95%A3%E5%8A%9F%E7%8E%87"><span class="toc-text">耗散功率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%91%E7%8E%87%E7%89%B9%E6%80%A7"><span class="toc-text">频率特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E7%94%B5%E6%B5%81"><span class="toc-text">反向电流</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%B6%E4%BD%93%E4%B8%89%E6%9E%81%E7%AE%A1%E4%BD%9C%E7%94%A8"><span class="toc-text">晶体三极管作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%B6%E4%BD%93%E4%B8%89%E6%9E%81%E7%AE%A1%E7%BB%93%E6%9E%84"><span class="toc-text">晶体三极管结构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MOS%E7%AE%A1"><span class="toc-text">MOS管</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MOS%E7%AE%A1%E7%9A%84%E6%9E%84%E9%80%A0"><span class="toc-text">MOS管的构造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MOS%E7%AE%A1%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">MOS管的工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MOS%E7%AE%A1%E7%9A%84%E7%89%B9%E6%80%A7"><span class="toc-text">MOS管的特性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94"><span class="toc-text">对比</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MOS%E7%AE%A1%E5%92%8C%E6%99%B6%E4%BD%93%E4%B8%89%E6%9E%81%E7%AE%A1%E7%9B%B8%E6%AF%94%E7%9A%84%E9%87%8D%E8%A6%81%E7%89%B9%E6%80%A7"><span class="toc-text">MOS管和晶体三极管相比的重要特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E7%94%B5%E8%B7%AF%E4%B8%AD%EF%BC%8C%E5%A4%A7%E5%8A%9F%E7%8E%87MOS%E7%AE%A1%E5%92%8C%E5%A4%A7%E5%8A%9F%E7%8E%87%E6%99%B6%E4%BD%93%E4%B8%89%E6%9E%81%E7%AE%A1%E7%9B%B8%E6%AF%94MOS%E7%AE%A1%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-text">在开关电源电路中，大功率MOS管和大功率晶体三极管相比MOS管的优点</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现"><div class="content"><span class="title" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现">全数字锁相环的Verilog实现</span><span class="categories" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">FPGA</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路">常见模拟电路</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识">一些硬件电路知识</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应"><div class="content"><span class="title" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应">开关电源如何降低纹波和改善动态响应</span><span class="categories" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型"><div class="content"><span class="title" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型">基本元器件的选型</span><span class="categories" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">模电原理及应用</span></div></a></div></div></div></div></main><footer id="footer"><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2025 By&nbsp;<a class="footer-bar-link" href="/"><img class="author-avatar" src="/img/pwa/favicon1.png">Jinbo Li</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude">主题：Solitude</a></div></div></div></div></footer></div><!-- right_menu--><!-- inject body--><div><script src="/js/utils.js?v=3.0.19"></script><script src="/js/main.js?v=3.0.19"></script><script src="/js/third_party/waterfall.min.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/tw_cn.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://fastly.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div class="js-pjax"></div></div><!-- pjax--><script>const pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+})
+
+document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+})
+
+document.addEventListener('pjax:complete', () => {
+    window.refreshFn()
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+    if (e.request.status === 404) {
+        pjax.loadUrl('/404.html')
+    }
+})</script><!-- google adsense--><!-- search--><!-- music--></body></html>
+        <script>
+            const posts = ["2025/07/19/全数字锁相环/","2025/07/19/模电常见电路/","2025/07/19/模电_数电/","2025/07/19/开关电源如何降低纹波/","2025/07/19/基本元器件选型/","2025/07/19/串行通信方式/","2025/07/19/shell_1/","2025/07/19/linux_5/","2025/07/19/linux_4/","2025/07/19/linux_3/","2025/07/19/linux_2/","2025/07/19/linux_1/","2025/07/19/fpga1/","2025/07/19/c++2/","2025/07/19/c++1/","2025/07/19/Buck电路/","2025/07/19/BJT与MOS管/","2025/07/19/BJT的直流参数/","2025/07/19/BJT的应用/","2025/07/19/24V-5VBUCK稳压电路/","2025/07/18/hello-world/","2020/04/26/Windows下搭建hexo博客总结/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>

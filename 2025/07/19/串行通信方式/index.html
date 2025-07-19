@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>串行通信方式之UART、IIC、SPI的区别和特点 | Something Interesting</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon1.png"><!-- index.css--><link rel="stylesheet" href="/css/index.css?v=3.0.19"><!-- inject head--><link rel="canonical" href="http://example.com/2025/07/19/%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/index.html"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><!-- Open Graph--><meta name="description" content="概述UART（Universal Asynchronous Receive Transmitter）通用异步收发器，即我们经常所说的串口，基本都用于调试。UART通信方式需要两根数据线RX、TX和地线GND。TX是用来发送数据，RX是用来接收数据，因为有两根数据线，收和发可以同时进行，所以它是全双工"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="Something Interesting"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon1.png"><link rel="apple-touch-icon" href="/img/pwa/favicon1.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.19' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: undefined,
+    runtime: '2025-07-18 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可"},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: false,
+    expire: false,
+};</script><!-- page-config head--><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: false,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body id="body"><!-- universe--><!-- background img--><!-- loading--><!-- console--><!-- sidebar--><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/Buck%E7%94%B5%E8%B7%AF/">Buck电路<sup>2</sup></a><a href="/tags/BJT/">BJT<sup>3</sup></a><a href="/tags/MOS%E7%AE%A1/">MOS管<sup>1</sup></a><a href="/tags/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/">开关电源<sup>2</sup></a><a href="/tags/FPGA%E5%99%A8%E4%BB%B6/">FPGA器件<sup>1</sup></a><a href="/tags/const/">const<sup>1</sup></a><a href="/tags/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/">Linux虚拟机安装<sup>1</sup></a><a href="/tags/Linux%E5%BF%AB%E6%8D%B7%E9%94%AE%E4%B8%8E%E5%91%BD%E4%BB%A4/">Linux快捷键与命令<sup>1</sup></a><a href="/tags/Linux%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">Linux文件操作<sup>1</sup></a><a href="/tags/NFS%E6%9C%8D%E5%8A%A1/">NFS服务<sup>1</sup></a><a href="/tags/Linux%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">Linux网络操作<sup>1</sup></a><a href="/tags/Vim/">Vim<sup>1</sup></a><a href="/tags/Shell%E7%BC%96%E7%A8%8B/">Shell编程<sup>1</sup></a><a href="/tags/%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/">串行通信<sup>1</sup></a><a href="/tags/UART/">UART<sup>1</sup></a><a href="/tags/IIC/">IIC<sup>1</sup></a><a href="/tags/SPI/">SPI<sup>1</sup></a><a href="/tags/DPLL/">DPLL<sup>1</sup></a><a href="/tags/Verilog/">Verilog<sup>1</sup></a><a href="/tags/%E5%80%8D%E9%A2%91%E5%99%A8/">倍频器<sup>1</sup></a><a href="/tags/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E7%90%86/">基尔霍夫定理<sup>1</sup></a><a href="/tags/%E5%BB%BA%E7%AB%8B%E6%97%B6%E9%97%B4%E5%92%8C%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4/">建立时间和保持时间<sup>1</sup></a><a href="/tags/%E7%BA%BF%E4%B8%8E/">线与<sup>1</sup></a><a href="/tags/%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%86%92%E9%99%A9/">竞争与冒险<sup>1</sup></a><a href="/tags/%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%E5%92%8C%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D/">异步复位和同步复位<sup>1</sup></a><a href="/tags/%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">元器件选型<sup>1</sup></a><a href="/tags/%E7%A7%AF%E5%88%86%E7%94%B5%E8%B7%AF/">积分电路<sup>1</sup></a><a href="/tags/%E5%BE%AE%E5%88%86%E7%94%B5%E8%B7%AF/">微分电路<sup>1</sup></a><a href="/tags/%E5%8A%A0%E6%B3%95%E7%94%B5%E8%B7%AF/">加法电路<sup>1</sup></a><a href="/tags/%E5%B7%AE%E5%88%86%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88%E5%87%8F%E6%B3%95%E7%94%B5%E8%B7%AF%EF%BC%89/">差分放大器（减法电路）<sup>1</sup></a></div></div></div></div><!-- keyboard--><!-- righhtside--><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><div class="back-home-button" tabindex="-1"><i class="back-home-button-icon solitude fas fa-bars-progress"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">project</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="Solitude"><img class="nolazyload back-menu-item-icon" src="/img/logo.png" alt="Solitude"><span class="back-menu-item-text">Solitude</span></a></div></div></div></div><a id="site-name" href="/" title="返回博客主页"><img src="/img/pwa/cursor.ico" alt="Something Interesting"><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">串行通信方式之UART、IIC、SPI的区别和特点</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文章</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>归档</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/moments/"><i class="solitude  fas fa-wifi"></i><span>朋友圈</span></a></li><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li><li><a class="site-page child" href="javascript:travelling()"><i class="solitude  fas fa-gift"></i><span>宝藏博主</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>我的</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user"></i><span>关于</span></a></li></ul></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fas fa-dice-d6"></i></a></div><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA%E5%8E%9F%E7%90%86%E5%92%8C%E5%BA%94%E7%94%A8/">单片机原理和应用</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>串行通信</span></a><a class="post-meta__tags" href="/tags/UART/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>UART</span></a><a class="post-meta__tags" href="/tags/IIC/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>IIC</span></a><a class="post-meta__tags" href="/tags/SPI/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>SPI</span></a></div></div></div></div><h1 class="post-title">串行通信方式之UART、IIC、SPI的区别和特点</h1><div id="post-meta"><div class="meta-secondline"></div></div></div><article class="post-content article-container"><h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="UART（Universal-Asynchronous-Receive-Transmitter）"><a href="#UART（Universal-Asynchronous-Receive-Transmitter）" class="headerlink" title="UART（Universal Asynchronous Receive Transmitter）"></a>UART（Universal Asynchronous Receive Transmitter）</h2><p>通用异步收发器，即我们经常所说的串口，基本都用于调试。UART通信方式需要两根数据线<strong>RX</strong>、<strong>TX</strong>和地线<strong>GND</strong>。TX是用来发送数据，RX是用来接收数据，因为有两根数据线，收和发可以同时进行，所以它是全双工通信。</p>
+<h2 id="IIC（Inter-Integrated-Circuit）"><a href="#IIC（Inter-Integrated-Circuit）" class="headerlink" title="IIC（Inter Integrated Circuit）"></a>IIC（Inter Integrated Circuit）</h2><p>IIC通信方式需要一根时钟线<strong>SCL</strong>和数据线<strong>SDA</strong>，由于其只有一根数据线，只能进行分时收发，所以是半双工通信，两条线上可以挂载许多设备，不同的设备以不同的IIC地址来区分。</p>
+<h2 id="SPI（Serial-Peripheral-Interface-）"><a href="#SPI（Serial-Peripheral-Interface-）" class="headerlink" title="SPI（Serial Peripheral Interface,）"></a>SPI（Serial Peripheral Interface,）</h2><p>串行外设接口，是摩托罗拉开发的全双工同步串行总线；SPI 接口由<strong>SDI</strong>（串行数据输入），<strong>SDO</strong>（串行数据输出），<strong>SCK</strong>（串行移位时钟），<strong>CS</strong>（从使能信号）四种信号构成，如没有CS 信号，则只能存在一个从设备，主设备通过产生移位时钟来发起通讯。通讯时，数据由SDO 输出，SDI 输入，数据在时钟的上升或下降沿由SDO 输出，在紧接着的下降或上升沿由SDI 读入，这样经过8&#x2F;16 次时钟的改变，完成8&#x2F;16 位数据的传输。</p>
+<span id="more"></span>
+
+<h1 id="工作方式"><a href="#工作方式" class="headerlink" title="工作方式"></a>工作方式</h1><h2 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h2><h3 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h3><h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><h4 id="发送数据过程"><a href="#发送数据过程" class="headerlink" title="发送数据过程"></a>发送数据过程</h4><p>空闲状态，线路处于高电位；当收到发送数据指令后，拉低线路一个数据位的时间 T，接着数据按低位到高位依次发送，数据发送完毕后，接着发送奇偶校验位和停止位（停止位为高电位），一帧数据发送结束。</p>
+<h4 id="接收数据过程"><a href="#接收数据过程" class="headerlink" title="接收数据过程"></a>接收数据过程</h4><p>空闲状态，线路处于高电位；当检测到线路的下降沿（线路电位由高电位变为低电位）时说明线路有数据传输，按照约定的波特率从低位到高位接收数据，数据接收完毕后，接着接收并比较奇偶校验位是否正确，如果正确则通知后续设备准备接收数据或存入缓存。由于UART是异步传输，没有传输同步时钟。为了能保证数据传输的正确性，UART 采用 16 倍数据波特率的时钟进行采样。每个数据有 16 个时钟采样，取中间的采样值，以保证采样不会滑码或误码。一般 UART 一帧的数据位数为 8，这样即使每个数据有一个时钟的误差，接收端也能正确地采样到数据。</p>
+<h4 id="接收数据时序"><a href="#接收数据时序" class="headerlink" title="接收数据时序"></a>接收数据时序</h4><p>当检测到数据的下降沿时，表明线路上有数据进行传输，这时计数器CNT开始计数，当计数器为24&#x3D;16+8 时，采样的值为第0位数据；当计数器的值为40时，采样的值为第1位数据，依此类推，进行后面6个数据的采样。如果需要进行奇偶校验，则当计数器的值为152时，采样的值即为奇偶位；当计数器的值为 168 时，采样的值为”1”表示停止位，一帧数据接收完成。一个标准的10位异步串行通信协议(包含1个起始位、1个停止位和8个数据位)收发时序，如下：</p>
+<h2 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h2><h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>SPI通信以主从方式工作，需要至少3根线，存在多个从设备时，则需要第4根线CS来选择从设备。</p>
+<table>
+<thead>
+<tr>
+<th>SDO</th>
+<th>主设备数据输出，从设备数据输入</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SDI</td>
+<td>主设备数据输入，从设备数据输出</td>
+</tr>
+<tr>
+<td>SCLK</td>
+<td>时钟信号，由主设备产生</td>
+</tr>
+<tr>
+<td>CS</td>
+<td>从设备使能信号，由主设备控制</td>
+</tr>
+</tbody></table>
+<h3 id="工作原理-1"><a href="#工作原理-1" class="headerlink" title="工作原理"></a>工作原理</h3><p>SPI是串行同步通讯协议，数据是一位一位的传输的。这就是SCLK时钟线存在的原因，SCLK提供同步的时钟脉冲，SDI，SDO则基于同步时钟完成数据传输。数据在时钟上升沿或下降沿时改变，在紧接着的下降沿或上升沿被读取，完成一位数据传输。因此，至少需要8次时钟信号的改变（上升沿和下降沿为一次），才能完成8位数据的传输。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>SCLK信号线只由主设备控制，从设备不能控制信号线，在基于SPI的通信中，至少有一个主控设备。这样的传输方式有一个优点，SPI允许数据一位一位的传送，甚至允许暂停，因为SCLK时钟线由主控设备控制，当没有时钟跳变时，从设备不采集或传送数据。也就是说，主设备通过对SCLK时钟线的控制可以完成对通讯的控制。另外，SPI是全双工同步数据传输，数据传输速率很高，可达到50MHz。</p>
+<p>但是，SPI接口有一个缺点，其没有指定的流控制，没有应答机制确认是否接收到数据。</p>
+<h2 id="IIC"><a href="#IIC" class="headerlink" title="IIC"></a>IIC</h2><p>IIC 接口的协议里面包括设备地址信息，IIC总线是一个真正的多主机总线，可以同一总线上连接多个从设备，通过应答来互通数据及命令。</p>
+<h3 id="数据协议"><a href="#数据协议" class="headerlink" title="数据协议"></a>数据协议</h3><p>假设A给B发数据，A-&gt;SCL接B-&gt;SCL, A-&gt;SDA接B-&gt;SDA。起初SDA和SCL上的电平都为高电平，接着A先把SDA拉低，等SDA变为低电平后再把SCL拉低，以上两个动作构成了IIC协议的起始位，此时SDA就可以发送数据了。与此同时，SCL发送一定周期的脉冲（周期和PCLK有关，一般会在IIC的控制寄存器中设置）。SDA发送数据和SCL发送脉冲要符合的关系是：SDA必须在SCL是高电平时保持有效，在SCL是低电平时发送下一位，而SCL会在上升沿对SDA进行采样。规定一次必须传8位数据，8位数据传输结束后A释放SDA，但SCL会再发一个脉冲，这会触发B通过将SDA置为低电平表示确认。最后SCL先变为高电平，SDA再变为高电平，这就构成了是IIC协议的结束标志。如果B没有将SDA置为低电平，则A停止发送下一帧数据。</p>
+<p>IIC总线上的每个设备都有唯一地址，数据包传输时先发送地址位，接着才发送数据。一个地址字节由7个地址位和1个指示位组成，总共可以挂载128个设备。指示位是0表示写操作，1表示读操作。还有10位寻址模式，使用两个字节来保存地址，第一个字节的最低两位和第二个字节的8位合起来构成10位地址。</p>
+<div style='text-align: center;'>
+
+<p><img src="http://tva1.sinaimg.cn/large/006HPlntgy1gv1xmry5v0j60ng08dwf102.jpg" alt="完整数据传输"> </p>
+</div>
+
+<h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>需严格按照时序图的要求进行操作；</li>
+<li>若与口线上带内部上拉电阻的单片机接口连接，可以不外加上拉电阻；</li>
+<li>程序中为配合相应的传输速率，在对口线操作的指令后可用NOP指令加一定的延时；</li>
+<li>为了减少意外的干扰信号将EEPROM内的数据改写可用外部写保护引脚（如果有），或者在EEPROM内部没有用的空间写入标志字，每次上电时或复位时做一次检测，判断EEPROM是否被意外改写。</li>
+<li>对IIC总线的一次操作完之后，需要等待一段时间才能进行第二次操作，否则是启动不了总线的；</li>
+<li>在时钟线（SCL）为高电平的时候，一定不能动数据线（SDA）状态，除非是启动或者结束总线；</li>
+<li>IIC传输速率有限，标准模式下可达到100Kbps，快速模式下可达到400Kbps，高速模式下达到4Mbps，不能实现全双工，不适合传输大量数据。</li>
+</ol>
+<h1 id="区别和联系"><a href="#区别和联系" class="headerlink" title="区别和联系"></a>区别和联系</h1><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li><p><strong>SPI总线</strong>由三条信号线组成：串行时钟(SCLK)、串行数据输出(SDO)、串行数据输入(SDI)。SPI总线可以<strong>实现多个SPI设备互相连接</strong>。提供SPI串行时钟的SPI设备为SPI主机或主设备(Master)，其他设备为SPI从机或从设备(Slave)。主从设备间可以实现全双工通信，当有多个从设备时，还可以增加一条从设备选择线（片选）。</p>
+<blockquote>
+<p>如果用通用IO口模拟SPI总线，必须要有一个输出口(SDO)，一个输入口(SDI)，另一个口则视实现的设备类型而定，如果要实现主从设备，则需输入输出口，若只实现主设备，则需输出口即可，若只实现从设备，则只需输入口即可。</p>
+</blockquote>
+</li>
+<li><p><strong>IIC总线</strong>是双向、两线(SCL、SDA)、串行、多主控（multi-master）的接口标准，具有<strong>总线仲裁机制</strong>，非常适合在器件之间进行<strong>近距离、非经常性的数据通信</strong>。在它的协议体系中，传输数据时都会带上目的设备的设备地址，因此可以<strong>实现设备组网</strong>。</p>
+<blockquote>
+<p>如果用通用IO口模拟IIC总线，并实现双向传输，则需一个输入输出口(SDA)，另外还需一个输出口(SCL)。</p>
+</blockquote>
+</li>
+<li><p><strong>UART总线</strong>是<strong>异步串口</strong>，因此一般比前两种同步串口的<strong>结构要复杂</strong>很多，一般由波特率产生器(产生的波特率等于传输波特率的16倍)、UART接收器、UART发送器组成，硬件上由两根线，一根用于发送，一根用于接收。</p>
+<blockquote>
+<p>显然，如果用通用IO口模拟UART总线，则需一个输入口，一个输出口。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><ol>
+<li><p>SPI和UART可以实现全双工，但IIC不行；</p>
+</li>
+<li><p>IIC线更少，我觉得比UART、SPI更为强大，但是技术上也更加麻烦些，因为IIC需要有<strong>双向IO</strong>的支持，而且使用上拉电阻，但是抗干扰能力较弱，一般用于同一板卡上芯片之间的通信，较少用于远距离通信。SPI实现则要简单一些，UART需要<strong>固定的波特率</strong>，就是说两位数据的间隔要相等，而SPI则无所谓，因为它是有时钟的协议；</p>
+</li>
+<li><p>IIC的速度比SPI慢一点，协议比SPI复杂一点，但是连线也比标准的SPI要少；</p>
+</li>
+<li><p>UART一帧可以传5&#x2F;6&#x2F;7&#x2F;8位，IIC必须是8位；</p>
+</li>
+<li><p>SPI用<strong>片选信号</strong>选择从机，IIC用<strong>地址</strong>选择从机。</p>
+<p>… …</p>
+<p></br></br></br></p>
+<ul>
+<li>end</li>
+</ul>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">Jinbo Li</div><div class="post-copyright__author_desc"></div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="social-share"><a class="social-share-ico icon-qq" target="_blank" rel="noopener" href="https://connect.qq.com/widget/shareqq/index.html?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E4%25B8%25B2%25E8%25A1%258C%25E9%2580%259A%25E4%25BF%25A1%25E6%2596%25B9%25E5%25BC%258F%2F&amp;title=%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%E4%B9%8BUART%E3%80%81IIC%E3%80%81SPI%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E7%89%B9%E7%82%B9&amp;desc=undefined&amp;summary=undefined&amp;site=%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%E4%B9%8BUART%E3%80%81IIC%E3%80%81SPI%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E7%89%B9%E7%82%B9&amp;pics=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到QQ"><i class="solitude fab fa-qq"></i></a><a class="social-share-ico icon-weibo" target="_blank" rel="noopener" href="http://service.weibo.com/share/share.php?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E4%25B8%25B2%25E8%25A1%258C%25E9%2580%259A%25E4%25BF%25A1%25E6%2596%25B9%25E5%25BC%258F%2F&amp;title=%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%E4%B9%8BUART%E3%80%81IIC%E3%80%81SPI%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E7%89%B9%E7%82%B9&amp;pic=%2Fimg%2Fpwa%2Ffavicon1.png" title="分享到微博"><i class="solitude fab fa-weibo"></i></a><a class="social-share-ico icon-twitter" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E4%25B8%25B2%25E8%25A1%258C%25E9%2580%259A%25E4%25BF%25A1%25E6%2596%25B9%25E5%25BC%258F%2F&amp;text=%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%E4%B9%8BUART%E3%80%81IIC%E3%80%81SPI%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E7%89%B9%E7%82%B9" title="分享到Twitter"><i class="solitude fab fa-twitter"></i></a><a class="social-share-ico icon-facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E4%25B8%25B2%25E8%25A1%258C%25E9%2580%259A%25E4%25BF%25A1%25E6%2596%25B9%25E5%25BC%258F%2F" title="分享到Facebook"><i class="solitude fab fa-facebook"></i></a><a class="social-share-ico icon-telegram" target="_blank" rel="noopener" href="https://t.me/share/url?url=http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E4%25B8%25B2%25E8%25A1%258C%25E9%2580%259A%25E4%25BF%25A1%25E6%2596%25B9%25E5%25BC%258F%2F&amp;text=%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%E4%B9%8BUART%E3%80%81IIC%E3%80%81SPI%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E7%89%B9%E7%82%B9" title="分享到Telegram"><i class="solitude fab fa-telegram"></i></a><a class="social-share-ico icon-whatsapp" target="_blank" rel="noopener" href="https://api.whatsapp.com/send?text=%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%E4%B9%8BUART%E3%80%81IIC%E3%80%81SPI%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E7%89%B9%E7%82%B9 http%3A%2F%2Fexample.com%2F2025%2F07%2F19%2F%25E4%25B8%25B2%25E8%25A1%258C%25E9%2580%259A%25E4%25BF%25A1%25E6%2596%25B9%25E5%25BC%258F%2F" title="分享到WhatsApp"><i class="solitude fab fa-whatsapp"></i></a></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">Something Interesting</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>串行通信<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/UART/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>UART<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/IIC/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>IIC<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/SPI/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>SPI<span class="tagsPageCount">1</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">基本元器件的选型</div></div></a></div><div class="next-post pull-right"><a href="/2025/07/19/shell_1/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">第六篇  Shell 编程学习小结</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/avatar.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">Jinbo Li</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UART%EF%BC%88Universal-Asynchronous-Receive-Transmitter%EF%BC%89"><span class="toc-text">UART（Universal Asynchronous Receive Transmitter）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IIC%EF%BC%88Inter-Integrated-Circuit%EF%BC%89"><span class="toc-text">IIC（Inter Integrated Circuit）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SPI%EF%BC%88Serial-Peripheral-Interface-%EF%BC%89"><span class="toc-text">SPI（Serial Peripheral Interface,）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-text">工作方式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UART"><span class="toc-text">UART</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E5%BA%8F%E5%9B%BE"><span class="toc-text">时序图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E6%95%B0%E6%8D%AE%E8%BF%87%E7%A8%8B"><span class="toc-text">发送数据过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E6%95%B0%E6%8D%AE%E8%BF%87%E7%A8%8B"><span class="toc-text">接收数据过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E6%95%B0%E6%8D%AE%E6%97%B6%E5%BA%8F"><span class="toc-text">接收数据时序</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SPI"><span class="toc-text">SPI</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-text">接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86-1"><span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-text">特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IIC"><span class="toc-text">IIC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%8F%E8%AE%AE"><span class="toc-text">数据协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E7%82%B9-1"><span class="toc-text">特点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8C%BA%E5%88%AB%E5%92%8C%E8%81%94%E7%B3%BB"><span class="toc-text">区别和联系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83"><span class="toc-text">比较</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现"><div class="content"><span class="title" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现">全数字锁相环的Verilog实现</span><span class="categories" href="/2025/07/19/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">FPGA</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/" title="常见模拟电路">常见模拟电路</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识"><div class="content"><span class="title" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/" title="一些硬件电路知识">一些硬件电路知识</span><span class="categories" href="/2025/07/19/%E6%A8%A1%E7%94%B5_%E6%95%B0%E7%94%B5/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应"><div class="content"><span class="title" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/" title="开关电源如何降低纹波和改善动态响应">开关电源如何降低纹波和改善动态响应</span><span class="categories" href="/2025/07/19/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E5%A6%82%E4%BD%95%E9%99%8D%E4%BD%8E%E7%BA%B9%E6%B3%A2/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型"><div class="content"><span class="title" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/" title="基本元器件的选型">基本元器件的选型</span><span class="categories" href="/2025/07/19/%E5%9F%BA%E6%9C%AC%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">模电原理及应用</span></div></a></div></div></div></div></main><footer id="footer"><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2025 By&nbsp;<a class="footer-bar-link" href="/"><img class="author-avatar" src="/img/pwa/favicon1.png">Jinbo Li</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude">主题：Solitude</a></div></div></div></div></footer></div><!-- right_menu--><!-- inject body--><div><script src="/js/utils.js?v=3.0.19"></script><script src="/js/main.js?v=3.0.19"></script><script src="/js/third_party/waterfall.min.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/tw_cn.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://fastly.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div class="js-pjax"></div></div><!-- pjax--><script>const pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+})
+
+document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+})
+
+document.addEventListener('pjax:complete', () => {
+    window.refreshFn()
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+    if (e.request.status === 404) {
+        pjax.loadUrl('/404.html')
+    }
+})</script><!-- google adsense--><!-- search--><!-- music--></body></html>
+        <script>
+            const posts = ["2025/07/19/全数字锁相环/","2025/07/19/模电常见电路/","2025/07/19/模电_数电/","2025/07/19/开关电源如何降低纹波/","2025/07/19/基本元器件选型/","2025/07/19/串行通信方式/","2025/07/19/shell_1/","2025/07/19/linux_5/","2025/07/19/linux_4/","2025/07/19/linux_3/","2025/07/19/linux_2/","2025/07/19/linux_1/","2025/07/19/fpga1/","2025/07/19/c++2/","2025/07/19/c++1/","2025/07/19/Buck电路/","2025/07/19/BJT与MOS管/","2025/07/19/BJT的直流参数/","2025/07/19/BJT的应用/","2025/07/19/24V-5VBUCK稳压电路/","2025/07/18/hello-world/","2020/04/26/Windows下搭建hexo博客总结/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>
