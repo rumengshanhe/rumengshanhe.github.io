@@ -5,5 +5,14 @@
 	src: url('../font/JinBuTi.ttf') format('truetype');
     font-weight: normal;  /* 字体粗细 */
     font-style: normal;   /* 字体样式 */
-	font-display: swap;
+	font-display: block;
+}
+@font-face {
+    font-family: 'DingTalk-Sans';  /* 定义字体名称 */
+    src: url('../font/DingTalk-Sans.woff2') format('woff2');  /* 字体文件路径及格式 */
+	src: url('../font/DingTalk-Sans.woff') format('woff');
+	src: url('../font/DingTalk-Sans.ttf') format('truetype');
+    font-weight: normal;  /* 字体粗细 */
+    font-style: italic;   /* 字体样式 */
+	font-display: block;
 }
