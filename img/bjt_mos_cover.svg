@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628"/>
+      <stop offset="100%" style="stop-color:#0d1117"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff6b9d"/>
+      <stop offset="100%" style="stop-color:#cc1155"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Circuit traces -->
+  <g opacity="0.08" stroke="#ff6b9d" stroke-width="2" fill="none">
+    <path d="M0,200 H300 L350,250 H600 L650,200 H1200"/>
+    <path d="M0,400 H400 L450,350 H800 L850,400 H1200"/>
+    <path d="M200,0 V300 L250,350 V630"/>
+    <path d="M800,630 V300 L850,250 V0"/>
+    <path d="M500,0 V150 L550,200 H700 L750,150 V630"/>
+  </g>
+  <!-- Decorative dots at trace nodes -->
+  <g fill="#ff6b9d" opacity="0.15">
+    <circle cx="300" cy="200" r="4"/><circle cx="350" cy="250" r="4"/><circle cx="600" cy="200" r="4"/><circle cx="650" cy="200" r="4"/>
+    <circle cx="400" cy="400" r="4"/><circle cx="450" cy="350" r="4"/><circle cx="800" cy="400" r="4"/><circle cx="850" cy="400" r="4"/>
+    <circle cx="200" cy="300" r="4"/><circle cx="250" cy="350" r="4"/>
+    <circle cx="800" cy="300" r="4"/><circle cx="850" cy="250" r="4"/>
+    <circle cx="500" cy="150" r="4"/><circle cx="550" cy="200" r="4"/><circle cx="700" cy="150" r="4"/><circle cx="750" cy="150" r="4"/>
+  </g>
+  <!-- Category tag -->
+  <rect x="80" y="50" rx="20" width="120" height="36" fill="#ff6b9d" opacity="0.15"/>
+  <rect x="80" y="50" rx="20" width="120" height="36" fill="none" stroke="#ff6b9d" stroke-width="1" opacity="0.4"/>
+  <text x="140" y="73" text-anchor="middle" fill="#ff6b9d" font-family="monospace" font-size="15" opacity="0.9">半导体</text>
+  <!-- Title -->
+  <text x="80" y="400" fill="#e8edf2" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="42" font-weight="bold" letter-spacing="2">
+    <tspan x="80" dy="0">BJT与MOS管</tspan>
+    <tspan x="80" dy="55"></tspan>
+  </text>
+  <!-- Bottom accent line -->
+  <rect x="80" y="450" width="100" height="3" rx="1.5" fill="url(#accent)"/>
+  <!-- Small logo mark -->
+  <text x="80" y="580" fill="#ff6b9d" font-family="monospace" font-size="14" opacity="0.4">lijinbo.cc</text>
+</svg>

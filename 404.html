@@ -1,12 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>404 - 访客您好</title>
-    <link rel="icon" href="">
-	</head>
-	<body>
-		<script type="text/javascript" 			  src="//qzonestyle.gtimg.cn/qzone/hybrid/app/404/search_children.js"  homePageUrl="http://lijinbo.top/"
-          homePageName="回到我的主页"charset="utf-8"></script>
-	</body>
-</html>
+extends includes/layout.pug
+
+block content
+    #error-wrap
+        .error-content
+            .error-img(style=`background-image: url(${url_for(theme.errorpage.img)})`)
+            .error-info
+                h1.error_title 404
+                .error_subtitle= theme.errorpage.text
+                a.button--animated(href=url_for("/"))
+                    i.solitude.fas.fa-arrow-up-right-from-square
+                    =_p('404.button')
+
+    if theme.errorpage.recommendList
+        .aside-list
+            .aside-list-group
+                each post, index in site.posts.sort('-date').data.slice(0, 6)
+                    if index >= 5
+                        break
+                    .aside-list-item
+                        a.thumbnail(href=url_for(post.path), title=post.title)
+                            img(src=url_for(post.cover), alt=post.title)
+                        .content
+                            a.title(href=url_for(post.path), title=post.title)= post.title
+
+        <script>
+            const posts = ["1970/01/01/24V-5VBUCK稳压电路/","1970/01/01/BJT与MOS管/","1970/01/01/BJT的应用/","1970/01/01/Buck电路/","2020/04/26/Windows下搭建hexo博客总结/","1970/01/01/BJT的直流参数/","1970/01/01/c++1/","1970/01/01/c++2/","1970/01/01/hello-world/","1970/01/01/linux_1/","1970/01/01/fpga1/","1970/01/01/linux_3/","1970/01/01/linux_4/","1970/01/01/linux_5/","1970/01/01/linux_2/","1970/01/01/串行通信方式/","1970/01/01/全数字锁相环/","1970/01/01/基本元器件选型/","1970/01/01/shell_1/","1970/01/01/开关电源如何降低纹波/","1970/01/01/模电_数电/","1970/01/01/模电常见电路/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>
