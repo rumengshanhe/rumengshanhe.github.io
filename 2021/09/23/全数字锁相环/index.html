@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>全数字锁相环的Verilog实现 | WELCOME TO COMBER'S BLOG</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/pwa/favicon.png"><!-- index.css--><link rel="stylesheet" href="/css/index.css?v=3.0.19"><!-- inject head--><link rel="canonical" href="https://lijinbo.cc/2021/09/23/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/index.html"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css"><!-- aplayer--><!-- swiper--><!-- fancybox ui--><!-- katex--><!-- Open Graph--><meta name="description" content="概述项目的主要目标就是用Verilog设计实现一款数字锁相环，基于低频率时钟源，倍频产生高频时钟，并且达到高频时钟输出相位锁定、占空比1:1的预期效果。设计全基于Verilog代码实现，第一阶段实现数字锁相环的基础架构，达到输入输出锁定的效果，第二阶段再进行倍频的实现。并结合Modelsim平台进行行为仿真，验证功能的正确性，观测仿真波形图。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="全数字锁相环的Verilog实现">
+<meta property="og:url" content="https://lijinbo.cc/2021/09/23/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/index.html">
+<meta property="og:site_name" content="WELCOME TO COMBER&#39;S BLOG">
+<meta property="og:description" content="概述项目的主要目标就是用Verilog设计实现一款数字锁相环，基于低频率时钟源，倍频产生高频时钟，并且达到高频时钟输出相位锁定、占空比1:1的预期效果。设计全基于Verilog代码实现，第一阶段实现数字锁相环的基础架构，达到输入输出锁定的效果，第二阶段再进行倍频的实现。并结合Modelsim平台进行行为仿真，验证功能的正确性，观测仿真波形图。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lijinbo.cc/img/pll_cover.png">
+<meta property="article:published_time" content="2021-09-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-18T15:00:26.340Z">
+<meta property="article:author" content="Campbell">
+<meta property="article:tag" content="DPLL">
+<meta property="article:tag" content="Verilog">
+<meta property="article:tag" content="倍频器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lijinbo.cc/img/pll_cover.png"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="WELCOME TO COMBER'S BLOG"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/pwa/favicon.png"><link rel="apple-touch-icon" href="/img/pwa/favicon.png" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.19' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><!-- global head--><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: undefined,
+    runtime: '2023-04-20 00:00:00',
+    lazyload: {
+        enable: false,
+        error: '/img/error_load.avif'
+    },
+    copyright: false,
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可"},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: [],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: false,
+    lightbox: 'null',
+    right_menu: false,
+    translate: {"translateDelay":0,"defaultEncoding":2},
+    lure: false,
+    expire: false,
+};</script><!-- page-config head--><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: false,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body id="body"><!-- universe--><!-- background img--><!-- loading--><!-- console--><!-- sidebar--><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">30</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90/">开关电源<sup>2</sup></a><a href="/tags/Buck%E7%94%B5%E8%B7%AF/">Buck电路<sup>2</sup></a><a href="/tags/BJT/">BJT<sup>3</sup></a><a href="/tags/MOS%E7%AE%A1/">MOS管<sup>1</sup></a><a href="/tags/const/">const<sup>1</sup></a><a href="/tags/FPGA%E5%99%A8%E4%BB%B6/">FPGA器件<sup>1</sup></a><a href="/tags/Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/">Linux虚拟机安装<sup>1</sup></a><a href="/tags/Linux%E5%BF%AB%E6%8D%B7%E9%94%AE%E4%B8%8E%E5%91%BD%E4%BB%A4/">Linux快捷键与命令<sup>1</sup></a><a href="/tags/Linux%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">Linux文件操作<sup>1</sup></a><a href="/tags/NFS%E6%9C%8D%E5%8A%A1/">NFS服务<sup>1</sup></a><a href="/tags/Linux%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C/">Linux网络操作<sup>1</sup></a><a href="/tags/Vim/">Vim<sup>1</sup></a><a href="/tags/Shell%E7%BC%96%E7%A8%8B/">Shell编程<sup>1</sup></a><a href="/tags/%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/">串行通信<sup>1</sup></a><a href="/tags/UART/">UART<sup>1</sup></a><a href="/tags/IIC/">IIC<sup>1</sup></a><a href="/tags/SPI/">SPI<sup>1</sup></a><a href="/tags/%E5%85%83%E5%99%A8%E4%BB%B6%E9%80%89%E5%9E%8B/">元器件选型<sup>1</sup></a><a href="/tags/%E5%9F%BA%E5%B0%94%E9%9C%8D%E5%A4%AB%E5%AE%9A%E7%90%86/">基尔霍夫定理<sup>1</sup></a><a href="/tags/%E5%BB%BA%E7%AB%8B%E6%97%B6%E9%97%B4%E5%92%8C%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4/">建立时间和保持时间<sup>1</sup></a><a href="/tags/%E7%BA%BF%E4%B8%8E/">线与<sup>1</sup></a><a href="/tags/%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%86%92%E9%99%A9/">竞争与冒险<sup>1</sup></a><a href="/tags/%E5%BC%82%E6%AD%A5%E5%A4%8D%E4%BD%8D%E5%92%8C%E5%90%8C%E6%AD%A5%E5%A4%8D%E4%BD%8D/">异步复位和同步复位<sup>1</sup></a><a href="/tags/DPLL/">DPLL<sup>1</sup></a><a href="/tags/Verilog/">Verilog<sup>1</sup></a><a href="/tags/%E5%80%8D%E9%A2%91%E5%99%A8/">倍频器<sup>1</sup></a><a href="/tags/%E7%A7%AF%E5%88%86%E7%94%B5%E8%B7%AF/">积分电路<sup>1</sup></a><a href="/tags/%E5%BE%AE%E5%88%86%E7%94%B5%E8%B7%AF/">微分电路<sup>1</sup></a><a href="/tags/%E5%8A%A0%E6%B3%95%E7%94%B5%E8%B7%AF/">加法电路<sup>1</sup></a><a href="/tags/%E5%B7%AE%E5%88%86%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88%E5%87%8F%E6%B3%95%E7%94%B5%E8%B7%AF%EF%BC%89/">差分放大器（减法电路）<sup>1</sup></a></div></div></div></div><!-- keyboard--><!-- righhtside--><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><a id="site-name" href="/" title="返回博客主页"><span class="title">COMBER'S BLOG</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">全数字锁相环的Verilog实现</a></div></div><div id="menus"></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="nav-totop" onclick="sco.toTop()"><a class="totopbtn"><i class="solitude fas fa-arrow-up"></i><span id="percent">0</span></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav><div class="coverdiv" id="coverdiv"><img class="nolazyload" id="post-cover" src="/img/pll_cover.png" alt="全数字锁相环的Verilog实现"></div><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/FPGA/">FPGA</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/DPLL/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>DPLL</span></a><a class="post-meta__tags" href="/tags/Verilog/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>Verilog</span></a><a class="post-meta__tags" href="/tags/%E5%80%8D%E9%A2%91%E5%99%A8/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>倍频器</span></a></div></div></div></div><h1 class="post-title">全数字锁相环的Verilog实现</h1><div id="post-meta"><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content article-container"><h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>项目的主要目标就是用<strong>Verilog</strong>设计实现一款数字锁相环，基于低频率时钟源，倍频产生高频时钟，并且达到高频时钟输出相位锁定、占空比1:1的预期效果。设计全基于Verilog代码实现，第一阶段实现数字锁相环的基础架构，达到输入输出锁定的效果，第二阶段再进行倍频的实现。并结合<strong>Modelsim</strong>平台进行行为仿真，验证功能的正确性，观测仿真波形图。 </p>
+<p><img src="https://s2.loli.net/2021/12/06/arilVAXkFsG1gh8.png" alt></p>
+<span id="more"></span>
+
+<h1 id="层次结构"><a href="#层次结构" class="headerlink" title="层次结构"></a>层次结构</h1><p>工程的结构分为顶层模块<strong>dpll.v</strong>和子模块<strong>Phasecomparator</strong>、<strong>VariableResetRandomWalkFilter</strong>和<strong>Freqdivider</strong>，分别对应PLL原理中的鉴相器<strong>PD</strong>、环路滤波器<strong>LF</strong>和受控振荡器<strong>VCO</strong>。系统在统一的系统时钟下同步工作，参考的架构图如下：</p>
+<div style="text-align: center;">
+
+<p><img src="https://s2.loli.net/2021/12/06/wpVePZIkvgc9U3x.jpg" alt="设计架构"></p>
+</div>
+
+<h1 id="模块说明"><a href="#模块说明" class="headerlink" title="模块说明"></a>模块说明</h1><h2 id="DPLL-v"><a href="#DPLL-v" class="headerlink" title="DPLL.v"></a>DPLL.v</h2><h3 id="模块接口"><a href="#模块接口" class="headerlink" title="模块接口"></a>模块接口</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> dpll(</span><br><span class="line">    <span class="keyword">input</span>  SignalIn;                       <span class="comment">// 输入信号</span></span><br><span class="line">    <span class="keyword">input</span>  MainClock;                     <span class="comment">// 系统时钟</span></span><br><span class="line">    <span class="keyword">output</span> SignalOut;                <span class="comment">// 输出信号</span></span><br><span class="line">    <span class="keyword">output</span> Positive, Negative;          <span class="comment">// 环路滤波器输出</span></span><br><span class="line">    <span class="keyword">output</span> Lead, Lag;               <span class="comment">// 鉴相器输出</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h3><p><strong>DPLL</strong>模块是工程的顶层文件，负责把各个子模块组合起来，负责声明整个系统的信号接口。</p>
+<h2 id="Phasecomparator-v"><a href="#Phasecomparator-v" class="headerlink" title="Phasecomparator.v"></a>Phasecomparator.v</h2><h3 id="模块接口-1"><a href="#模块接口-1" class="headerlink" title="模块接口"></a>模块接口</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> phasecomparator(</span><br><span class="line">    <span class="keyword">input</span> MainClock,                  <span class="comment">// System Clock</span></span><br><span class="line">    <span class="keyword">input</span> InputSignal, OutputSignal,         <span class="comment">// 输入输出信号</span></span><br><span class="line">    <span class="keyword">output</span> SynchronousSignal,                 <span class="comment">// 同步信号</span></span><br><span class="line">    <span class="keyword">output</span> Lead, Lag,                    <span class="comment">// 超前、滞后脉冲</span></span><br><span class="line">    <span class="keyword">output</span> InputSignalEdge,  <span class="comment">// 输入信号上升沿</span></span><br><span class="line">    <span class="keyword">output</span> OutputSignalEdge,      <span class="comment">// 输出信号上升沿</span></span><br><span class="line">    <span class="keyword">output</span> Lock,                    <span class="comment">// 锁定标志位</span></span><br><span class="line">    <span class="keyword">output</span> [<span class="number">7</span>:<span class="number">0</span>] PeriodCount  <span class="comment">// 输入信号周期</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="功能描述-1"><a href="#功能描述-1" class="headerlink" title="功能描述"></a>功能描述</h3><p><strong>Phasecomparator</strong>为鉴相器模块，首先通过D触发器，把输入信号同步到系统的时钟域；其二，统计输入信号的周期，用于振荡信号的生成；其三，对输入信号与反馈信号进行相位比较，反馈信号超前于输入信号则置Lead为高电平，反之，反馈信号滞后则置Lag为高电平，这两个信号有效的持续周期都为一个系统时钟周期。</p>
+<div style="text-align: center;">
+
+<p><img src="https://s2.loli.net/2021/12/06/GUCWkRHwEKltxFZ.jpg" alt="鉴相器工作示意图"></p>
+</div>
+
+<h2 id="VariableResetRandomWalkFilter-v和RandomWalkFilter-v"><a href="#VariableResetRandomWalkFilter-v和RandomWalkFilter-v" class="headerlink" title="VariableResetRandomWalkFilter.v和RandomWalkFilter.v"></a>VariableResetRandomWalkFilter.v和RandomWalkFilter.v</h2><h3 id="模块接口-2"><a href="#模块接口-2" class="headerlink" title="模块接口"></a>模块接口</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> variableresetrandomwalkfilter(</span><br><span class="line">   <span class="keyword">input</span>  MainClock, Lead, Lag;  <span class="comment">// System Clock and Phase Comparator signals</span></span><br><span class="line">   <span class="keyword">output</span> Positive, Negative;    <span class="comment">// &quot;positive shift&quot; and &quot;negative shift&quot; outputs</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> randomwalkfilter(</span><br><span class="line">   <span class="keyword">input</span>  MainClock, Lead, Lag;  <span class="comment">// System Clock and Phase Comparator signals</span></span><br><span class="line">   <span class="keyword">output</span> Positive, Negative;    <span class="comment">// &quot;positive shift&quot; and &quot;negative shift&quot; outputs</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="功能描述-2"><a href="#功能描述-2" class="headerlink" title="功能描述"></a>功能描述</h3><p><strong>VariableResetRandomWalkFilter</strong>模块是环路滤波器模块，<strong>RandomWalkFilter</strong>是它的子模块，该子模块实现的是<strong>随机徘徊序列滤波器</strong>，前者在后者基础上增加Reset值可调的功能。随机徘徊序列滤波器的主体是一个可逆计数器。当有超前脉冲输人到UP端时,计数器上行计数,当有滞后脉冲输入到DN端时,计数器下行计数。如果超前脉冲超过滞后的数目到达计数容量N时,就在+N端输出一个提前脉冲,同时使计数器复位。反之，则在-N端输出一个推后脉冲,同时计数器复位。环路锁定前,鉴相器连续输出超前或滞后脉冲,上行计数器或下行计数器到达满状态后输出提前脉冲或推后脉冲,在这两个脉冲作用下环路逐步进入锁定状态。当环路进入锁定状态后，由噪声引起的超前或滞后脉冲是随机的，而且出现概率基本相等,不会有连续很多个超前或滞后脉冲，因而它们的差值达到计数容量N的可能性极小，这样就可以减小噪声对环路的干扰作用。</p>
+<div style="text-align: center;">
+
+<p><img src="https://s2.loli.net/2021/12/06/C7VKpyd3mNFPsrg.jpg" alt="RandomWalkFilter滤波器的结构"></p>
+</div>
+
+
+
+<h2 id="Freqdivider-v"><a href="#Freqdivider-v" class="headerlink" title="Freqdivider.v"></a>Freqdivider.v</h2><h3 id="模块接口-3"><a href="#模块接口-3" class="headerlink" title="模块接口"></a>模块接口</h3><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> freqdivider(</span><br><span class="line">	<span class="keyword">input</span> MainClock;                  </span><br><span class="line">	<span class="keyword">input</span> Positive, Negative;    <span class="comment">// 控制输出周期</span></span><br><span class="line">	<span class="keyword">output</span> FrequencyOut;               <span class="comment">// 倍频输出</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="功能描述-3"><a href="#功能描述-3" class="headerlink" title="功能描述"></a>功能描述</h3><p>主要功能是基于系统时钟进行分频。系统时钟取决于FPGA硬件型号，一般需要较高的系统时钟。基于由上述鉴相器模块计算得到的输入信号的时钟周期数，计算倍频信号的时钟周期数，产生同步振荡信号。由于存在系统延时，一开始产生的振荡信号与输入信号并不同步，由鉴相器处理使其逐渐达到同步锁定状态。</p>
+<h1 id="功能仿真"><a href="#功能仿真" class="headerlink" title="功能仿真"></a>功能仿真</h1><h2 id="电路逻辑"><a href="#电路逻辑" class="headerlink" title="电路逻辑"></a>电路逻辑</h2><p>使用Quartus完成程序设计，对应的RTL电路逻辑如下图所示。</p>
+<p><img src="https://s2.loli.net/2021/12/06/JWBkolRYv56Op2V.png" alt="RTL逻辑电路图"></p>
+<h2 id="仿真参数"><a href="#仿真参数" class="headerlink" title="仿真参数"></a>仿真参数</h2><p>系统时钟设置为50MHz，输入信号频率为500KHz，输入信号具有不确定性，即仿真中添加一个随机时延，此处设置为3287ns。</p>
+<h2 id="仿真效果"><a href="#仿真效果" class="headerlink" title="仿真效果"></a>仿真效果</h2><h3 id="同步性能"><a href="#同步性能" class="headerlink" title="同步性能"></a>同步性能</h3><p>波形仿真图如图3-1所示，MainClock为系统时钟，SignalIn为输入信号，SignalOut为输出信号，Lead、Lag分别为鉴相器输出的相位领先和滞后信号，Positive、Negative则对应上述两个信号经过环路滤波器后的输出。Lock是输出锁定信号，置高电平时环路锁定。由仿真波形图可以看出，锁定时间为168300ns ，减去开头加入的输入时延3287ns，实际锁定时间为165013ns，即165μs，锁定后输出与输入信号同频同相。</p>
+<p><img src="https://s2.loli.net/2021/12/06/jmBtJRqaOgFWsSx.png" alt="环路锁定"></p>
+<h3 id="倍频效果"><a href="#倍频效果" class="headerlink" title="倍频效果"></a>倍频效果</h3><p>改变顶层文件（dpll.v）里的参数（parameter）DividerMultiple的值，便可以修改锁相环输出倍频的倍数，可以实现奇倍频和偶倍频。如图所示分别为基于500KHz输入信号产生2倍频、5倍频和20倍频的效果图。。</p>
+<p><img src="https://s2.loli.net/2021/12/06/Ibzl2HNjD1W9xRQ.png" alt="2倍频"></p>
+<p><img src="https://s2.loli.net/2021/12/06/xM14OUsGlWbcQ6I.png" alt="5倍频"></p>
+<p><img src="https://s2.loli.net/2021/12/06/U5VjaZlAGEFqdS3.png" alt="20倍频"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>结合上述功能仿真，本次设计实现了基于低频率时钟源，倍频产生高频时钟，并且达到高频时钟输出相位锁定、占空比1:1的预期效果。通过本次设计的锁相环路，可以实现在FPGA平台上，锁定未知的较低频输入信号，产生同频同相的任意倍频（频率低于系统时钟频率）输出信号。本设计完全基于Verilog代码实现，程序简单，完全可以满足简单地实现同步倍频信号的场合要求。</p>
+<p> <br><br><br></p>
+<ul>
+<li>end</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/logo.png"></div><div class="post-copyright__author_name">Campbell</div><div class="post-copyright__author_desc">一个靓仔的自述</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">WELCOME TO COMBER'S BLOG</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/DPLL/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>DPLL<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/Verilog/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>Verilog<span class="tagsPageCount">1</span></span></a><a class="post-meta__tags" href="/tags/%E5%80%8D%E9%A2%91%E5%99%A8/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>倍频器<span class="tagsPageCount">1</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/02/14/24V-5VBUCK%E7%A8%B3%E5%8E%8B%E7%94%B5%E8%B7%AF/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">24V-5V降压DC-DC稳压电路设计</div></div></a></div><div class="next-post pull-right"><a href="/2021/08/17/Buck%E7%94%B5%E8%B7%AF/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Buck电路是怎么实现降压的?</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/logo.png"></div><div class="description"></div><div class="bottom-group"><span class="left"><div class="name">Campbell</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-text">层次结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E8%AF%B4%E6%98%8E"><span class="toc-text">模块说明</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DPLL-v"><span class="toc-text">DPLL.v</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E6%8E%A5%E5%8F%A3"><span class="toc-text">模块接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0"><span class="toc-text">功能描述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Phasecomparator-v"><span class="toc-text">Phasecomparator.v</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E6%8E%A5%E5%8F%A3-1"><span class="toc-text">模块接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0-1"><span class="toc-text">功能描述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VariableResetRandomWalkFilter-v%E5%92%8CRandomWalkFilter-v"><span class="toc-text">VariableResetRandomWalkFilter.v和RandomWalkFilter.v</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E6%8E%A5%E5%8F%A3-2"><span class="toc-text">模块接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0-2"><span class="toc-text">功能描述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Freqdivider-v"><span class="toc-text">Freqdivider.v</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E6%8E%A5%E5%8F%A3-3"><span class="toc-text">模块接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0-3"><span class="toc-text">功能描述</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E4%BB%BF%E7%9C%9F"><span class="toc-text">功能仿真</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B5%E8%B7%AF%E9%80%BB%E8%BE%91"><span class="toc-text">电路逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BF%E7%9C%9F%E5%8F%82%E6%95%B0"><span class="toc-text">仿真参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BF%E7%9C%9F%E6%95%88%E6%9E%9C"><span class="toc-text">仿真效果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%80%A7%E8%83%BD"><span class="toc-text">同步性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%80%8D%E9%A2%91%E6%95%88%E6%9E%9C"><span class="toc-text">倍频效果</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/2022/02/14/24V-5VBUCK%E7%A8%B3%E5%8E%8B%E7%94%B5%E8%B7%AF/" title="24V-5V降压DC-DC稳压电路设计"><div class="thumbnail"><img alt="24V-5V降压DC-DC稳压电路设计" src="/img/dc24v5v_cover.png"></div><div class="content"><span class="title" href="/2022/02/14/24V-5VBUCK%E7%A8%B3%E5%8E%8B%E7%94%B5%E8%B7%AF/" title="24V-5V降压DC-DC稳压电路设计">24V-5V降压DC-DC稳压电路设计</span><span class="categories" href="/2022/02/14/24V-5VBUCK%E7%A8%B3%E5%8E%8B%E7%94%B5%E8%B7%AF/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2021/09/23/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现"><div class="thumbnail"><img alt="全数字锁相环的Verilog实现" src="/img/pll_cover.png"></div><div class="content"><span class="title" href="/2021/09/23/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/" title="全数字锁相环的Verilog实现">全数字锁相环的Verilog实现</span><span class="categories" href="/2021/09/23/%E5%85%A8%E6%95%B0%E5%AD%97%E9%94%81%E7%9B%B8%E7%8E%AF/">FPGA</span></div></a><a class="aside-list-item" href="/2021/08/17/Buck%E7%94%B5%E8%B7%AF/" title="Buck电路是怎么实现降压的?"><div class="thumbnail"><img alt="Buck电路是怎么实现降压的?" src="/img/buck_cover.png"></div><div class="content"><span class="title" href="/2021/08/17/Buck%E7%94%B5%E8%B7%AF/" title="Buck电路是怎么实现降压的?">Buck电路是怎么实现降压的?</span><span class="categories" href="/2021/08/17/Buck%E7%94%B5%E8%B7%AF/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2021/08/02/BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0/" title="BJT的直流参数"><div class="thumbnail"><img alt="BJT的直流参数" src="/img/bjt_param_cover.png"></div><div class="content"><span class="title" href="/2021/08/02/BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0/" title="BJT的直流参数">BJT的直流参数</span><span class="categories" href="/2021/08/02/BJT%E7%9A%84%E7%9B%B4%E6%B5%81%E5%8F%82%E6%95%B0/">模电原理及应用</span></div></a><a class="aside-list-item" href="/2021/06/22/fpga1/" title="FPGA平台与器件"><div class="thumbnail"><img alt="FPGA平台与器件" src="/img/fpga_cover.png"></div><div class="content"><span class="title" href="/2021/06/22/fpga1/" title="FPGA平台与器件">FPGA平台与器件</span><span class="categories" href="/2021/06/22/fpga1/">FPGA</span></div></a></div></div></div></div></main><footer id="footer"><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2023 - 2026 By&nbsp;<a class="footer-bar-link" href="/"><img class="author-avatar" src="/img/pwa/favicon.png">Campbell</a></div><div class="beian-group"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude">主题：Solitude</a></div></div></div></div></footer></div><!-- right_menu--><!-- inject body--><div><script src="/js/utils.js?v=3.0.19"></script><script src="/js/main.js?v=3.0.19"></script><script src="/js/third_party/waterfall.min.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script src="/js/tw_cn.js?v=3.0.19"></script><script src="https://fastly.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="https://fastly.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div class="js-pjax"></div></div><!-- pjax--><script>const pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+})
+
+document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+})
+
+document.addEventListener('pjax:complete', () => {
+    window.refreshFn()
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+    if (e.request.status === 404) {
+        pjax.loadUrl('/404.html')
+    }
+})</script><!-- google adsense--><!-- search--><!-- music--></body></html>
+        <script>
+            const posts = ["2022/02/14/24V-5VBUCK稳压电路/","2021/09/23/全数字锁相环/","2021/08/17/Buck电路/","2021/08/02/BJT的直流参数/","2021/06/22/fpga1/","2021/06/15/串行通信方式/","2021/06/11/BJT的应用/","2021/06/10/BJT与MOS管/","2021/05/20/模电常见电路/","2021/04/25/模电_数电/","2021/04/11/shell_1/","2021/04/10/c++2/","2021/03/10/linux_5/","2021/01/24/c++1/","2020/12/20/linux_3/","2020/12/13/linux_2/","2020/12/13/linux_4/","2020/12/04/linux_1/","2020/11/21/基本元器件选型/","2020/10/11/开关电源如何降低纹波/","2020/04/26/Windows下搭建hexo博客总结/","2020/04/01/hello-world/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>
