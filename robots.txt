@@ -1,0 +1,8 @@
+# robots.txt for lijinbo.cc
+User-agent: *
+Allow: /
+Disallow: /js/
+Disallow: /css/
+
+Sitemap: https://lijinbo.cc/sitemap.xml
+Sitemap: https://lijinbo.cc/baidusitemap.xml
